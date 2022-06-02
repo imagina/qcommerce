@@ -101,6 +101,14 @@
                 ],
               }
             },
+            h1Title: {
+              value: '',
+              type: 'input',
+              isTranslatable: true,
+              props: {
+                label: `${this.$tr('isite.cms.form.h1')}`
+              }
+            },
             metaTitle: {
               value: '',
               type: 'input',
