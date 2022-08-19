@@ -68,6 +68,7 @@ export default {
           name: {
             value: '',
             type: 'input',
+            isTranslatable: true,
             props: {
               label: `${this.$tr('isite.cms.form.name')}*`,
               rules: [
