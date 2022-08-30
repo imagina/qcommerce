@@ -309,7 +309,7 @@
                   <!--Crud manufacturer-->
                   <crud :crud-data="import('@imagina/qcommerce/_crud/manufacturers')"
                         type="select"
-                        :crud-props="{label:`${$tr('icommerce.cms.form.manufacturer')}`,'data-testid': 'manufacturerId'}"
+                        :crud-props="{label:`${$tr('icommerce.cms.form.manufacturer')}`,'data-testid': 'manufacturerId', clearable : true}"
                         v-model="locale.formTemplate.manufacturerId"
                         :config="{options: {label: 'name', value: 'id'}}"
                   />
@@ -691,7 +691,7 @@ export default {
           props: {
             label: this.$trp('isite.cms.form.category') + '*',
             rules: [val => !!val || $tr('isite.cms.message.fieldRequired')],
-            clearable: false,
+            clearable: true,
             multiple: true,
             valueConsistsOf: 'ALL'
           },
