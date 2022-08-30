@@ -859,6 +859,7 @@ export default {
       if (await this.$refs.localeComponent.validateForm()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
+        console.warn(this.getDataForm())
         this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
           this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
           this.$router.push({name: 'qcommerce.admin.products.index'})
@@ -878,7 +879,7 @@ export default {
           delete response[item]
         }
       }
-      return response
+      return {...response, manufacturerId: this.locale.form.manufacturerId || null}
     },
     //Action after created
     actionAfterCreated(id) {
