@@ -2,7 +2,7 @@
   <div id="showOrderPage">
     <!--page actions-->
     <div class="box box-auto-height q-mb-md">
-      <page-actions @refresh="init" :exclude-actions="['export']"
+      <page-actions @refresh="init" :exclude-actions="['export']" :extra-actions="extraPageActions"
                     :title="`${$route.meta.title} #${ orderId.toString().padStart(5, '0')}`"/>
     </div>
 
@@ -132,6 +132,18 @@ export default {
     }
   },
   computed: {
+    //Return extra actions
+    extraPageActions(){
+      return [
+        {
+          label: this.$tr('isite.cms.label.print'),
+          props: {
+            icon: 'fa-solid fa-print'
+          },
+          action: this.printScreen
+        }
+      ]
+    },
     //Return settings to use
     settings() {
       return {
@@ -433,7 +445,11 @@ export default {
           this.modalRating.loading = false
         })
       })
-    }
+    },
+    //print
+    printScreen() {
+      print();
+    },
   }
 }
 </script>
@@ -461,4 +477,12 @@ export default {
       color $blue-grey
       font-weight bold
       font-size 15px
+      
+@media print 
+  #masterPanelHeader, 
+  #masterDrawers, 
+  #pageActionscomponent .actions-content
+    display none
+  .q-page-container
+    padding 0 !important        
 </style>
