@@ -44,8 +44,8 @@ export default {
             },
             {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'slug', align: 'left'},
             {
-              name: 'price', label: this.$tr('isite.cms.form.price'), field: 'price', align: 'left',
-              format: val => this.$trc(val || 0)
+              name: 'price', label: this.$tr('isite.cms.form.price'), field: 'formattedPrice', align: 'left',
+              //format: val => this.$trn(val || 0)
             },
             {
               name: 'createdAt', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
