@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-10 offset-lg-1 relative-position">
         <!--Page Actions-->
         <div class="box box-auto-height q-mb-md">
-          <page-actions :title="$route.meta.title"/>
+          <page-actions :title="pageTitle"/>
         </div>
         <!--Data-->
         <q-form autocorrect="off" autocomplete="off" ref="formContent"
@@ -537,6 +537,11 @@ export default {
     }
   },
   computed: {
+    //Page title
+    pageTitle() {
+      const useLegacyStructure = parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('isite::legacyStructureCMS') || 0)
+      return useLegacyStructure ? this.$tr(this.$route.meta.title) : this.$route.meta.title
+    },
     dataLocale() {
       return {
         fields: {
