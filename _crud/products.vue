@@ -16,7 +16,7 @@ export default {
         extraFormFields: 'Icommerce.crud-fields.products',
         create: {
           title: this.$tr('icommerce.cms.newProduct'),
-          to: {name: 'qcommerce.admin.products.create'}
+          //to: {name: 'qcommerce.admin.products.create'}
         },
         read: {
           columns: [
@@ -129,10 +129,162 @@ export default {
           ]
         },
         update: {
-          to: 'qcommerce.admin.products.edit'
+          //to: 'qcommerce.admin.products.edit'
         },
-        delete: true
+        delete: true,
+        formLeft: {
+          banner: {
+            type: 'banner',
+            props: {
+              color: 'info',
+              icon: 'fas fa-exclamation-triangle',
+              message:  this.crudInfo.typeForm == 'create' ? 'En este formulario podrás crear un nuevo producto de manera sencilla, si quieres crear tu producto con opciones más avanzadas, da click en el siguiente botón para ir a el formulario avanzado.' : 'En este formulario podrás editar tu producto de manera sencilla, si quieres editar tu producto con opciones más avanzadas, da click en el siguiente botón para ir a el formulario avanzado.',
+              actions: [
+                {
+                  props: {
+                    label: this.$tr('isite.cms.label.advanceOptions')
+                  },
+                  action: () => {
+                    if (this.crudInfo.typeForm === 'create') {
+                      this.$router.push({name: 'qcommerce.admin.products.create'})
+                    }else{
+                      this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: 'id'}})
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          name: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.name')}*`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
+          },
+          slug: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.slug')}*`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
+          },
+          summary: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.summary')}*`,
+              type: 'textarea',
+              rows: "3",
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
+          },
+          description: {
+            value: '',
+            type: 'html',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.description')}*`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            }
+          },
+        },
+        formRight: {
+          status: {
+            value: null,
+            type: 'select',
+            props: {
+              label: `${this.$tr('isite.cms.form.status')}:`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+              clearable: true,
+              options: [
+                {label: this.$tr('isite.cms.label.enabled'), value: 1},
+                {label: this.$tr('isite.cms.label.disabled'), value: 0}
+              ],
+            },
+          },
+          categoryId: {
+            value: null,
+            type: 'crud',
+            props: {
+              crudType: 'select',
+              crudData: import('@imagina/qcommerce/_crud/productCategories'),
+              customData: {
+                read: {
+                  requestParams: {include: 'parent', refresh: true}
+                }
+              },
+              crudProps: {
+                label: `${this.$tr('isite.cms.form.category')}*`,
+                rules: [
+                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
+                ],
+              },
+            },
+          },
+          categories: {
+            value: [],
+            type: 'crud',
+            props: {
+              crudType: 'select',
+              crudData: import('@imagina/qcommerce/_crud/productCategories'),
+              customData: {
+                read: {
+                  requestParams: {include: 'parent', refresh: true}
+                }
+              },
+              crudProps: {
+                label: this.$trp('isite.cms.form.category'),
+                multiple: true,
+                useChips: true,
+              },
+            },
+          },
+          metaTitle: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.metaTitle')}*`,
+            }
+          },
+          metaDescription: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.metaDescription')}*`,
+            }
+          },
+          customUrl: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.customUrl')}*`,
+            }
+          }
+        },
       }
+    },
+    //Crud info
+    crudInfo() {
+      return this.$store.state.qcrudComponent.component[this.crudId] || {}
     }
   }
 }

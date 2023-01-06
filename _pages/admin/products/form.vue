@@ -17,7 +17,83 @@
               <locales v-model="locale" ref="localeComponent" :form="$refs.formContent"/>
             </div>
             <!--Form left-->
-            <div class="col-12" v-if="locale.success">
+            <div class="col-12 col-md-8 mx-auto" v-if="locale.success">
+              <!-- New Form Style -->
+              <q-card>
+                <q-tabs
+                  v-model="tab"
+                  dense
+                  class="text-grey"
+                  active-color="primary"
+                  indicator-color="primary"
+                  align="justify"
+                  narrow-indicator
+                >
+                  <q-tab name="content" :label="$tr('icommerce.cms.form.content')"></q-tab>
+                  <q-tab name="status" label="Estado"></q-tab>
+                  <q-tab name="categories" label="Categorias"></q-tab>
+                  <q-tab name="metaInfo" label="Meta Info"></q-tab>
+                  <q-tab name="data" label="Datos"></q-tab>
+                  <q-tab name="relations" label="Relaciones"></q-tab>
+                  <q-tab name="images" label="Imagenes"></q-tab>
+                  <q-tab name="options" label="Opciones"></q-tab>
+                  <q-tab name="discount" label="Descuento"></q-tab>
+                </q-tabs>
+
+                <q-separator></q-separator>
+
+                <q-tab-panels v-model="tab" animated>
+                  <q-tab-panel name="content">
+                    <div class="col-xs-12 col-md-8 col-lg-6">
+                      <!--name-->
+                      <q-input v-model="locale.formTemplate.name" @input="setSlug()" outlined dense
+                              data-testid="name"
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                              :label="`${$tr('isite.cms.form.name')} (${locale.language})*`"/>
+                      <!--Slug-->
+                      <q-input v-model="locale.formTemplate.slug" outlined dense
+                              data-testid="slug"
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                              :label="`${$tr('isite.cms.form.slug')} (${locale.language})*`"/>
+                      <!--Sumario-->
+                      <q-input v-model="locale.formTemplate.summary" type="textarea" outlined dense
+                              data-testid="summary"
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                              :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3"/>
+                      <!--Description-->
+                      <div class="input-title">{{ `${$tr('isite.cms.form.description')} (${locale.language})*` }}</div>
+                      <q-field v-model="locale.formTemplate.description" borderless
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]">
+                        <ck-editor v-model="locale.formTemplate.description" data-testid="description"/>
+                        <q-editor v-if="false" v-model="locale.formTemplate.description" class="full-width"
+                                  :toolbar="editorText.toolbar" content-class="text-grey-9"
+                                  toolbar-text-color="grey-9"/>
+                      </q-field>
+                    </div>
+                  </q-tab-panel>
+                  
+                  <q-tab-panel name="test">
+                    <div class="text-h6">test</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+                  
+                  <q-tab-panel name="b">
+                    <div class="text-h6">b</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+
+                  <q-tab-panel name="alarms">
+                    <div class="text-h6">Alarms</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+
+                  <q-tab-panel name="movies">
+                    <div class="text-h6">Movies</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+                </q-tab-panels>
+              </q-card>
+              <!-- End New Form Style -->
               <q-expansion-item default-opened icon="fas fa-home" :label="$tr('icommerce.cms.form.content')"
                                 class="box-collapse q-mb-md" header-class="header-container" group="gpProdExpansion">
                 <div class="row q-pa-md q-col-gutter-md">
@@ -497,6 +573,7 @@ export default {
   },
   data() {
     return {
+      tab: 'content',
       locale: {},
       vTab: 'tab-data',
       loading: false,
