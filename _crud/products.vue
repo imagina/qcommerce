@@ -133,6 +133,7 @@ export default {
         },
         delete: true,
         formLeft: {
+          id: {value: ''},
           banner: {
             type: 'banner',
             props: {
@@ -148,7 +149,7 @@ export default {
                     if (this.crudInfo.typeForm === 'create') {
                       this.$router.push({name: 'qcommerce.admin.products.create'})
                     }else{
-                      this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: 'id'}})
+                      this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: this.crudInfo.id}})
                     }
                   }
                 }
