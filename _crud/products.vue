@@ -139,7 +139,7 @@ export default {
             props: {
               color: 'info',
               icon: 'fas fa-exclamation-triangle',
-              message:  this.crudInfo.typeForm == 'create' ? 'En este formulario podrás crear un nuevo producto de manera sencilla, si quieres crear tu producto con opciones más avanzadas, da click en el siguiente botón para ir a el formulario avanzado.' : 'En este formulario podrás editar tu producto de manera sencilla, si quieres editar tu producto con opciones más avanzadas, da click en el siguiente botón para ir a el formulario avanzado.',
+              message:  this.crudInfo.typeForm == 'create' ? this.$tr('isite.cms.message.createFormProduct') : this.$tr('isite.cms.message.editFormProduct'),
               actions: [
                 {
                   props: {
