@@ -593,7 +593,7 @@ export default {
         actions: [
           {
             props: {
-              label: "Cerrar",
+              label: this.$tr('isite.cms.label.close'),
               color: "green",
               rounded: true,
               icon: 'fal fa-fill-drip',
