@@ -129,6 +129,7 @@ export default {
           ]
         },
         update: {
+          title: this.$tr('icommerce.cms.updateProduct'),
           //to: 'qcommerce.admin.products.edit'
         },
         delete: true,
@@ -139,7 +140,7 @@ export default {
             props: {
               color: 'info',
               icon: 'fas fa-exclamation-triangle',
-              message:  this.crudInfo.typeForm == 'create' ? this.$tr('isite.cms.message.createFormProduct') : this.$tr('isite.cms.message.editFormProduct'),
+              message: this.crudInfo.typeForm == 'create' ? this.$tr('isite.cms.message.createFormProduct') : this.$tr('isite.cms.message.editFormProduct'),
               actions: [
                 {
                   props: {
@@ -148,7 +149,7 @@ export default {
                   action: () => {
                     if (this.crudInfo.typeForm === 'create') {
                       this.$router.push({name: 'qcommerce.admin.products.create'})
-                    }else{
+                    } else {
                       this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: this.crudInfo.id}})
                     }
                   }
