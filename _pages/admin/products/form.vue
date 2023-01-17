@@ -107,10 +107,10 @@
                   <q-tab-panel name="categories">
                     <div class="relative-position text-right">
                       <!--Crud category-->
-                      <crud :crud-data="import('@imagina/qcommerce/_crud/productCategories')"
-                            type="button-create" @created="getCategories" class="q-mb-sm"/>
+                      <!-- <crud :crud-data="import('@imagina/qcommerce/_crud/productCategories')"
+                            type="button-create" @created="getCategories" class="q-mb-sm"/> -->
                       <!--Main category-->
-                      <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.category"/>
+                      <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.categoryId"/>
                       <!--Categories-->
                       <dynamic-field v-model="locale.formTemplate.categories"
                                      :field="dynamicFields.categories"/>
@@ -474,9 +474,6 @@ export default {
     $route(to, from) {
       this.initForm()
     },
-    'locale.form'(value) {
-      //console.warn(value)
-    },
     'locale.formTemplate.categoryId'(newValue) {
       setTimeout(() => {
         if (this.locale.formTemplate && this.locale.formTemplate.categories && newValue) {
@@ -499,10 +496,14 @@ export default {
     this.$nextTick(function () {
       this.initForm()
       this.$root.$on('page.data.refresh', () => this.initForm())//Listen refresh event
+      const path = this.$route.path.split("/");
+      const lastChildPath = path[path.length - 2];
+      if (lastChildPath === 'create') this.isCreateMode = true;
     })
   },
   data() {
     return {
+      isCreateMode: false,
       locale: {},
       vTab: 'tab-data',
       loading: false,
@@ -763,35 +764,72 @@ export default {
             select: {label: 'name', id: 'id'}
           }
         },
-        category: {
+        // category: {
+        //   value: null,
+        //   type: 'treeSelect',
+        //   testId: 'categoryId',
+        //   props: {
+        //     label: this.$tr('isite.cms.form.category') + '*',
+        //     rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
+        //     clearable: false
+        //   },
+        //   loadOptions: {
+        //     apiRoute: 'apiRoutes.qcommerce.categories',
+        //     requestParams: {include: 'parent'}
+        //   }
+        // },
+        // categories: {
+        //   value: [],
+        //   type: 'treeSelect',
+        //   testId: 'categories',
+        //   props: {
+        //     label: this.$trp('isite.cms.form.category') + '*',
+        //     rules: [val => !!val || $tr('isite.cms.message.fieldRequired')],
+        //     clearable: true,
+        //     multiple: true,
+        //     valueConsistsOf: 'ALL'
+        //   },
+        //   loadOptions: {
+        //     apiRoute: 'apiRoutes.qcommerce.categories',
+        //     requestParams: {include: 'parent'}
+        //   }
+        // },
+        categoryId: {
           value: null,
-          type: 'treeSelect',
-          testId: 'categoryId',
+          type: 'crud',
           props: {
-            label: this.$tr('isite.cms.form.category') + '*',
-            rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
-            clearable: false
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/productCategories'),
+            customData: {
+              read: {
+                requestParams: {include: 'parent', refresh: true}
+              }
+            },
+            crudProps: {
+              label: `${this.$tr('isite.cms.form.category')}*`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
           },
-          loadOptions: {
-            apiRoute: 'apiRoutes.qcommerce.categories',
-            requestParams: {include: 'parent'}
-          }
         },
         categories: {
           value: [],
-          type: 'treeSelect',
-          testId: 'categories',
+          type: 'crud',
           props: {
-            label: this.$trp('isite.cms.form.category') + '*',
-            rules: [val => !!val || $tr('isite.cms.message.fieldRequired')],
-            clearable: true,
-            multiple: true,
-            valueConsistsOf: 'ALL'
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/productCategories'),
+            customData: {
+              read: {
+                requestParams: {include: 'parent', refresh: true}
+              }
+            },
+            crudProps: {
+              label: this.$trp('isite.cms.form.category'),
+              multiple: true,
+              useChips: true,
+            },
           },
-          loadOptions: {
-            apiRoute: 'apiRoutes.qcommerce.categories',
-            requestParams: {include: 'parent'}
-          }
         },
         mainImage: {
           type: 'media',
@@ -815,6 +853,12 @@ export default {
     }
   },
   methods: {
+    //validate fields from home tab
+    async validateFieldsHomeTab(){
+      const { name, slug, summary, description, categoryId, categories } = this.locale.formTemplate;
+      if (name.trim() === '' || slug.trim() === '' || summary.trim() === '' || description.trim() === '' || categoryId === 0 || categories.length === 0) return false;
+      return true
+    },
     //back to home panel
     async backHomePanel() {
       if (await this.$refs.localeComponent.validateForm()) {
@@ -946,7 +990,7 @@ export default {
     },
     //Create Product
     async createItem() {
-      if (await this.$refs.localeComponent.validateForm()) {
+      if (await this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         this.$crud.create(configName, this.getDataForm()).then(response => {
@@ -956,11 +1000,13 @@ export default {
           this.loading = false
           this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
         })
+      }else{
+        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
       }
     },
     //Update Product
     async updateItem() {
-      if (await this.$refs.localeComponent.validateForm()) {
+      if (await this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
@@ -971,6 +1017,8 @@ export default {
           this.loading = false
           this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
         })
+      }else{
+        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
       }
     },
     //Get just values not null from form
