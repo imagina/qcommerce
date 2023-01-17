@@ -106,9 +106,6 @@
                   </q-tab-panel>
                   <q-tab-panel name="categories">
                     <div class="relative-position text-right">
-                      <!--Crud category-->
-                      <!-- <crud :crud-data="import('@imagina/qcommerce/_crud/productCategories')"
-                            type="button-create" @created="getCategories" class="q-mb-sm"/> -->
                       <!--Main category-->
                       <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.categoryId"/>
                       <!--Categories-->
@@ -764,36 +761,6 @@ export default {
             select: {label: 'name', id: 'id'}
           }
         },
-        // category: {
-        //   value: null,
-        //   type: 'treeSelect',
-        //   testId: 'categoryId',
-        //   props: {
-        //     label: this.$tr('isite.cms.form.category') + '*',
-        //     rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
-        //     clearable: false
-        //   },
-        //   loadOptions: {
-        //     apiRoute: 'apiRoutes.qcommerce.categories',
-        //     requestParams: {include: 'parent'}
-        //   }
-        // },
-        // categories: {
-        //   value: [],
-        //   type: 'treeSelect',
-        //   testId: 'categories',
-        //   props: {
-        //     label: this.$trp('isite.cms.form.category') + '*',
-        //     rules: [val => !!val || $tr('isite.cms.message.fieldRequired')],
-        //     clearable: true,
-        //     multiple: true,
-        //     valueConsistsOf: 'ALL'
-        //   },
-        //   loadOptions: {
-        //     apiRoute: 'apiRoutes.qcommerce.categories',
-        //     requestParams: {include: 'parent'}
-        //   }
-        // },
         categoryId: {
           value: null,
           type: 'crud',
