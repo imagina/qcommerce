@@ -206,14 +206,13 @@ export default {
         },
         formRight: {
           status: {
-            value: null,
+            value: '1',
             type: 'select',
             props: {
               label: `${this.$tr('isite.cms.form.status')}:`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
-              clearable: true,
               options: [
                 {label: this.$tr('isite.cms.label.enabled'), value: 1},
                 {label: this.$tr('isite.cms.label.disabled'), value: 0}
@@ -257,20 +256,31 @@ export default {
               },
             },
           },
-          metaTitle: {
-            value: '',
+          price: {
+            value: '0',
             type: 'input',
-            isTranslatable: true,
             props: {
-              label: `${this.$tr('isite.cms.form.metaTitle')}*`,
+              label: `${this.$tr('isite.cms.form.price')}`,
+              type: 'number'
             }
           },
-          metaDescription: {
-            value: '',
+          quantity: {
+            value: '1',
             type: 'input',
-            isTranslatable: true,
             props: {
-              label: `${this.$tr('isite.cms.form.metaDescription')}*`,
+              label: `${this.$tr('isite.cms.form.quantity')}`,
+              type: 'number'
+            }
+          },
+          stockStatus: {
+            value: '1',
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.form.stock'),
+              options: [
+                {label: this.$tr('isite.cms.label.available'), value: '1'},
+                {label: this.$tr('isite.cms.label.soldOut'), value: '0'}
+              ]
             }
           },
           mainImage: {
