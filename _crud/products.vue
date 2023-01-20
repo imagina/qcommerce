@@ -283,22 +283,22 @@ export default {
               ]
             }
           },
-          mainImage: {
+          mediasSingle: {
             type: 'media',
             props: {
               label: this.$tr('isite.cms.form.image'),
               zone: 'mainimage',
               entity: 'Modules\\Icommerce\\Entities\\Product',
-              entityId: this.productId ? this.productId : null
+              entityId: null
             }
           },
-          gallery: {
+          mediasMulti: {
             type: 'media',
             props: {
               label: this.$tr('isite.cms.form.gallery'),
               zone: 'gallery',
               entity: 'Modules\\Icommerce\\Entities\\Product',
-              entityId: this.productId ? this.productId : null
+              entityId: null
             }
           }
         },
