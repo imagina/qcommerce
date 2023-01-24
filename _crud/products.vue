@@ -125,6 +125,14 @@ export default {
               action: (row) => {
                 this.$helper.openExternalURL(row.url)
               }
+            },
+            {
+              icon: 'fas fa-pen-to-square',
+              color: 'info',
+              tooltip: this.$tr('icommerce.cms.message.advanceEdit'),
+              action: (item) => {
+                this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: item.id}})
+              }
             }
           ]
         },
