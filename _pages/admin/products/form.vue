@@ -218,18 +218,8 @@
                       <!--Right-->
                       <div class="col-12 col-md-6">
                         <!--availability date-->
-                        <q-input data-testid="dateAvailable" dense mask="date"
-                                 v-model="locale.formTemplate.dateAvailable" color="primary"
-                                 unmasked-value :label="$tr('icommerce.cms.form.availableDate')"
-                                 outlined placeholder="YYYY/MM/DD">
-                          <template v-slot:append>
-                            <q-icon name="fas fa-calendar-day"/>
-                            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                              <q-date v-model="locale.formTemplate.dateAvailable"
-                                      @input="() => $refs.qDateProxy.hide()"/>
-                            </q-popup-proxy>
-                          </template>
-                        </q-input>
+                        <dynamic-field v-model="locale.formTemplate.dateAvailable"
+                                       :field="dynamicFields.dateAvailable"/>
                         <!--Points-->
                         <q-input data-testid="points" v-model="locale.formTemplate.points" outlined dense
                                  :label="$trp('isite.cms.form.point')"/>
@@ -815,14 +805,20 @@ export default {
             entity: 'Modules\\Icommerce\\Entities\\Product',
             entityId: this.productId ? this.productId : null
           }
+        },
+        dateAvailable: {
+          type: 'date',
+          props: {
+            label: this.$tr('icommerce.cms.form.availableDate')
+          }
         }
       }
     }
   },
   methods: {
     //validate fields from home tab
-    async validateFieldsHomeTab(){
-      const { name, slug, summary, description, categoryId, categories } = this.locale.formTemplate;
+    async validateFieldsHomeTab() {
+      const {name, slug, summary, description, categoryId, categories} = this.locale.formTemplate;
       if (name.trim() === '' || slug.trim() === '' || summary.trim() === '' || description.trim() === '' || categoryId === 0 || categories.length === 0) return false;
       return true
     },
@@ -967,7 +963,7 @@ export default {
           this.loading = false
           this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
         })
-      }else{
+      } else {
         this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
       }
     },
@@ -984,7 +980,7 @@ export default {
           this.loading = false
           this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
         })
-      }else{
+      } else {
         this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
       }
     },

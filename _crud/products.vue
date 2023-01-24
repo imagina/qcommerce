@@ -119,7 +119,7 @@ export default {
           },
           actions: [
             {
-              icon: 'fas fa-eye',
+              icon: 'fa-light fa-arrow-right-to-arc',
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.viewProduct'),
               action: (row) => {
@@ -127,7 +127,7 @@ export default {
               }
             },
             {
-              icon: 'fas fa-pen-to-square',
+              icon: 'fa-light fa-pen-to-square',
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.advanceEdit'),
               action: (item) => {
@@ -152,7 +152,7 @@ export default {
               actions: [
                 {
                   props: {
-                    label: this.$tr('isite.cms.label.advanceOptions')
+                    label: this.$tr('icommerce.cms.message.advanceEdit')
                   },
                   action: () => {
                     if (this.crudInfo.typeForm === 'create') {
