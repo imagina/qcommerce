@@ -630,7 +630,7 @@ export default {
           quantity: 1,
           stockStatus: 1,
           price: 0,
-          dateAvailable: this.$moment().format('YYYY-MM-DD'),
+          dateAvailable: null,
           weight: 0,
           length: 0,
           width: 0,
@@ -807,6 +807,7 @@ export default {
           }
         },
         dateAvailable: {
+          value: this.$moment().format('YYYY/MM/DD'),
           type: 'date',
           props: {
             label: this.$tr('icommerce.cms.form.availableDate')
