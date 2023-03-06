@@ -200,6 +200,14 @@ export default {
               ],
             },
           },
+          advancedSummary: {
+            value: '',
+            type: 'html',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('icommerce.cms.advancedSummary')}`
+            }
+          },
           description: {
             value: '',
             type: 'html',
