@@ -19,6 +19,12 @@
             <!--Form left-->
             <div class="col-12" v-if="locale.success">
               <div class="box">
+                <!-- Product Title-->
+                <div v-if="locale.formTemplate.name" class="box-title">
+                  <q-icon name="fa-light fa-tags"/>
+                  {{ locale.formTemplate.name }}
+                  <q-separator class="q-my-md"/>
+                </div>
                 <!-- Tab information -->
                 <div v-if="lastPanelOpen != 'home'">
                   <div class="box-title text-primary q-mb-xs">{{ $tr(modalForms[lastPanelOpen].title) }}</div>
