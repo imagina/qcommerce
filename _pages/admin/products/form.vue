@@ -942,8 +942,10 @@ export default {
       if (data.relatedProducts && data.relatedProducts.length) {
         this.optionsTemplate.relatedProducts = this.$array.tree(data.relatedProducts, {label: 'name', id: 'id'})
       }
-
-      this.locale.form = this.$clone(orderData)
+      this.locale.form = this.$clone({
+        ...orderData,
+        dateAvailable: orderData.dateAvailable ? orderData.dateAvailable.replaceAll("-", "/") : this.$moment().format('YYYY/MM/DD')
+      })
       this.calculateAllPriceLists()
       setTimeout(() => {
         /*this.locale.formTemplate.categoryId = orderData.categoryId
