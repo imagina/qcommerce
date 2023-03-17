@@ -267,6 +267,7 @@
                             :label="$tr('icommerce.cms.form.requriedShipping')"
                             color="primary"
                         />
+                        <br>
                         <!--Show price when is call-->
                         <q-toggle
                             data-testid="showPriceIsCall"
