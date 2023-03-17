@@ -267,6 +267,15 @@
                             :label="$tr('icommerce.cms.form.requriedShipping')"
                             color="primary"
                         />
+                        <!--Show price when is call-->
+                        <q-toggle
+                            data-testid="showPriceIsCall"
+                            v-model="locale.formTemplate.showPriceIsCall"
+                            true-value="1"
+                            false-value="0"
+                            :label="$tr('icommerce.cms.form.isCall')"
+                            color="primary"
+                        />
                         <br>
                         <!--Free shipping-->
                         <q-toggle
@@ -644,6 +653,7 @@ export default {
           minimum: 1,
           reference: '',
           shipping: false,
+          showPriceIsCall: false,
           subtract: false,
           freeshipping: false,
           orderWeight: 0,
