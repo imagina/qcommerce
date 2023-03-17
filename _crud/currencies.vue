@@ -91,10 +91,7 @@ export default {
             value: '',
             type: 'input',
             props: {
-              label: `${this.$tr('icommerce.cms.form.symbolLeft')}*`,
-              rules: [
-                val => !val || val.length == 1 || this.$tr('isite.cms.message.fieldMaxLeng', {num: 1})
-              ],
+              label: `${this.$tr('icommerce.cms.form.symbolLeft')}*`
             },
           },
           symbolRight: {
@@ -102,13 +99,10 @@ export default {
             type: 'input',
             props: {
               label: `${this.$tr('icommerce.cms.form.symbolRight')}*`,
-              rules: [
-                val => !val || val.length == 1 || this.$tr('isite.cms.message.fieldMaxLeng', {num: 1})
-              ],
             },
           },
           decimalPlace: {
-            value: '',
+            value: 0,
             type: 'input',
             props: {
               type: 'number',
@@ -159,6 +153,34 @@ export default {
               ],
             }
           },
+          locale: {
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.label.language')
+            },
+            loadOptions: {
+              delayed: () => {
+                return new Promise(resolve => {
+                  //get core locales
+                  const locales = this.$store.getters['qsiteApp/getSettingValueByName']('core::locales')
+                  const requestParams = {
+                    refresh: true,
+                    params: {filter: {settingGroupName: 'availableLocales'}}
+                  }
+                  //Request locales
+                  this.$crud.index('apiRoutes.qsite.siteSettings', requestParams).then(response => {
+                    //Map the locales as a select
+                    const availableLocales = response.data.filter(locale => locales.includes(locale.iso)).map(locale => ({
+                      label: locale.name,
+                      value: locale.iso,
+                      id: locale.iso,
+                    }))
+                    resolve(availableLocales)
+                  }).catch(error => resolve([]))
+                })
+              }
+            }
+          }
         }
       }
     }
