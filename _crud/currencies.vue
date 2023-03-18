@@ -43,7 +43,6 @@ export default {
               name: 'decimals', label: this.$tr('icommerce.cms.form.decimals'), field: 'decimals',
               align: 'right'
             },
-
             {name: 'value', label: this.$tr('isite.cms.label.value'), field: 'value', align: 'right'},
             {
               name: 'default_currency', label: this.$tr('isite.cms.form.default'),
@@ -176,6 +175,34 @@ export default {
               ],
             }
           },
+          locale: {
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.label.language')
+            },
+            loadOptions: {
+              delayed: () => {
+                return new Promise(resolve => {
+                  //get core locales
+                  const locales = this.$store.getters['qsiteApp/getSettingValueByName']('core::locales')
+                  const requestParams = {
+                    refresh: true,
+                    params: {filter: {settingGroupName: 'availableLocales'}}
+                  }
+                  //Request locales
+                  this.$crud.index('apiRoutes.qsite.siteSettings', requestParams).then(response => {
+                    //Map the locales as a select
+                    const availableLocales = response.data.filter(locale => locales.includes(locale.iso)).map(locale => ({
+                      label: locale.name,
+                      value: locale.iso,
+                      id: locale.iso,
+                    }))
+                    resolve(availableLocales)
+                  }).catch(error => resolve([]))
+                })
+              }
+            }
+          }
         }
       }
     }
