@@ -40,14 +40,23 @@ export default {
             },
             {name: 'status', label: this.$tr('isite.cms.form.status'), field: 'status', align: 'left'},
             {
-              name: 'decimal_place', label: this.$tr('isite.cms.label.decimal'), field: 'decimalPlace',
+              name: 'decimals', label: this.$tr('icommerce.cms.form.decimals'), field: 'decimals',
               align: 'right'
             },
+
             {name: 'value', label: this.$tr('isite.cms.label.value'), field: 'value', align: 'right'},
             {
               name: 'default_currency', label: this.$tr('isite.cms.form.default'),
               field: 'defaultCurrency', align: 'right',
               format: val => (val == 1) ? this.$tr('isite.cms.label.yes') : this.$tr('isite.cms.label.no')
+            },
+            {
+              name: 'decimal_separator', label: this.$tr('icommerce.cms.form.decimalSeparator'), field: 'decimalSeparator',
+              align: 'left', maxLength: 1
+            },
+            {
+              name: 'thousands_separator', label: this.$tr('icommerce.cms.form.thousandsSeparator'), field: 'thousandsSeparator',
+              align: 'left', maxLength: 1
             },
             //Action
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
@@ -91,28 +100,36 @@ export default {
             value: '',
             type: 'input',
             props: {
-              label: `${this.$tr('icommerce.cms.form.symbolLeft')}*`,
-              rules: [
-                val => !val || val.length == 1 || this.$tr('isite.cms.message.fieldMaxLeng', {num: 1})
-              ],
+              label: `${this.$tr('icommerce.cms.form.symbolLeft')}*`
             },
           },
           symbolRight: {
             value: '',
             type: 'input',
             props: {
-              label: `${this.$tr('icommerce.cms.form.symbolRight')}*`,
-              rules: [
-                val => !val || val.length == 1 || this.$tr('isite.cms.message.fieldMaxLeng', {num: 1})
-              ],
+              label: `${this.$tr('icommerce.cms.form.symbolRight')}*`
             },
           },
-          decimalPlace: {
+          decimalSeparator: {
+            value: '',
+            type: 'input',
+            props: {
+              label: `${this.$tr('icommerce.cms.form.decimalSeparator')}*`
+            },
+          },
+          thousandsSeparator: {
+            value: '',
+            type: 'input',
+            props: {
+              label: `${this.$tr('icommerce.cms.form.thousandsSeparator')}*`
+            },
+          },
+          decimals: {
             value: '',
             type: 'input',
             props: {
               type: 'number',
-              label: `${this.$tr('isite.cms.label.decimal')}*`,
+              label: `${this.$tr('icommerce.cms.form.decimals')}*`,
               rules: [
                 val => !val || val.length == 1 || this.$tr('isite.cms.message.fieldMaxLeng', {num: 1})
               ],
