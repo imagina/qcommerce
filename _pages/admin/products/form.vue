@@ -274,7 +274,7 @@
                             v-model="locale.formTemplate.showPriceIsCall"
                             true-value="1"
                             false-value="0"
-                            :label="$tr('icommerce.cms.form.isCall')"
+                            :label="$tr('icommerce.cms.form.showPriceIsCall')"
                             color="primary"
                         />
                         <br>
