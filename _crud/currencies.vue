@@ -50,12 +50,18 @@ export default {
               format: val => (val == 1) ? this.$tr('isite.cms.label.yes') : this.$tr('isite.cms.label.no')
             },
             {
-              name: 'decimal_separator', label: this.$tr('icommerce.cms.form.decimalSeparator'), field: 'decimalSeparator',
-              align: 'left', maxLength: 1
+              name: 'decimal_separator',
+              label: this.$tr('icommerce.cms.form.decimalSeparator'),
+              field: 'decimalSeparator',
+              align: 'left',
+              maxLength: 1
             },
             {
-              name: 'thousands_separator', label: this.$tr('icommerce.cms.form.thousandsSeparator'), field: 'thousandsSeparator',
-              align: 'left', maxLength: 1
+              name: 'thousands_separator',
+              label: this.$tr('icommerce.cms.form.thousandsSeparator'),
+              field: 'thousandsSeparator',
+              align: 'left',
+              maxLength: 1
             },
             //Action
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
@@ -192,11 +198,11 @@ export default {
                   //Request locales
                   this.$crud.index('apiRoutes.qsite.siteSettings', requestParams).then(response => {
                     //Map the locales as a select
-                    const availableLocales = response.data.filter(locale => locales.includes(locale.iso)).map(locale => ({
+                    const availableLocales = response.data.map(locale => ({
                       label: locale.name,
                       value: locale.iso,
                       id: locale.iso,
-                    }))
+                    }))//.filter(locale => locales.includes(locale.iso))
                     resolve(availableLocales)
                   }).catch(error => resolve([]))
                 })
