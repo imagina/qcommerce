@@ -268,15 +268,7 @@
                             color="primary"
                         />
                         <br>
-                        <!--Show price when is call-->
-                        <q-toggle
-                            data-testid="showPriceIsCall"
-                            v-model="locale.formTemplate.showPriceIsCall"
-                            true-value="1"
-                            false-value="0"
-                            :label="$tr('icommerce.cms.form.showPriceIsCall')"
-                            color="primary"
-                        />
+
                         <br>
                         <!--Free shipping-->
                         <q-toggle
@@ -315,6 +307,15 @@
                             true-value="1"
                             false-value="0"
                             :label="$tr('icommerce.cms.form.isCall')"
+                            color="primary"
+                        />
+                        <!--Show price when is call-->
+                        <q-toggle
+                            data-testid="showPriceIsCall"
+                            v-model="locale.formTemplate.showPriceIsCall"
+                            true-value="1"
+                            false-value="0"
+                            :label="$tr('icommerce.cms.form.showPriceIsCall')"
                             color="primary"
                         />
                       </div>
