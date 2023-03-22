@@ -268,8 +268,6 @@
                             color="primary"
                         />
                         <br>
-
-                        <br>
                         <!--Free shipping-->
                         <q-toggle
                             data-testid="freeShipping"
@@ -309,6 +307,7 @@
                             :label="$tr('icommerce.cms.form.isCall')"
                             color="primary"
                         />
+                        <br>
                         <!--Show price when is call-->
                         <q-toggle
                             data-testid="showPriceIsCall"
