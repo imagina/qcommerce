@@ -132,21 +132,6 @@
                     <q-input data-testid="customUrl" v-model="locale.formTemplate.customUrl" outlined dense
                              :label="`${$tr('isite.cms.form.customUrl')}`">
                     </q-input>
-                    <!--Extra fields-->
-                    <div v-for="(field, key) in  extraFields" :key="key" :ref="key">
-                      <!--Dynamic fake field-->
-                      <dynamic-field v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
-                                     :key="key" v-if="field.isFakeField || field.fakeFieldName"
-                                     :field="{...field, testId : (field.testId || field.name || key)}"
-                                     :language="locale.language" :item-id="productId"
-                                     :ref="`field-${field.name || key}`"/>
-                      <!--Dynamic field-->
-                      <dynamic-field v-model="locale.formTemplate[field.name || key]" :key="key"
-                                     :field="{...field, testId : (field.testId  || field.name || key)}"
-                                     :language="locale.language" :item-id="productId"
-                                     :ref="`field-${field.name || key}`"
-                                     v-if="!field.isFakeField && !field.fakeFieldName"/>
-                    </div>
                   </q-tab-panel>
                   <q-tab-panel name="data">
                     <div class="row q-col-gutter-md q-pa-md">
@@ -317,6 +302,21 @@
                             :label="$tr('icommerce.cms.form.showPriceIsCall')"
                             color="primary"
                         />
+                        <!--Extra fields-->
+                        <div v-for="(field, key) in  extraFields" :key="key" :ref="key">
+                          <!--Dynamic fake field-->
+                          <dynamic-field v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
+                                         :key="key" v-if="field.isFakeField || field.fakeFieldName"
+                                         :field="{...field, testId : (field.testId || field.name || key)}"
+                                         :language="locale.language" :item-id="productId"
+                                         :ref="`field-${field.name || key}`"/>
+                          <!--Dynamic field-->
+                          <dynamic-field v-model="locale.formTemplate[field.name || key]" :key="key"
+                                         :field="{...field, testId : (field.testId  || field.name || key)}"
+                                         :language="locale.language" :item-id="productId"
+                                         :ref="`field-${field.name || key}`"
+                                         v-if="!field.isFakeField && !field.fakeFieldName"/>
+                        </div>
                       </div>
                     </div>
                   </q-tab-panel>
