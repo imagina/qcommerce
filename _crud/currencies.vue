@@ -181,7 +181,7 @@ export default {
               ],
             }
           },
-          locale: {
+          language: {
             type: 'select',
             props: {
               label: this.$tr('isite.cms.label.language')
