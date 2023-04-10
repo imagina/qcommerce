@@ -8,7 +8,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'icommerce.cms.sidebar.panelOrders',
-    icon: 'fas fa-shopping-bag',
+    icon: 'fa-light fa-receipt',
     authenticated: true,
     subHeader: {
       refresh: true,
@@ -22,7 +22,7 @@ export default {
     page: () => import('@imagina/qcommerce/_pages/admin/order/show'),
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'icommerce.cms.sidebar.orderIndex',
-    icon: 'fas fa-box-open',
+    icon: 'fa-light fa-receipt',
     authenticated: true,
     subHeader: {
       refresh: true,

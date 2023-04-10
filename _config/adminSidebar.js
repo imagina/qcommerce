@@ -4,7 +4,7 @@ const pages = config('pages') // Get Pages from config
 export default [
   {
     title: 'icommerce.cms.sidebar.adminGroup',
-    icon: 'fas fa-cash-register',
+    icon: 'fa-light fa-cash-register',
     children: [
       pages.qcommerce.products,//products index
       pages.qcommerce.categories,//products categories,
