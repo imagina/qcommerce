@@ -391,7 +391,9 @@ export default {
           this.order = response.data
           resolve(response.data)
         }).catch(error => {
-          resolve(error)
+          this.$apiResponse.handleError(error, () => {
+            resolve(error)
+          })
         })
       })
     },
@@ -413,7 +415,9 @@ export default {
           this.conversation = this.$clone(response.data)
           resolve(response.data)
         }).catch(error => {
-          resolve(error)
+          this.$apiResponse.handleError(error, () => {
+            resolve(error)
+          })
         })
       })
     },
@@ -442,7 +446,9 @@ export default {
           this.modalRating.itemRating = this.$clone(response.data)
           this.modalRating.loading = false
         }).catch(error => {
-          this.modalRating.loading = false
+          this.$apiResponse.handleError(error, () => {
+            this.modalRating.loading = false
+          })
         })
       })
     },
@@ -477,12 +483,12 @@ export default {
       color $blue-grey
       font-weight bold
       font-size 15px
-      
-@media print 
-  #masterPanelHeader, 
-  #masterDrawers, 
+
+@media print
+  #masterPanelHeader,
+  #masterDrawers,
   #pageActionscomponent .actions-content
     display none
   .q-page-container
-    padding 0 !important        
+    padding 0 !important
 </style>

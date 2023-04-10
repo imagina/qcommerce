@@ -5,12 +5,12 @@
     <div class="col-12 relative-position backend-page">
       <!--Table-->
       <q-table
-        :data="table.data"
-        :columns="table.columns"
-        :pagination.sync="table.pagination"
-        @request="getData"
-        :filter="table.filter"
-        class="shadow-1 border-top-color"
+          :data="table.data"
+          :columns="table.columns"
+          :pagination.sync="table.pagination"
+          @request="getData"
+          :filter="table.filter"
+          class="shadow-1 border-top-color"
       >
         <!--Table slot left-->
         <template slot="top-left" slot-scope="props">
@@ -28,7 +28,7 @@
           <!--Button refresh data-->
           <q-btn icon="fas fa-sync-alt" color="info" class="q-ml-xs"
                  @click="getDataTable(true)">
-            <q-tooltip :delay="300">{{$tr('isite.cms.label.refresh')}}</q-tooltip>
+            <q-tooltip :delay="300">{{ $tr('isite.cms.label.refresh') }}</q-tooltip>
           </q-btn>
         </template>
 
@@ -38,11 +38,12 @@
           <q-btn color="green" icon="fas fa-pen" size="sm"
                  v-if="$auth.hasAccess('icommerce.payment-methods.edit')"
                  @click="itemToEdit = props.row; formItemShow = true">
-            <q-tooltip :delay="300">{{$tr('isite.cms.label.edit')}}</q-tooltip>
+            <q-tooltip :delay="300">{{ $tr('isite.cms.label.edit') }}</q-tooltip>
           </q-btn>
           <!--status button-->
           <q-toggle color="green" v-model="props.row.status" class="q-px-xs" @input="update(props.row)">
-            <q-tooltip :delay="300">{{`${$tr('isite.cms.label.enabled')}/${$tr('isite.cms.label.disabled')}`}}</q-tooltip>
+            <q-tooltip :delay="300">{{ `${$tr('isite.cms.label.enabled')}/${$tr('isite.cms.label.disabled')}` }}
+            </q-tooltip>
           </q-toggle>
         </q-td>
       </q-table>
@@ -56,111 +57,113 @@
   </div>
 </template>
 <script>
-  //Components
-  import icommerceagree from '@imagina/qcommerce/_components/admin/shippingMethods/agree'
-  import icommerceflatrate from '@imagina/qcommerce/_components/admin/shippingMethods/flatrate'
-  import icommercefreeshipping from '@imagina/qcommerce/_components/admin/shippingMethods/freeshipping'
-  import icommercelocaldelivery from '@imagina/qcommerce/_components/admin/shippingMethods/localdelivery'
-  import icommercepickup from '@imagina/qcommerce/_components/admin/shippingMethods/pickup'
-  import icommerceurbanshipping from '@imagina/qcommerce/_components/admin/shippingMethods/urbanshipping'
-  import icommerceusps from '@imagina/qcommerce/_components/admin/shippingMethods/usps'
-  import icommerceups from '@imagina/qcommerce/_components/admin/shippingMethods/ups'
+//Components
+import icommerceagree from '@imagina/qcommerce/_components/admin/shippingMethods/agree'
+import icommerceflatrate from '@imagina/qcommerce/_components/admin/shippingMethods/flatrate'
+import icommercefreeshipping from '@imagina/qcommerce/_components/admin/shippingMethods/freeshipping'
+import icommercelocaldelivery from '@imagina/qcommerce/_components/admin/shippingMethods/localdelivery'
+import icommercepickup from '@imagina/qcommerce/_components/admin/shippingMethods/pickup'
+import icommerceurbanshipping from '@imagina/qcommerce/_components/admin/shippingMethods/urbanshipping'
+import icommerceusps from '@imagina/qcommerce/_components/admin/shippingMethods/usps'
+import icommerceups from '@imagina/qcommerce/_components/admin/shippingMethods/ups'
 
-  export default {
-    props: {},
-    components: {
-      icommerceagree,
-      icommerceflatrate,
-      icommercefreeshipping,
-      icommercelocaldelivery,
-      icommercepickup,
-      icommerceurbanshipping,
-      icommerceusps,
-      icommerceups
-    },
-    watch: {},
-    mounted() {
-      this.$nextTick(function () {
-        this.getDataTable(true)
-      })
-    },
-    data() {
-      return {
-        loading: false,
-        formItemShow: false,
-        itemToEdit: {},
-        table: {
-          data: [],
-          columns: [
-            {name: 'id', label: 'ID', field: 'id', style: 'width: 50px'},
-            {name: 'title', label: 'Title', field: 'title', align: 'rigth'},
-            {
-              name: 'createdAt', label: 'Creation Date', field: 'createdAt', align: 'left',
-              format: val => val ? this.$trd(val) : '-',
-            },
-            {name: 'actions', label: 'Actions', align: 'left'},
-          ],
-          pagination: {
-            page: 1,
-            rowsNumber: '',
-            rowsPerPage: 10
+export default {
+  props: {},
+  components: {
+    icommerceagree,
+    icommerceflatrate,
+    icommercefreeshipping,
+    icommercelocaldelivery,
+    icommercepickup,
+    icommerceurbanshipping,
+    icommerceusps,
+    icommerceups
+  },
+  watch: {},
+  mounted() {
+    this.$nextTick(function () {
+      this.getDataTable(true)
+    })
+  },
+  data() {
+    return {
+      loading: false,
+      formItemShow: false,
+      itemToEdit: {},
+      table: {
+        data: [],
+        columns: [
+          {name: 'id', label: 'ID', field: 'id', style: 'width: 50px'},
+          {name: 'title', label: 'Title', field: 'title', align: 'rigth'},
+          {
+            name: 'createdAt', label: 'Creation Date', field: 'createdAt', align: 'left',
+            format: val => val ? this.$trd(val) : '-',
           },
-          filter: {
-            search: null,
-            allTranslations: true
-          }
+          {name: 'actions', label: 'Actions', align: 'left'},
+        ],
+        pagination: {
+          page: 1,
+          rowsNumber: '',
+          rowsPerPage: 10
         },
-      }
-    },
-    methods: {
-      //Request products with params from server table
-      getDataTable(refresh = false) {
-        this.getData({pagination: this.table.pagination}, refresh)
-      },
-      //Get payment methods
-      getData({pagination, filter}, refresh = false) {
-        this.loading = true
-        //Params to request
-        let params = {
-          refresh: refresh,
-          params: {
-            filter: this.table.filter,
-            page: pagination.page,
-            take: pagination.rowsPerPage
-          }
+        filter: {
+          search: null,
+          allTranslations: true
         }
+      },
+    }
+  },
+  methods: {
+    //Request products with params from server table
+    getDataTable(refresh = false) {
+      this.getData({pagination: this.table.pagination}, refresh)
+    },
+    //Get payment methods
+    getData({pagination, filter}, refresh = false) {
+      this.loading = true
+      //Params to request
+      let params = {
+        refresh: refresh,
+        params: {
+          filter: this.table.filter,
+          page: pagination.page,
+          take: pagination.rowsPerPage
+        }
+      }
 
-        //Request
-        this.$crud.index('apiRoutes.qcommerce.shippingMethods', params).then(response => {
-          this.table.data = response.data
-          this.table.pagination.page = response.meta.page.currentPage
-          this.table.pagination.rowsNumber = response.meta.page.total
-          this.table.pagination.rowsPerPage = pagination.rowsPerPage
-          this.loading = false
-        }).catch(error => {
+      //Request
+      this.$crud.index('apiRoutes.qcommerce.shippingMethods', params).then(response => {
+        this.table.data = response.data
+        this.table.pagination.page = response.meta.page.currentPage
+        this.table.pagination.rowsNumber = response.meta.page.total
+        this.table.pagination.rowsPerPage = pagination.rowsPerPage
+        this.loading = false
+      }).catch(error => {
+        this.$apiResponse.handleError(error, () => {
           this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           this.loading = false
         })
+      })
 
-      },
+    },
 
-      //update shipping methods
-      update(data) {
-        this.loading = true
-        //Request
-        this.$crud.update('apiRoutes.qcommerce.shippingMethods', data.id, data).then(response => {
-          this.$alert.success({message: this.$tr('isite.cms.message.recordUpdated')})
-          this.loading = false
-        }).catch(error => {
-          this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
-          this.loading = false
-        })
+    //update shipping methods
+    update(data) {
+      this.loading = true
+      //Request
+      this.$crud.update('apiRoutes.qcommerce.shippingMethods', data.id, data).then(response => {
+        this.$alert.success({message: this.$tr('isite.cms.message.recordUpdated')})
+        this.loading = false
+      }).catch(error => {
+        this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
+        this.loading = false
+      })
 
-      },
-
-    }
+    },
 
   }
+
+}
 </script>
 <style lang="stylus">
 </style>

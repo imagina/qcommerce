@@ -116,7 +116,11 @@ export default {
         this.$crud.show('apiRoutes.qcommerce.paymentMethods', 'icommercestripe', requestParams).then(response => {
           this.paymentMethod = response.data
           resolve(response.data)
-        }).catch(error => resolve(error))
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            resolve(error)
+          })
+        })
       })
     },
     //Get payout data

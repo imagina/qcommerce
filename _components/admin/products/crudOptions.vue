@@ -114,7 +114,8 @@
                 :config="{options : {label : 'description', value : 'id'}}"/>
           <!--btn dave option-->
           <div class="text-right q-mt-md">
-            <q-btn :label="$tr('isite.cms.label.save')" color="green" rounded unelevated @click="createProductOption()"/>
+            <q-btn :label="$tr('isite.cms.label.save')" color="green" rounded unelevated
+                   @click="createProductOption()"/>
           </div>
           <!--Loading-->
           <inner-loading :visible="modal.loading"/>
@@ -194,9 +195,11 @@ export default {
           this.loading = false
           resolve(true)
         }).catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-          reject(false)
+          this.$apiResponse.handleError(error, () => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            reject(false)
+          })
         })
       })
     },
@@ -212,8 +215,10 @@ export default {
         })
         this.loading = false
       }).catch(error => {
-        this.loading = false
-        this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+        this.$apiResponse.handleError(error, () => {
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.loading = false
+        })
       })
     },
     //Add to list option no added
@@ -382,8 +387,10 @@ export default {
         this.template.options = this.$clone(options)
         this.loadingOptions = false
       }).catch(error => {
-        this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-        this.loadingOptions = false
+        this.$apiResponse.handleError(error, () => {
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.loading = false
+        })
       })
     },
     //Find option by parameter

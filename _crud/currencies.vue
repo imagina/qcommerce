@@ -204,7 +204,11 @@ export default {
                       id: locale.iso,
                     }))//.filter(locale => locales.includes(locale.iso))
                     resolve(availableLocales)
-                  }).catch(error => resolve([]))
+                  }).catch(error => {
+                    this.$apiResponse.handleError(error, () => {
+                      resolve([])
+                    })
+                  })
                 })
               }
             }

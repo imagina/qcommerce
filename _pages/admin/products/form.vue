@@ -305,11 +305,12 @@
                         <!--Extra fields-->
                         <div v-for="(field, key) in  extraFields" :key="key" :ref="key">
                           <!--Dynamic fake field-->
-                          <dynamic-field v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
-                                         :key="key" v-if="field.isFakeField || field.fakeFieldName"
-                                         :field="{...field, testId : (field.testId || field.name || key)}"
-                                         :language="locale.language" :item-id="productId"
-                                         :ref="`field-${field.name || key}`"/>
+                          <dynamic-field
+                              v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
+                              :key="key" v-if="field.isFakeField || field.fakeFieldName"
+                              :field="{...field, testId : (field.testId || field.name || key)}"
+                              :language="locale.language" :item-id="productId"
+                              :ref="`field-${field.name || key}`"/>
                           <!--Dynamic field-->
                           <dynamic-field v-model="locale.formTemplate[field.name || key]" :key="key"
                                          :field="{...field, testId : (field.testId  || field.name || key)}"
@@ -885,9 +886,11 @@ export default {
           this.loadingCategory = false
           resolve(true)
         }).catch(error => {
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-          this.loadingCategory = false
-          reject(true)
+          this.$apiResponse.handleError(error, () => {
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            this.loadingCategory = false
+            reject(true)
+          })
         })
       })
     },
@@ -903,8 +906,9 @@ export default {
         this.optionsTemplate.priceLists = response.data
         //this.locale.fields.categoryId = response.data.length ? response.data[0].id : null
       }).catch(error => {
-        this.priceListEnable = false
-
+        this.$apiResponse.handleError(error, () => {
+          this.priceListEnable = false
+        })
       })
     },
     //Get product if is edit
@@ -926,10 +930,12 @@ export default {
             this.orderDataItemToLocale(response.data)
             resolve(true)//Resolve
           }).catch(error => {
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-            console.error(error)
-            this.loading = false
-            reject(false)//Resolve
+            this.$apiResponse.handleError(error, () => {
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+              console.error(error)
+              this.loading = false
+              reject(false)//Resolve
+            })
           })
         } else {
           resolve(true)//Resolve
@@ -1052,7 +1058,9 @@ export default {
         this.$crud.index(configName, params).then(response => {
           callback(null, this.$array.tree(response.data, {label: 'name', id: 'id'}))
         }).catch(error => {
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$apiResponse.handleError(error, () => {
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          })
         })
       }
     },
@@ -1115,7 +1123,11 @@ export default {
           if (response.data && Object.keys(response.data).length) this.extraFields = this.$clone(response.data)
           //Response
           resolve(response.data)
-        }).catch(error => reject(error))
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            reject(error)
+          })
+        })
       })
     },
     //Order fields

@@ -142,8 +142,10 @@
           this.template.options = this.$array.builTree(response.data)
           this.loading = false
         }).catch(error => {
-          console.error(error)
-          this.loading = false
+          this.$apiResponse.handleError(error, () => {
+            console.error(error)
+            this.loading = false
+          })
         })
       },
       //Add product to cart

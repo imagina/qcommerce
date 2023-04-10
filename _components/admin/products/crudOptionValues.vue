@@ -314,9 +314,11 @@ export default {
           this.table.data = response.data
           resolve(true)
         }).catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
-          reject(error)
+          this.$apiResponse.handleError(error, () => {
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            this.loading = false
+            reject(error)
+          })
         })
       })
     },
@@ -394,7 +396,11 @@ export default {
               return {label: item.description, id: item.id}
             })
             resolve(true)
-          }).catch(error => reject(error))
+          }).catch(error => {
+            this.$apiResponse.handleError(error, () => {
+              reject(error)
+            })
+          })
         }),
         //Get Parent Product option values
         new Promise((resolve, reject) => {
@@ -415,7 +421,11 @@ export default {
               return {label: item.optionValue, value: item.optionValueId}
             })
             resolve(true)
-          }).catch(error => reject(error))
+          }).catch(error => {
+            this.$apiResponse.handleError(error, () => {
+              reject(error)
+            })
+          })
         }),
       ])
 
