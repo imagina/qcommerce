@@ -13,7 +13,7 @@
           crudId: this.crudId,
           entityName: config("main.qcommerce.entityNames.taxClass"),
           apiRoute: 'apiRoutes.qcommerce.taxClasses',
-          //permission: 'icommerce.manufacturers',
+          permission: 'icommerce.taxclasses',
           extraFormFields: 'Icommerce.crud-fields.taxClasses',
           create: {
             title: this.$tr('icommerce.cms.newTaxClass'),
