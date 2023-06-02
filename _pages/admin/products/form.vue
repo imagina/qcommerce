@@ -998,7 +998,8 @@ export default {
       if (await this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
-        this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
+        let requestData = {...this.getDataForm(), id: this.productId}
+        this.$crud.update(configName, this.productId, requestData).then(response => {
           this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
           this.$router.push({name: 'qcommerce.admin.products.index'})
           this.initForm()
