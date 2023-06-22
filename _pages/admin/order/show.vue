@@ -3,7 +3,7 @@
     <!--page actions-->
     <div class="box box-auto-height q-mb-md">
       <page-actions @refresh="init" :exclude-actions="['export']" :extra-actions="extraPageActions"
-                    :title="`${$route.meta.title} #${ orderId.toString().padStart(5, '0')}`"/>
+                    :title="`${$tr($route.meta.title)} #${ orderId.toString().padStart(5, '0')}`"/>
     </div>
 
     <!--Dynamic blocks-->
