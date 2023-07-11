@@ -33,6 +33,14 @@
     <div id="orderItemsContent" class="box box-auto-height q-mb-md">
       <!--Product list-->
       <q-table v-bind="tableConfig.props">
+        <!-- Custom column -->
+        <template v-slot:body-cell-productOptionsLabel="props">
+          <q-td :props="props">
+            <div style="max-width: 250px; white-space: normal">
+              {{ props.value }}
+            </div>
+          </q-td>
+        </template>
         <!--Custom columns-->
         <template v-slot:body-cell="props">
           <!-- actions columns -->
@@ -133,7 +141,7 @@ export default {
   },
   computed: {
     //Return extra actions
-    extraPageActions(){
+    extraPageActions() {
       return [
         {
           label: this.$tr('isite.cms.label.print'),
@@ -201,8 +209,14 @@ export default {
           class: 'no-shadow',
           hideBottom: true,
           columns: [
-            {name: 'title', label: this.$tr('isite.cms.form.product'), field: 'title', align: 'left'},
             {name: 'id', label: 'ID', field: 'productId', align: 'left'},
+            {name: 'title', label: this.$tr('isite.cms.form.product'), field: 'title', align: 'left'},
+            {
+              name: 'productOptionsLabel',
+              label: this.$trp('isite.cms.label.option'),
+              field: 'productOptionsLabel',
+              align: 'left'
+            },
             {name: 'sku', label: 'SKU', field: 'reference', align: 'left'},
             {name: 'quantity', label: this.$tr('isite.cms.label.quantity'), field: 'quantity', align: 'left'},
             {
@@ -489,6 +503,7 @@ export default {
   #masterDrawers,
   #pageActionscomponent .actions-content
     display none
+
   .q-page-container
     padding 0 !important
 </style>
