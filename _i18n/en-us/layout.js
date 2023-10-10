@@ -6,7 +6,7 @@ export default {
   productOptions: 'Product Options',
   newOption: 'New Option',
   updateOption: 'Update Option',
-  newOptionValue: 'New Option value',
+  newOptionValue: 'New value',
   updateOptionValue: 'Update Option Value',
   newProductOptionValue: 'New Product Option Value',
   updateProductOptionValue: 'Update Product Option Value',
