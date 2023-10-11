@@ -16,6 +16,9 @@ export default {
         extraFormFields: 'Icommerce.crud-fields.productOptions',
         create: {
           title: this.$tr('icommerce.cms.newOption'),
+          callback: (model) => {
+            this.$router.push({name: 'qcommerce.admin.options.edit', params: {id: model.id }})
+          }
         },
         read: {
           columns: [
