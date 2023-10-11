@@ -80,17 +80,41 @@
                 label: this.$tr('isite.cms.form.sort'),
               }
             },
+            type:{
+              value: 1,
+              type: 'select',
+              required : true,
+              fakeFieldName: 'options',
+              props:{
+                label: this.$tr('isite.cms.form.type'),
+                options : [
+                  {label: this.$tr('isite.cms.label.text'), value: 1},
+                  {label: this.$tr('isite.cms.label.image'), value: 2},
+                  {label: this.$tr('icommerce.cms.form.color'), value: 3},
+                ]
+              }
+            },
             mediasSingle: {
               name: 'mediasSingle',
               value: {},
               type: 'media',
+              fakeFieldName: 'options',
               props : {
                 label: this.$tr('isite.cms.form.firstImage'),
                 zone: 'mainimage',
-                entity: 'Modules\\Icommerce\\Entities\\OptionValue',
-                enitityId: null
+                entity: 'Modules\Icommerce\Entities\OptionValue',
+                enitityId: null,
+                vIf: this.crudInfo?.options?.type == 2
               }
             },
+            color : {
+              type: 'inputColor',
+              fakeFieldName: 'options',
+              props: {
+                label: this.$tr('icommerce.cms.form.color'),
+                vIf: this.crudInfo?.options?.type == 3
+              }
+            }
           },
         }
       },
