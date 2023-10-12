@@ -191,6 +191,12 @@ export default {
         this.$crud.show(configName, this.productId, params).then(response => {
           this.productOptions = this.$clone(this.arrayToTree(response.data.productOptions))//Set product Options
           this.productOptionsRoot = this.$clone(response.data.productOptions)//Set product Options
+          this.productOptionsRoot.forEach(item => {
+            if(!item.hasOwnProperty('required')){
+              item.required = false
+            }
+          })
+
           this.productOptionValues = this.$clone(response.data.optionValues)//Set product options values
           this.loading = false
           resolve(true)
