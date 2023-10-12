@@ -191,6 +191,8 @@ export default {
         this.$crud.show(configName, this.productId, params).then(response => {
           this.productOptions = this.$clone(this.arrayToTree(response.data.productOptions))//Set product Options
           this.productOptionsRoot = this.$clone(response.data.productOptions)//Set product Options
+
+          // fix: backend does not provide required field when is false
           this.productOptionsRoot.forEach(item => {
             if(!item.hasOwnProperty('required')){
               item.required = false
@@ -275,6 +277,14 @@ export default {
       if (!form.parentId) form.parentId = 0//Set null as default parent
       if (!form.parentOptionValueId) form.parentOptionValueId = null//Set null as default parent option
 
+      // fix: required toggle
+      this.productOptionsRoot.find((element) => {
+        if(element.id == this.template.currentOption){
+          if(this.template.form?.required != undefined){
+            element.required = this.template.form.required
+          }
+        }
+      })
       //Request
       this.$crud.update(configName, form.id, form).then(response => {
         this.$alert.success({message: this.$tr('isite.cms.message.recordUpdated'), pos: 'bottom'})
