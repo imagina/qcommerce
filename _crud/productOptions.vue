@@ -17,7 +17,9 @@ export default {
         create: {
           title: this.$tr('icommerce.cms.newOption'),
           callback: (model) => {
-            this.$router.push({name: 'qcommerce.admin.options.edit', params: {id: model.id }})
+            if(model?.id){
+              this.$router.push({name: 'qcommerce.admin.options.edit', params: {id: model.id }})
+            }
           }
         },
         read: {
