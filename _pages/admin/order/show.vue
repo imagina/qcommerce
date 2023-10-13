@@ -146,7 +146,7 @@ export default {
         {
           label: this.$tr('isite.cms.label.print'),
           props: {
-            icon: 'fa-solid fa-print'
+            icon: 'fa-light fa-print'
           },
           action: this.printScreen
         }
@@ -501,6 +501,8 @@ export default {
 @media print
   #masterPanelHeader,
   #masterDrawers,
+  #masterFooter,
+  #menuMaster,
   #pageActionscomponent .actions-content
     display none
 
