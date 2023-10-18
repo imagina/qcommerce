@@ -1,18 +1,21 @@
 <template>
   <div class="row gutter-y-sm relative-position">
     <div class="col-md-12 ">
-      <div class="float-right">
-        <q-btn :to="{name: 'qcommerce.admin.options'}" icon="fas fa-arrow-alt-circle-left"
-               color="primary" class="q-ml-xs" round unelevated/>
-        <q-btn @click="id = -1,dialogNewValue=true" icon="fas fa-edit" rounded unelevated
-               :label="$tr('icommerce.cms.newOptionValue')" color="positive" class="q-ml-xs"/>
-        <q-btn @click="getItems(true)" icon="fas fa-sync-alt" color="info" class="q-ml-xs"
-               rounded unelevated>
+      <div class="row q-gutter-x-sm justify-between">
+        <q-btn :to="{name: 'qcommerce.admin.options'}" icon="fa-light fa-arrow-left"
+               v-bind="buttonProps"/>
+        <q-btn @click="id = -1,dialogNewValue=true" icon="fa-light fa-plus"
+               :label="$tr('icommerce.cms.newOptionValue')" v-bind="buttonProps"/>
+        <q-btn @click="getItems(true)" icon="fa-light fa-rotate-right" v-bind="buttonProps">
           <q-tooltip :delay="300">
             {{ $tr('isite.cms.label.refresh') }}
           </q-tooltip>
         </q-btn>
       </div>
+    </div>
+
+    <div class="col-12">
+      <q-separator class="q-my-md" />
     </div>
 
     <div class="col-12 q-mt-sm">
@@ -73,6 +76,20 @@ export default {
       this.$root.$on('updateoptionValues', this.handlerUpdateoptionValues)
       this.$root.$on('showEdit', this.showEdit)
     })
+  },
+  computed: {
+    buttonProps() {
+      return {
+        round: false,
+        rounded: true,
+        dense: true,
+        unelevated: true,
+        textColor: "primary",
+        style: "border: 1px solid rgba(0, 13, 71, 0.15)",
+        class: `btn-${this.size}`,
+        noCaps: true,
+      }
+    },
   },
   methods: {
     showEdit(id) {
