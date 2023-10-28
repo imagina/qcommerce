@@ -39,7 +39,7 @@
       </div>
     </draggable>
     <div class="col-12 text-center text-h5" v-else>
-      No Data
+      <not-result />
     </div>
 
     <q-dialog v-model="dialogDeleteItem">

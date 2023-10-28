@@ -16,6 +16,11 @@ export default {
         extraFormFields: 'Icommerce.crud-fields.productOptions',
         create: {
           title: this.$tr('icommerce.cms.newOption'),
+          callback: (model) => {
+            if(model?.id){
+              this.$router.push({name: 'qcommerce.admin.options.edit', params: {id: model.id }})
+            }
+          }
         },
         read: {
           columns: [
@@ -56,14 +61,13 @@ export default {
             isTranslatable: false,
             props: {
               label: `${this.$tr('isite.cms.form.type')}*`,
-              options: [
-                {label: 'Selección unica (Selector)', value: 'select'},
-                {label: 'Selección unica (Lista)', value: 'radio'},
-                {label: 'Selección multiple (Lista)', value: 'checkbox'}
-              ],
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              ]
+            },
+            loadOptions: {
+              apiRoute: "apiRoutes.qcommerce.optionTypes",
+              select: {label: 'label', id: 'value'}
             }
           },
           sortOrder: {

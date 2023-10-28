@@ -95,6 +95,9 @@ export default {
     title: 'icommerce.cms.sidebar.adminOptionsEdit',
     icon: 'fa-light fa-diagram-subtask',
     authenticated: true,
+    subHeader: {
+      breadcrumb: ['qcommerce.options']
+    }
   },
   //Product options values
   optionValues: {

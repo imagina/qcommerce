@@ -12,6 +12,7 @@ export default {
   productOptionOrder: `${urlBase}/product-option/order`,
   productOptionValues: `${urlBase}/product-option-values`,
   options: `${urlBase}/options`,
+  optionTypes: `${urlBase}/option-types`,
   optionValues: `${urlBase}/option-values`,
   optionValuesOrdener: `${urlBase}/option-values/order`,
   categories: `${urlBase}/categories`,
