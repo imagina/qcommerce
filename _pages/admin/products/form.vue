@@ -186,6 +186,8 @@
                         <!--Quantity-->
                         <q-input data-testid="quantity" outlined dense v-model="locale.formTemplate.quantity"
                                  :label="$tr('isite.cms.form.quantity')" type="number"/>
+                        <!--Quantity Class-->
+                        <dynamic-field v-model="locale.formTemplate.quantityClassId" :field="dynamicFields.quantityClassId"/>
                         <!--minimum-->
                         <q-input data-testid="minimumOrder" :label="$tr('icommerce.cms.form.minimumOrder')"
                                  outlined dense
@@ -235,14 +237,25 @@
                                      outlined dense type="number"/>
                           </div>
                         </div>
+                        <!--Lenght Class-->
+                        <dynamic-field v-model="locale.formTemplate.lengthClassId" :field="dynamicFields.lengthClassId"/>
                         <!--weight-->
                         <q-input data-testid="weight" v-model="locale.formTemplate.weight"
                                  :label="$tr('isite.cms.form.weight')"
                                  outlined dense type="number"/>
+                        <!--Weight Class-->
+                        <dynamic-field v-model="locale.formTemplate.weightClassId" :field="dynamicFields.weightClassId"/>
+
                         <!--Order Weight-->
                         <q-input data-testid="orderWeight" :label="$tr('icommerce.cms.form.orderWeight')" outlined
                                  dense
                                  v-model="locale.formTemplate.orderWeight"/>
+                        <!--volume-->
+                        <q-input data-testid="weight" v-model="locale.formTemplate.volume"
+                                 :label="$tr('icommerce.cms.form.volume')"
+                                 outlined dense type="number"/>
+                        <!--Volume Class-->
+                        <dynamic-field v-model="locale.formTemplate.volumeClassId" :field="dynamicFields.volumeClassId"/>
                         <!--Requires shipping-->
                         <q-toggle
                             data-testid="shipping"
@@ -652,6 +665,7 @@ export default {
           length: 0,
           width: 0,
           height: 0,
+          volume: 0,
           minimum: 1,
           reference: '',
           shipping: false,
@@ -672,6 +686,10 @@ export default {
             video: null
           },
           taxClassId: null,
+          weightClassId: null,
+          lengthClassId: null,
+          volumeClassId: null,
+          quantityClassId: null,
           manufacturerId: null,
           metaTitle: '',
           metaDescription: '',
@@ -785,6 +803,54 @@ export default {
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
+            },
+          },
+        },
+         quantityClassId: {
+          value: null,
+          type: 'crud',
+          props: {
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/quantityClasses'),
+
+            crudProps: {
+              label: `${this.$tr('icommerce.cms.sidebar.quantityClasses')}`
+            },
+          },
+        },
+        weightClassId: {
+          value: null,
+          type: 'crud',
+          props: {
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/weightClasses'),
+
+            crudProps: {
+              label: `${this.$tr('icommerce.cms.sidebar.weightClasses')}`
+            },
+          },
+        },
+        lengthClassId: {
+          value: null,
+          type: 'crud',
+          props: {
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/lengthClasses'),
+
+            crudProps: {
+              label: `${this.$tr('icommerce.cms.sidebar.lengthClasses')}`
+            },
+          },
+        },
+        volumeClassId: {
+          value: null,
+          type: 'crud',
+          props: {
+            crudType: 'select',
+            crudData: import('@imagina/qcommerce/_crud/volumeClasses'),
+
+            crudProps: {
+              label: `${this.$tr('icommerce.cms.sidebar.volumeClasses')}`
             },
           },
         },

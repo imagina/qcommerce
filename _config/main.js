@@ -18,7 +18,11 @@ export default {
     store: 'store',
     taxClass: 'taxClass',
     taxRate: 'taxRate',
-    currencies: 'currencies'
+    currencies: 'currencies',
+    weightClasses: 'weightClasses',
+    lengthClasses: 'lengthClasses',
+    volumeClasses: 'volumeClasses',
+    quantityClasses: 'quantityClasses'
   },
   //Quick Cards
   quickCards: [

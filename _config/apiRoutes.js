@@ -31,6 +31,10 @@ export default {
   productDiscounts: `${urlBase}/product-discounts`,
   itemTypes: `${urlBase}/item-types`,
   priceLists: `${urlBase2}/price-lists`,
+  weightClasses: `${urlBase}/weight-classes`,
+  lengthClasses: `${urlBase}/length-classes`,
+  volumeClasses: `${urlBase}/volume-classes`,
+  quantityClasses: `${urlBase}/quantity-classes`,
   currencies: `${urlBase}/currencies`,
   ratings: `rateable/v1/ratings`,
   stripe: {
