@@ -132,6 +132,8 @@
                     <q-input data-testid="customUrl" v-model="locale.formTemplate.customUrl" outlined dense
                              :label="`${$tr('isite.cms.form.customUrl')}`">
                     </q-input>
+                    <!--Quantity Class-->
+                    <dynamic-field v-model="locale.formTemplate.tags" :field="dynamicFields.tags"/>
                   </q-tab-panel>
                   <q-tab-panel name="data">
                     <div class="row q-col-gutter-md q-pa-md">
@@ -676,6 +678,7 @@ export default {
           rating: 3,
           points: 0,
           relatedProducts: [],
+          tags: [],
           productOptions: [],
           discounts: [],
           priceLists: [],
@@ -690,6 +693,7 @@ export default {
           lengthClassId: null,
           volumeClassId: null,
           quantityClassId: null,
+          tags: null,
           manufacturerId: null,
           metaTitle: '',
           metaDescription: '',
@@ -787,6 +791,20 @@ export default {
             select: {label: 'name', id: 'id'}
           }
         },
+        tags: {
+            value: [],
+            type: 'select',
+            //isTranslatable: true,
+            props: {
+              label: this.$trp('isite.cms.form.tag'),
+              useInput: true,
+              useChips: true,
+              multiple: true,
+              hideDropdownIcon: true,
+              inputDebounce: "0",
+              newValueMode: "add-unique"
+            }
+          },
         categoryId: {
           value: null,
           type: 'crud',
