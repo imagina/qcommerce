@@ -693,7 +693,7 @@ export default {
           lengthClassId: null,
           volumeClassId: null,
           quantityClassId: null,
-          tags: null,
+          tags: [],
           manufacturerId: null,
           metaTitle: '',
           metaDescription: '',
