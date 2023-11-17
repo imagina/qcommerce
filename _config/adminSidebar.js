@@ -21,7 +21,11 @@ export default [
       pages.qcommerce.priceLists,//Price Lists
       //pages.qcommerce.itemTypes,//Item Types
       pages.qcommerce.currency,
-      pages.qcommerce.quotes
+      pages.qcommerce.quotes,
+      pages.qcommerce.quantityClasses,
+      pages.qcommerce.weightClasses,
+      pages.qcommerce.lengthClasses,
+      pages.qcommerce.volumeClasses
     ]
   },
 ]

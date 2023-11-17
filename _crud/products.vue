@@ -299,6 +299,20 @@ export default {
               ]
             }
           },
+          tags: {
+            value: [],
+            type: 'select',
+            //isTranslatable: true,
+            props: {
+              label: this.$trp('isite.cms.form.tag'),
+              useInput: true,
+              useChips: true,
+              multiple: true,
+              hideDropdownIcon: true,
+              inputDebounce: "0",
+              newValueMode: "add-unique"
+            }
+          },
           mediasSingle: {
             type: 'media',
             props: {

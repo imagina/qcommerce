@@ -371,6 +371,62 @@ export default {
     authenticated: true,
     subHeader: {refresh: true}
   },
+  //Quantity Classes
+  quantityClasses: {
+    permission: 'icommerce.quantityclasses.manage',
+    activated: true,
+    path: '/ecommerce/quantity-classes',
+    name: 'qcommerce.admin.quantityClasses.index',
+    crud: import('@imagina/qcommerce/_crud/quantityClasses'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.quantityClasses',
+    icon: 'fa-light fa-grip-dots',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
+  //Weight Classes
+  weightClasses: {
+    permission: 'icommerce.weightclasses.manage',
+    activated: true,
+    path: '/ecommerce/weight-classes',
+    name: 'qcommerce.admin.weightClasses.index',
+    crud: import('@imagina/qcommerce/_crud/weightClasses'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.weightClasses',
+    icon: 'fa-light fa-weight-scale',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
+  //Length Classes
+  lengthClasses: {
+    permission: 'icommerce.lengthclasses.manage',
+    activated: true,
+    path: '/ecommerce/length-classes',
+    name: 'qcommerce.admin.lengthClasses.index',
+    crud: import('@imagina/qcommerce/_crud/lengthClasses'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.lengthClasses',
+    icon: 'fa-light fa-ruler-combined',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
+  //Volume Classes
+  volumeClasses: {
+    permission: 'icommerce.volumeclasses.manage',
+    activated: true,
+    path: '/ecommerce/volume-classes',
+    name: 'qcommerce.admin.volumeClasses.index',
+    crud: import('@imagina/qcommerce/_crud/volumeClasses'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.volumeClasses',
+    icon: 'fa-light fa-jug-bottle',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
   //Quotes
   quotes: {
     permission: 'icommerce.quotes.manage',
