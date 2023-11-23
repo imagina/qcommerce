@@ -176,7 +176,6 @@ export default {
               ],
             },
           },
-
           summary: {
             value: '',
             type: 'input',
@@ -190,8 +189,6 @@ export default {
               ],
             },
           },
-        },
-        formRight: {
           status: {
             value: '1',
             type: 'select',
@@ -233,6 +230,8 @@ export default {
               type: 'number'
             }
           },
+        },
+        formRight: {
           mediasSingle: {
             type: 'media',
             props: {
