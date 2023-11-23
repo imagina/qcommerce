@@ -176,17 +176,6 @@ export default {
               ],
             },
           },
-          slug: {
-            value: '',
-            type: 'input',
-            isTranslatable: true,
-            props: {
-              label: `${this.$tr('isite.cms.form.slug')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            },
-          },
           summary: {
             value: '',
             type: 'input',
@@ -200,27 +189,6 @@ export default {
               ],
             },
           },
-          advancedSummary: {
-            value: '',
-            type: 'html',
-            isTranslatable: true,
-            props: {
-              label: `${this.$tr('icommerce.cms.advancedSummary')}`
-            }
-          },
-          description: {
-            value: '',
-            type: 'html',
-            isTranslatable: true,
-            props: {
-              label: `${this.$tr('isite.cms.form.description')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            }
-          },
-        },
-        formRight: {
           status: {
             value: '1',
             type: 'select',
@@ -254,24 +222,6 @@ export default {
               },
             },
           },
-          categories: {
-            value: [],
-            type: 'crud',
-            props: {
-              crudType: 'select',
-              crudData: import('@imagina/qcommerce/_crud/productCategories'),
-              customData: {
-                read: {
-                  requestParams: {include: 'parent', refresh: true}
-                }
-              },
-              crudProps: {
-                label: this.$trp('isite.cms.form.category'),
-                multiple: true,
-                useChips: true,
-              },
-            },
-          },
           price: {
             value: '0',
             type: 'input',
@@ -280,39 +230,8 @@ export default {
               type: 'number'
             }
           },
-          quantity: {
-            value: '1',
-            type: 'input',
-            props: {
-              label: `${this.$tr('isite.cms.form.quantity')}`,
-              type: 'number'
-            }
-          },
-          stockStatus: {
-            value: '1',
-            type: 'select',
-            props: {
-              label: this.$tr('isite.cms.form.stock'),
-              options: [
-                {label: this.$tr('isite.cms.label.available'), value: '1'},
-                {label: this.$tr('isite.cms.label.soldOut'), value: '0'}
-              ]
-            }
-          },
-          tags: {
-            value: [],
-            type: 'select',
-            //isTranslatable: true,
-            props: {
-              label: this.$trp('isite.cms.form.tag'),
-              useInput: true,
-              useChips: true,
-              multiple: true,
-              hideDropdownIcon: true,
-              inputDebounce: "0",
-              newValueMode: "add-unique"
-            }
-          },
+        },
+        formRight: {
           mediasSingle: {
             type: 'media',
             props: {
@@ -322,16 +241,19 @@ export default {
               entityId: null
             }
           },
-          mediasMulti: {
-            type: 'media',
-            props: {
-              label: this.$tr('isite.cms.form.gallery'),
-              zone: 'gallery',
-              entity: 'Modules\\Icommerce\\Entities\\Product',
-              entityId: null
-            }
-          }
         },
+        getDataForm: (data, type) => {
+          return new Promise(resolve => {
+            if (type == 'create') {
+              const languages = this.$store.state?.qsiteApp?.selectedLocales
+              //Set all languages with the same title
+              for (const lang of languages) {
+                data[lang].slug = this.$helper.getSlug(data[lang].name)
+              }
+            }
+            resolve(data)
+          })
+        }
       }
     },
     //Crud info
