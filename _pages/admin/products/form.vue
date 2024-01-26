@@ -189,7 +189,8 @@
                         <q-input data-testid="quantity" outlined dense v-model="locale.formTemplate.quantity"
                                  :label="$tr('isite.cms.form.quantity')" type="number"/>
                         <!--Quantity Class-->
-                        <dynamic-field v-model="locale.formTemplate.quantityClassId" :field="dynamicFields.quantityClassId"/>
+                        <dynamic-field v-model="locale.formTemplate.quantityClassId"
+                                       :field="dynamicFields.quantityClassId"/>
                         <!--minimum-->
                         <q-input data-testid="minimumOrder" :label="$tr('icommerce.cms.form.minimumOrder')"
                                  outlined dense
@@ -240,13 +241,15 @@
                           </div>
                         </div>
                         <!--Lenght Class-->
-                        <dynamic-field v-model="locale.formTemplate.lengthClassId" :field="dynamicFields.lengthClassId"/>
+                        <dynamic-field v-model="locale.formTemplate.lengthClassId"
+                                       :field="dynamicFields.lengthClassId"/>
                         <!--weight-->
                         <q-input data-testid="weight" v-model="locale.formTemplate.weight"
                                  :label="$tr('isite.cms.form.weight')"
                                  outlined dense type="number"/>
                         <!--Weight Class-->
-                        <dynamic-field v-model="locale.formTemplate.weightClassId" :field="dynamicFields.weightClassId"/>
+                        <dynamic-field v-model="locale.formTemplate.weightClassId"
+                                       :field="dynamicFields.weightClassId"/>
 
                         <!--Order Weight-->
                         <q-input data-testid="orderWeight" :label="$tr('icommerce.cms.form.orderWeight')" outlined
@@ -257,7 +260,8 @@
                                  :label="$tr('icommerce.cms.form.volume')"
                                  outlined dense type="number"/>
                         <!--Volume Class-->
-                        <dynamic-field v-model="locale.formTemplate.volumeClassId" :field="dynamicFields.volumeClassId"/>
+                        <dynamic-field v-model="locale.formTemplate.volumeClassId"
+                                       :field="dynamicFields.volumeClassId"/>
                         <!--Requires shipping-->
                         <q-toggle
                             data-testid="shipping"
@@ -457,6 +461,28 @@
                       </q-card-section>
                     </q-card>
                   </q-tab-panel>
+                  <q-tab-panel name="productWarehouse">
+                    <q-card>
+                      <q-card-section class="q-pa-sm">
+                        <div class="full-width">
+                          <div class="q-pa-sm" v-if="productId">
+                            <crud
+                                :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
+                                :custom-data="{read: {requestParams: {include: 'warehouse', filter: {productId: productId} } }, formLeft:{productId: {value: productId} } }"
+                            />
+                          </div>
+                          <div v-else class="text-center q-pa-sm">
+                            <div class="q-my-md">
+                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
+                              {{ `${$tr('icommerce.cms.message.warnWarehouse')}...` }}
+                            </div>
+                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
+                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                          </div>
+                        </div>
+                      </q-card-section>
+                    </q-card>
+                  </q-tab-panel>
                 </q-tab-panels>
                 <!-- Back action -->
                 <div v-if="lastPanelOpen != 'home'" class="q-px-md text-right">
@@ -614,6 +640,12 @@ export default {
           type: 'discount',
           title: this.$tr('icommerce.cms.form.discount'),
           content: this.$tr('icommerce.cms.form.discountContent'),
+        },
+        productWarehouse: {
+          show: false,
+          type: 'productWarehouse',
+          title: this.$tr('icommerce.cms.form.productWarehouse'),
+          content: this.$tr('icommerce.cms.form.productWarehouseContent'),
         },
         home: {
           show: false,
@@ -792,19 +824,19 @@ export default {
           }
         },
         tags: {
-            value: [],
-            type: 'select',
-            //isTranslatable: true,
-            props: {
-              label: this.$trp('isite.cms.form.tag'),
-              useInput: true,
-              useChips: true,
-              multiple: true,
-              hideDropdownIcon: true,
-              inputDebounce: "0",
-              newValueMode: "add-unique"
-            }
-          },
+          value: [],
+          type: 'select',
+          //isTranslatable: true,
+          props: {
+            label: this.$trp('isite.cms.form.tag'),
+            useInput: true,
+            useChips: true,
+            multiple: true,
+            hideDropdownIcon: true,
+            inputDebounce: "0",
+            newValueMode: "add-unique"
+          }
+        },
         categoryId: {
           value: null,
           type: 'crud',
@@ -824,7 +856,7 @@ export default {
             },
           },
         },
-         quantityClassId: {
+        quantityClassId: {
           value: null,
           type: 'crud',
           props: {

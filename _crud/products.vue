@@ -230,8 +230,6 @@ export default {
               type: 'number'
             }
           },
-        },
-        formRight: {
           mediasSingle: {
             type: 'media',
             props: {
