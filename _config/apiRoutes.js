@@ -37,6 +37,9 @@ export default {
   quantityClasses: `${urlBase}/quantity-classes`,
   currencies: `${urlBase}/currencies`,
   ratings: `rateable/v1/ratings`,
+  warehouses: `${urlBase}/warehouses`,
+  productWarehouse: `${urlBase}/product-warehouse`,
+  productOptionValueWarehouse: `${urlBase}/product-option-value-warehouse`,
   stripe: {
     connect: `${urlStripe}/payout/connect`,
     accountUser: `${urlStripe}/payout/connect/account/user`
