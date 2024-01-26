@@ -429,8 +429,6 @@ export default {
         }),
       ])
 
-      console.warn(this.options)
-
       //Close loading
       this.loading = false
     }

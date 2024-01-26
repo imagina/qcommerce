@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-10 offset-lg-1 relative-position">
         <!--Page Actions-->
         <div class="box box-auto-height q-mb-md">
-          <page-actions :title="pageTitle"/>
+          <page-actions :title="pageTitle" :exclude-actions="['sync']"/>
         </div>
         <!--Data-->
         <q-form autocorrect="off" autocomplete="off" ref="formContent"
@@ -35,8 +35,8 @@
                 <q-tab-panels v-model="lastPanelOpen" keep-alive animated class="rounded-borders q-pa-none">
                   <q-tab-panel name="home">
                     <div class="row q-col-gutter-md q-mb-md">
-                      <div v-for="modalForm in modalForms" v-if="modalForm.type !== 'home'"
-                           class="col-12 col-md-6 col-xl-4"
+                      <div v-for="modalForm in modalForms" class="col-12 col-md-6 col-xl-4"
+                           v-if="modalForm.type !== 'home' && (modalForm.vIf != undefined ? modalForm.vIf : true)"
                            @click="() => showNewForm(modalForm.type)">
                         <div class="relative-position card">
                           <q-icon name="fal fa-edit" color="primary" class="absolute-right q-pr-md q-pt-md"/>
@@ -466,9 +466,15 @@
                       <q-card-section class="q-pa-sm">
                         <div class="full-width">
                           <div class="q-pa-sm" v-if="productId">
+                            <!--Product Warehouse-->
                             <crud
                                 :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
-                                :custom-data="{read: {requestParams: {include: 'warehouse', filter: {productId: productId} } }, formLeft:{productId: {value: productId} } }"
+                                :custom-data="customCurdData.productWarehouse"
+                            />
+                            <!--Product Options ValueWarehouse-->
+                            <crud
+                                :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
+                                :custom-data="customCurdData.productOptValueWarehouse"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -646,6 +652,7 @@ export default {
           type: 'productWarehouse',
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
+          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionability')
         },
         home: {
           show: false,
@@ -948,7 +955,31 @@ export default {
           }
         }
       }
-    }
+    },
+    //custom crudData for productWarehouse
+    customCurdData() {
+      return {
+        productWarehouse: {
+          read: {
+            title: 'Product Warehouse (PT)',
+            excludeActions: ['sync', 'recommendations'],
+            requestParams: {include: 'warehouse', filter: {productId: this.productId}}
+          },
+          formLeft: {productId: {value: this.productId}}
+        },
+        productOptValueWarehouse: {
+          read: {
+            title: 'Product opt value Warehouse (PT)',
+            excludeActions: ['sync', 'recommendations'],
+            requestParams: {
+              include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',
+              filter: {productId: this.productId}
+            }
+          },
+          formLeft: {productId: {value: this.productId}}
+        }
+      }
+    },
   },
   methods: {
     //validate fields from home tab
