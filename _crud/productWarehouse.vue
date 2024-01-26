@@ -57,7 +57,7 @@ export default {
               label: `${this.$tr('isite.cms.form.warehouse')}*`
             },
             loadOptions: {
-              apiRoute: 'apiRoutes.qcommerce.warehouse'
+              apiRoute: 'apiRoutes.qcommerce.warehouses'
             }
           },
           quantity: {
