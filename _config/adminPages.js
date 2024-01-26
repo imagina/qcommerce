@@ -456,5 +456,19 @@ export default {
       refresh: true,
       breadcrumb: ['qcommerce.quotes']
     }
-  }
+  },
+  //Warehouses
+  warehouses: {
+    permission: 'icommerce.volumeclasses.manage',
+    activated: true,
+    path: '/ecommerce/warehouses',
+    name: 'warehouses',
+    crud: import('@imagina/qcommerce/_crud/warehouses'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'Warehouses',
+    icon: 'fa-light fa-warehouse',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
 }
