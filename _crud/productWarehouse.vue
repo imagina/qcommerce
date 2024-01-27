@@ -16,7 +16,7 @@ export default {
         permission: 'icommerce.productwarehouses',
         extraFormFields: 'Icommerce.crud-fields.productWarehouse',
         create: {
-          title: this.$tr('icommerce.cms.warehouse'),
+          title: this.$tr('icommerce.cms.newWarehouse'),
         },
         read: {
           columns: [
