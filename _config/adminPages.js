@@ -466,7 +466,7 @@ export default {
     crud: import('@imagina/qcommerce/_crud/warehouses'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'Warehouses',
+    title: 'icommerce.cms.sidebar.warehouses',
     icon: 'fa-light fa-warehouse',
     authenticated: true,
     subHeader: {refresh: true}
