@@ -228,7 +228,6 @@ export default {
           status: {
             value: '0',
             type: 'select',
-            help: { description: this.$tr('icommerce.cms.form.mapHelp')},
             props: {
               label: `${this.$tr('isite.cms.form.status')}:`,
               clearable: true,
