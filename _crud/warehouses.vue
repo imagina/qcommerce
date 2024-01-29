@@ -161,7 +161,7 @@ export default {
           map: {
             value: { lat: this.crudInfo.lat, },
             type: 'positionMarkerMap',
-            help: { description: 'Search for the address or locate it on the map.'},
+            help: { description: this.$tr('icommerce.cms.form.mapHelp')},
             required: true,
             isFakeField: true,
             props: {
@@ -244,7 +244,7 @@ export default {
             value: '0',
             type: 'select',
             props: {
-              label: `default`,
+              label: this.$tr('isite.cms.form.default'),
               clearable: true,
               options: [
                 {label: this.$tr('isite.cms.label.enabled'), value: 1},
