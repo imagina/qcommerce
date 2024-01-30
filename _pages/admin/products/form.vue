@@ -469,12 +469,12 @@
                             <!--Product Warehouse-->
                             <crud
                                 :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
-                                :custom-data="customCurdData.productWarehouse"
+                                :custom-data="customCrudData.productWarehouse"
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
                                 :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
-                                :custom-data="customCurdData.productOptValueWarehouse"
+                                :custom-data="customCrudData.productOptValueWarehouse"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -957,19 +957,19 @@ export default {
       }
     },
     //custom crudData for productWarehouse
-    customCurdData() {
+    customCrudData() {
       return {
         productWarehouse: {
           read: {
-            title: 'Product Warehouse (PT)',
+            title: this.$tr('icommerce.cms.form.generalWarehouse'),
             excludeActions: ['sync', 'recommendations'],
             requestParams: {include: 'warehouse', filter: {productId: this.productId}}
           },
-          formLeft: {productId: {value: this.productId}}
+          formLeft: {productId: {value: this.productId}},
         },
         productOptValueWarehouse: {
           read: {
-            title: 'Product opt value Warehouse (PT)',
+            title: this.$tr('icommerce.cms.form.warehouseByOptions'),
             excludeActions: ['sync', 'recommendations'],
             requestParams: {
               include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',

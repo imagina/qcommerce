@@ -16,9 +16,14 @@ export default {
         permission: 'icommerce.productoptionvaluewarehouses',
         extraFormFields: 'Icommerce.crud-fields.productoptionvaluewarehouses',
         create: {
-          title: this.$tr('icommerce.cms.warehouse'),
+          title: this.$tr('icommerce.cms.form.warehouseByOptions'),
         },
         read: {
+          help: {
+            title: this.$tr('icommerce.cms.form.warehouseByOptions'),
+            icon: 'fa-light fa-warehouse-full',
+            description: this.$tr('icommerce.cms.form.warehouseByOptionsHelp')
+          },
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
