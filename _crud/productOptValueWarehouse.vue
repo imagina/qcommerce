@@ -4,7 +4,8 @@
 export default {
   data() {
     return {
-      crudId: this.$uid()
+      crudId: this.$uid(),
+      productOptionValues: []
     }
   },
   computed: {
@@ -36,7 +37,7 @@ export default {
             },
             {
               name: 'warehouse',
-              label: this.$tr('isite.cms.form.warehouse'),
+              label: this.$tr('icommerce.cms.label.warehouse'),
               field: 'warehouse',
               align: 'left',
               format: val => val.title || ''
@@ -52,7 +53,32 @@ export default {
             include: 'warehouse',
             filter: {},
           },
-          filters: {}
+          filters: {
+            productOptionValueId: {
+              value: null,
+              type: 'select',
+              required: true,
+              props: {
+                label: `${this.$tr('icommerce.cms.form.optionValue')}*`
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.productOptionValues',
+                requestParams: {include: 'option,optionValue'},
+                select: {label: item => `${item.option.description} - ${item.optionValue}`, id: 'id'}
+              }
+            },
+            warehouseId: {
+              value: null,
+              type: 'select',
+              required: true,
+              props: {
+                label: `${this.$tr('icommerce.cms.label.warehouse')}*`
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.warehouses'
+              }
+            }
+          }
         },
         update: {
           title: this.$tr('icommerce.cms.updateWarehouse'),
@@ -62,12 +88,40 @@ export default {
         formLeft: {
           id: {value: ''},
           userId: {value: this.$store.state.quserAuth.userId},
-          warehouseId: {
+          optionId: {value: null},
+          optionValueId: {value: null},
+          productId: {
             value: null,
             type: 'select',
             required: true,
             props: {
-              label: `${this.$tr('isite.cms.form.warehouse')}*`
+              label: `${this.$tr('isite.cms.form.product')}*`
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qcommerce.products',
+              select: {label: 'name', id: 'id'}
+            }
+          },
+          productOptionValueId: {
+            value: null,
+            type: 'select',
+            props: {
+              label: `${this.$tr('icommerce.cms.form.optionValue')}`,
+              clearable: true
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qcommerce.productOptionValues',
+              requestParams: {include: 'option,optionValue'},
+              select: {label: item => `${item.option.description} - ${item.optionValue}`, id: 'id'},
+              loadedOptions: (data) => this.productOptionValues = data
+            }
+          },
+          warehouseId: {
+            value: null,
+            type: 'select',
+            props: {
+              label: `${this.$tr('icommerce.cms.label.warehouse')}`,
+              clearable: true
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qcommerce.warehouses'
@@ -81,6 +135,19 @@ export default {
               label: `${this.$tr('isite.cms.form.quantity')}*`,
             }
           }
+        },
+        getDataForm: (data, type) => {
+          return new Promise(resolve => {
+            //Set the optionId and OptionValueId
+            let prodOptionValue = this.productOptionValues.find(item => item.id == data.productOptionValueId)
+            if (prodOptionValue) {
+              data.optionId = prodOptionValue.optionId
+              data.optionValueId = prodOptionValue.optionValueId
+            }
+
+            //Response
+            resolve(data)
+          })
         }
       }
     },

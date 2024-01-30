@@ -20,48 +20,53 @@ export default {
         read: {
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'rigth', sortable: true},
+            {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'slug', align: 'left',},
+            {name: 'status', label: this.$tr('icommerce.cms.form.status'), field: 'status', align: 'left'},
             {
-              name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'rigth', sortable: true
+              name: 'default', label: this.$tr('isite.cms.form.default'), field: 'default', align: 'left',
+              format: val => this.$tr(`isite.cms.label.${val ? 'yes' : 'no'}`)
             },
             {
-              name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'slug', align: 'left',
-            },
-            {
-              name: 'status', label: this.$tr('icommerce.cms.form.status'), field: 'status', align: 'left',
-            },
-            {
-              name: 'default', label: 'default', field: 'default', align: 'left',
-            },
-            {
-              name: 'address', label: this.$tr('isite.cms.form.address'), field: 'address', align: 'left',
-            },
-            {
-              name: 'description', label: this.$tr('isite.cms.form.description'), field: 'description', align: 'left',
-            },
-            {
-              name: 'country_id', label: this.$tr('ilocations.cms.form.country'), field: 'country', align: 'left',
+              name: 'country_id',
+              label: this.$tr('ilocations.cms.form.country'),
+              field: 'country',
+              align: 'left',
               format: val => val ? val.name : ''
             },
             {
-              name: 'province_id', label: this.$tr('ilocations.cms.form.province'), field: 'province', align: 'left',
+              name: 'province_id',
+              label: this.$tr('ilocations.cms.form.province'),
+              field: 'province',
+              align: 'left',
               format: val => val ? val.name : ''
             },
             {
-              name: 'city_id', label: this.$tr('ilocations.cms.form.city'), field: 'city', align: 'left',
+              name: 'city_id',
+              label: this.$tr('ilocations.cms.form.city'),
+              field: 'city',
+              align: 'left',
               format: val => val ? val.name : ''
             },
+            {name: 'address', label: this.$tr('isite.cms.form.address'), field: 'address', align: 'left',},
             {
-              name: 'createdAt', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
+              name: 'createdAt',
+              label: this.$tr('isite.cms.form.createdAt'),
+              field: 'createdAt',
+              align: 'left',
               format: val => val ? this.$trd(val) : '-',
             },
             {
-              name: 'updated_at', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt', align: 'left',
+              name: 'updated_at',
+              label: this.$tr('isite.cms.form.updatedAt'),
+              field: 'updatedAt',
+              align: 'left',
               format: val => val ? this.$trd(val) : '-',
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
           requestParams: {include: 'country,province,city', filter: {order: {field: 'id', way: 'desc'}}},
-          filters: {            
+          filters: {
             countryId: {
               value: null,
               type: 'select',
@@ -97,7 +102,7 @@ export default {
                 apiRoute: 'apiRoutes.qlocations.cities',
                 select: {label: 'name', id: 'id'},
               }
-            },                      
+            },
             status: {
               value: null,
               type: 'select',
@@ -117,24 +122,18 @@ export default {
           title: this.$tr('icommerce.cms.updateWarehouse'),
         },
         delete: true,
-        formLeft: {          
+        formLeft: {
+          id: {value: ''},
+          userId: {value: this.$store.state.quserAuth.userId},
           title: {
             isTranslatable: true,
             value: '',
             type: 'input',
-            props : {
+            props: {
               label: `${this.$tr('isite.cms.form.title')}*`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
-              }
-          },
-          description: {
-            isTranslatable: true,
-            value: '',
-            type: 'input',
-            props : {
-              label: `${this.$tr('isite.cms.form.description')}`,              
             }
           },
           slug: {
@@ -147,41 +146,47 @@ export default {
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
             }
-          },          
-          address: {
-            value: '',            
-            type: 'input',            
-            props: {
-              label: `${this.$tr('isite.cms.form.address')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            }
           },
-          map: {
-            value: { lat: this.crudInfo.lat, },
-            type: 'positionMarkerMap',
-            help: { description: this.$tr('icommerce.cms.form.mapHelp')},
-            required: true,
-            isFakeField: true,
+          description: {
+            isTranslatable: true,
+            value: '',
+            type: 'html',
             props: {
-              label: `${this.$tr('isite.cms.label.search')}...`,
-              emitDefault: ( this.crudInfo.typeForm === 'create'),
-            }
-          },
-          polygonId: {
-            value: null,
-            type: 'select',
-            props: {
-              label: this.$tr('ilocations.cms.form.polygon'),
-            },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qlocations.polygons',
-              select: {label: 'name', id: 'id'},
+              label: `${this.$tr('isite.cms.form.description')}`,
             }
           },
         },
-        formRight: { 
+        formRight: {
+          status: {
+            value: '1',
+            type: 'select',
+            props: {
+              label: `${this.$tr('isite.cms.form.status')}:`,
+              clearable: true,
+              options: [
+                {label: this.$tr('isite.cms.label.enabled'), value: 1},
+                {label: this.$tr('isite.cms.label.disabled'), value: 0}
+              ],
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
+          },
+          default: {
+            value: '0',
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.form.default'),
+              clearable: true,
+              options: [
+                {label: this.$tr('isite.cms.label.yes'), value: 1},
+                {label: this.$tr('isite.cms.label.no'), value: 0}
+              ],
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
+            },
+          },
           countryId: {
             value: null,
             type: 'select',
@@ -205,7 +210,7 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.provinces',
-              requestParams: {filter: {country_id: this.crudInfo.countryId}},
+              requestParams: {filter: {countryId: this.crudInfo.countryId}},
               select: {label: 'name', id: 'id'},
               filterByQuery: true
             }
@@ -220,53 +225,55 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.cities',
-              requestParams: {filter: {province_id: this.crudInfo.provinceId}},
+              requestParams: {filter: {provinceId: this.crudInfo.provinceId}},
               select: {label: 'name', id: 'id'},
               filterByQuery: true,
             }
           },
-          status: {
-            value: '0',
+          polygonId: {
+            value: null,
             type: 'select',
             props: {
-              label: `${this.$tr('isite.cms.form.status')}:`,
-              clearable: true,
-              options: [
-                {label: this.$tr('isite.cms.label.enabled'), value: 1},
-                {label: this.$tr('isite.cms.label.disabled'), value: 0}
-              ],
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              label: this.$tr('ilocations.cms.form.polygon'),
             },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qlocations.polygons',
+              select: {label: 'name', id: 'id'},
+            }
           },
-          default: {
-            value: '0',
-            type: 'select',
+          address: {
+            value: '',
+            type: 'input',
             props: {
-              label: this.$tr('isite.cms.form.default'),
-              clearable: true,
-              options: [
-                {label: this.$tr('isite.cms.label.enabled'), value: 1},
-                {label: this.$tr('isite.cms.label.disabled'), value: 0}
-              ],
+              label: `${this.$tr('isite.cms.form.address')}*`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
-            },
+            }
+          },
+          map: {
+            value: {lat: this.crudInfo.lat,},
+            type: 'positionMarkerMap',
+            help: {description: this.$tr('icommerce.cms.form.mapHelp')},
+            required: true,
+            isFakeField: true,
+            props: {
+              label: `${this.$tr('isite.cms.label.search')}...`,
+              emitDefault: (this.crudInfo.typeForm === 'create'),
+            }
           },
         },
         getDataForm(data, type) {
           return new Promise(resolve => {
             //replace name value
-            if(data.options){
+            if (data.options) {
               data.lat = data.options.map?.lat
               data.lng = data.options.map?.lng
             }
-             //Response
+            //Response
             resolve(data)
           })
-        }        
+        }
       }
     },
     //Crud info

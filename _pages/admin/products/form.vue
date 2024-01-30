@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-10 offset-lg-1 relative-position">
         <!--Page Actions-->
         <div class="box box-auto-height q-mb-md">
-          <page-actions :title="pageTitle" :exclude-actions="['sync']"/>
+          <page-actions :title="pageTitle" :exclude-actions="['sync']" @refresh="initForm"/>
         </div>
         <!--Data-->
         <q-form autocorrect="off" autocomplete="off" ref="formContent"
@@ -546,7 +546,6 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.initForm()
-      this.$root.$on('page.data.refresh', () => this.initForm())//Listen refresh event
       const path = this.$route.path.split("/");
       const lastChildPath = path[path.length - 2];
       if (lastChildPath === 'create') this.isCreateMode = true;
@@ -963,9 +962,23 @@ export default {
           read: {
             title: this.$tr('icommerce.cms.form.generalWarehouse'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: {include: 'warehouse', filter: {productId: this.productId}}
+            requestParams: {include: 'product,warehouse',filter: {productId: this.productId}}
           },
-          formLeft: {productId: {value: this.productId}},
+          formLeft: {
+            productId: {
+              value: this.productId,
+              type: 'select',
+              required: true,
+              props: {
+                label: `${this.$tr('isite.cms.form.product')}*`,
+                readonly: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.products',
+                select: {label: 'name', id: 'id'}
+              }
+            },
+          },
         },
         productOptValueWarehouse: {
           read: {
@@ -973,10 +986,24 @@ export default {
             excludeActions: ['sync', 'recommendations'],
             requestParams: {
               include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',
-              filter: {productId: this.productId}
+              filter: {include: 'product,warehouse',productId: this.productId}
             }
           },
-          formLeft: {productId: {value: this.productId}}
+          formLeft: {
+            productId: {
+              value: this.productId,
+              type: 'select',
+              required: true,
+              props: {
+                label: `${this.$tr('isite.cms.form.product')}*`,
+                readonly: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.products',
+                select: {label: 'name', id: 'id'}
+              }
+            },
+          }
         }
       }
     },

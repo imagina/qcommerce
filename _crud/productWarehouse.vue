@@ -27,8 +27,15 @@ export default {
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
+              name: 'product',
+              label: this.$tr('isite.cms.form.product'),
+              field: 'product',
+              align: 'left',
+              format: val => val.name || ''
+            },
+            {
               name: 'warehouse',
-              label: this.$tr('isite.cms.form.warehouse'),
+              label: this.$tr('icommerce.cms.label.warehouse'),
               field: 'warehouse',
               align: 'left',
               format: val => val.title || ''
@@ -41,10 +48,22 @@ export default {
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
           requestParams: {
-            include: 'warehouse',
+            include: 'product,warehouse',
             filter: {},
           },
-          filters: {}
+          filters: {
+            warehouseId: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.label.warehouse')}`,
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.warehouses'
+              }
+            }
+          }
         },
         update: {
           title: this.$tr('icommerce.cms.updateWarehouse'),
@@ -54,12 +73,24 @@ export default {
         formLeft: {
           id: {value: ''},
           userId: {value: this.$store.state.quserAuth.userId},
+          productId: {
+            value: null,
+            type: 'select',
+            required: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.product')}*`
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qcommerce.products',
+              select: {label: 'name', id: 'id'}
+            }
+          },
           warehouseId: {
             value: null,
             type: 'select',
             required: true,
             props: {
-              label: `${this.$tr('isite.cms.form.warehouse')}*`
+              label: `${this.$tr('icommerce.cms.label.warehouse')}*`
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qcommerce.warehouses'
