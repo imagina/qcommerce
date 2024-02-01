@@ -43,7 +43,7 @@
     methods: {}
   }
 </script>
-<style lang="sass">
+<style lang="scss">
   #orderStatusHistoryComponent
     table
       thead

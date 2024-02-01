@@ -107,7 +107,7 @@
     },
   }
 </script>
-<style lang="sass">
+<style lang="scss">
   #listOptionsCommerce
     .q-item
       padding 0px

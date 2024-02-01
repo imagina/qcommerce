@@ -44,7 +44,7 @@
     methods: {}
   }
 </script>
-<style lang="sass">
+<style lang="scss">
   #transactionsComponent
     table
       thead

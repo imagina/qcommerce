@@ -65,7 +65,7 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="scss">
   .circle
     border-radius 50%
     background $primary

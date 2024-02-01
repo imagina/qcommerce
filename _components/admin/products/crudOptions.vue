@@ -456,7 +456,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
 #crudOptions
   .border
     border 1px solid $grey-4

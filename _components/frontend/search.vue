@@ -109,7 +109,7 @@
     },
   }
 </script>
-<style lang="sass">
+<style lang="scss">
     #searchComponent
       border-radius: 30px
 </style>

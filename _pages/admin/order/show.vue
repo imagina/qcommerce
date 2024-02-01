@@ -474,7 +474,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
 #trackingOrderStatusContent
   .q-timeline__entry
     .q-timeline__subtitle
