@@ -1338,7 +1338,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
 .productForm
   .q-tab-panel
     padding 0

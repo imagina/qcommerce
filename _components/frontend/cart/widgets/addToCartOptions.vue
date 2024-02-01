@@ -182,7 +182,7 @@
   }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
   #addCartOptions
     .q-list
       padding 0

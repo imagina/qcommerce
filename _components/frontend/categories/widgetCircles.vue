@@ -65,7 +65,7 @@
   }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
   .circle
     border-radius 50%
     background $primary

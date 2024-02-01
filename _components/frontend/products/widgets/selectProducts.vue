@@ -55,7 +55,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="sass">
 #widgetSelectProducts
   display: inline-block
   min-height 40px !important

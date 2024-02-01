@@ -474,7 +474,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
 #trackingOrderStatusContent
   .q-timeline__entry
     .q-timeline__subtitle

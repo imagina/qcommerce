@@ -215,7 +215,7 @@
   }
 </script>
 
-<style lang="stylus">
+<style lang="sass">
   #recursiveListOptionsComponent
     .content-option
       padding 10px 0px

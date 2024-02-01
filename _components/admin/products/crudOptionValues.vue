@@ -435,7 +435,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="sass">
 
 #crudOptionValues
   .input-title

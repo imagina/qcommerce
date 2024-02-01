@@ -158,7 +158,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="sass">
 #selectProductConfig
   .q-option-group
     .q-checkbox__label

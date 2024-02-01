@@ -60,7 +60,7 @@
     methods: {}
   }
 </script>
-<style lang="stylus">
+<style lang="sass">
   #orderItemsComponent
     table
 

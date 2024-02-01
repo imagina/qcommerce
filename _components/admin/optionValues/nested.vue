@@ -110,7 +110,7 @@
   };
 </script>
 
-<style lang="stylus">
+<style lang="sass">
   .list-group-item
     .list-group-item
       padding-left 15px !important

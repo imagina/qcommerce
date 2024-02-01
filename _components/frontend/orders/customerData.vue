@@ -36,7 +36,7 @@
     methods: {}
   }
 </script>
-<style lang="stylus">
+<style lang="sass">
   #customerDataComponent
     table
       thead
