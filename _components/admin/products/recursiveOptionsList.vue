@@ -108,17 +108,21 @@
   }
 </script>
 <style lang="scss">
-  #listOptionsCommerce
-    .q-item
-      padding 0px
+  #listOptionsCommerce {
+    .q-item {
+      padding: 0px;
 
-      .q-item-side
-        &.relative-position
-          display: none
+      .q-item-side.relative-position {
+        display: none;
+      }
+    }
 
-    .q-expansion-item
-      .q-expansion-item__content
-        padding 0px 0px 0px 15px
+    .q-expansion-item {
+      .q-expansion-item__content {
+        padding: 0px 0px 0px 15px;
+      }
+    }
+  }
 </style>
 
 

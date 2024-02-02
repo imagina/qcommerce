@@ -167,13 +167,17 @@ export default {
 }
 </script>
 <style lang="scss">
-#payoutComponent
-  #tablePayout
-    th
-      color $blue-grey
-      font-weight bold
-      font-size 13px !important
+#payoutComponent {
+  #tablePayout {
+    th {
+      color: $blue-grey;
+      font-weight: bold;
+      font-size: 13px !important;
+    }
 
-    td
-      color #222222
+    td {
+      color: #222222;
+    }
+  }
+}
 </style>

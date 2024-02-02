@@ -44,9 +44,11 @@ export default {
 }
 </script>
 <style lang="scss">
-#tagetProductQuoteComponent
-  cursor pointer
+#tagetProductQuoteComponent {
+  cursor: pointer;
 
-  .box
-    padding 0
+  .box {
+    padding: 0;
+  }
+}
 </style>
