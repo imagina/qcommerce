@@ -159,8 +159,11 @@ export default {
 }
 </script>
 <style lang="scss">
-#selectProductConfig
-  .q-option-group
-    .q-checkbox__label
-      color $blue-grey
+#selectProductConfig {
+  .q-option-group {
+    .q-checkbox__label {
+      color: $blue-grey;
+    }
+  }
+}
 </style>

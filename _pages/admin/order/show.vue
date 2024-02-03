@@ -475,37 +475,48 @@ export default {
 </script>
 
 <style lang="scss">
-#trackingOrderStatusContent
-  .q-timeline__entry
-    .q-timeline__subtitle
-      text-transform none
-      margin 0px
+#trackingOrderStatusContent {
+  .q-timeline__entry {
+    .q-timeline__subtitle {
+      text-transform: none;
+      margin: 0px;
+    }
 
-    .q-timeline__content
-      font-size 12px
-      color $grey-7
+    .q-timeline__content {
+      font-size: 12px;
+      color: $grey-7;
 
-      .q-timeline__title
-        font-size 13px
-        margin 0px
-        font-weight bold
-        color $grey-8
+      .q-timeline__title {
+        font-size: 13px;
+        margin: 0px;
+        font-weight: bold;
+        color: $grey-8;
+      }
+    }
+  }
 
-#orderItemsContent
-  thead
-    th
-      color $blue-grey
-      font-weight bold
-      font-size 15px
+  #orderItemsContent {
+    thead {
+      th {
+        color: $blue-grey;
+        font-weight: bold;
+        font-size: 15px;
+      }
+    }
+  }
 
-@media print
-  #masterPanelHeader,
-  #masterDrawers,
-  #masterFooter,
-  #menuMaster,
-  #pageActionscomponent .actions-content
-    display none
+  @media print {
+    #masterPanelHeader,
+    #masterDrawers,
+    #masterFooter,
+    #menuMaster,
+    #pageActionscomponent .actions-content {
+      display: none;
+    }
 
-  .q-page-container
-    padding 0 !important
+    .q-page-container {
+      padding: 0 !important;
+    }
+  }
+}
 </style>

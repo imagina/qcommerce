@@ -436,14 +436,14 @@ export default {
 }
 </script>
 <style lang="scss">
-
-#crudOptionValues
-  .input-title
-    color #757575
-    font-size 14px
-    font-weight 500
-    line-height 18px
-    min-height 48px
-    padding 15px 16px
-
+#crudOptionValues {
+  .input-title {
+    color: #757575;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    min-height: 48px;
+    padding: 15px 16px;
+  }
+}
 </style>

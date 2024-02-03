@@ -320,7 +320,9 @@ export default {
 }
 </script>
 <style lang="scss">
-#quotesFormPage
-  .q-tab-panels
-    background transparent
+#quotesFormPage {
+  .q-tab-panels {
+    background: transparent;
+  }
+}
 </style>

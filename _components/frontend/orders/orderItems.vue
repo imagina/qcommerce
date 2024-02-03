@@ -61,26 +61,33 @@
   }
 </script>
 <style lang="scss">
-  #orderItemsComponent
-    table
+  #orderItemsComponent {
+    table {
+      thead {
+        th {
+          color: $blue-grey;
+        }
+      }
+      td, th {
+        // font-family: $secondaryFont !important;
+        font-size: 14px;
+        color: $tertiary;
+      }
+    }
 
-      thead
-        th
-          color $blue-grey
-      td, th
-        font-family $secondaryFont !important
-        font-size 14px
-        color $tertiary
+    .option-content {
+      margin-left: 20px;
 
-    .option-content
-      margin-left 20px
+      .option-title {
+        color: $blue-grey;
+        font-weight: bold;
+        font-size: 14px;
+      }
 
-      .option-title
-        color $blue-$grey
-        font-weight bold
-        font-size 14px
-
-      .value-title
-        color $grey-8
-        font-size 14px
+      .value-title {
+        color: $grey-8;
+        font-size: 14px;
+      }
+    }
+  }
 </style>
