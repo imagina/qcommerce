@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {required} from 'vuelidate/lib/validators'
+//[ptc]import {required} from 'vuelidate/lib/validators'
 
 export default {
   data() {
@@ -47,8 +47,8 @@ export default {
   },
   validations: {
     form: {
-      orderId: {required},
-      status: {required}
+      //[ptc]orderId: {required},
+      //[ptc]status: {required}
     }
   },
   created() {
