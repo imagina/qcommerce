@@ -99,7 +99,7 @@
 </template>
 <script>
   //Plugins
-  import {required} from 'vuelidate/lib/validators'
+  //[ptc]import {required} from 'vuelidate/lib/validators'
   import _cloneDeep from 'lodash.clonedeep'
 
   //Components
