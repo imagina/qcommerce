@@ -1,12 +1,13 @@
 <template>
   <div class="row">
     <div class="col-md-12 flex flex-center">
+      <!-- [ptc]: Change tag -->
       <router-link
-        tag="a"
         v-for="(category, index) in categories"
         :key="index"
         class="q-mx-sm q-py-sm"
-        :to="{name:'products.index', params: { slugCategory: category.slug }}">
+        :to="{name:'products.index', params: { slugCategory: category.slug }}"
+      >
         <div class="flex flex-center text-white border">
           <div
             class="flex flex-center text-white circle text-center"
