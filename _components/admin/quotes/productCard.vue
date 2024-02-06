@@ -1,5 +1,5 @@
 <template>
-  <div id="tagetProductQuoteComponent" @click="$eventBus.$emit('qcommerce.quote.addProduct', row)">
+  <div id="tagetProductQuoteComponent" @click="eventBus.emit('qcommerce.quote.addProduct', row)">
     <q-card class="box box-auto-height">
       <!--Product image-->
       <img :src="row.mediaFiles.mainimage.mediumThumb" v-if="false">
@@ -18,6 +18,8 @@
   </div>
 </template>
 <script>
+import eventBus from '@imagina/qsite/_plugins/eventBus'
+
 export default {
   props: {
     row: {default: false},
@@ -33,7 +35,8 @@ export default {
   data() {
     return {
       loading: false,
-      data: []
+      data: [],
+      eventBus
     }
   },
   computed: {},

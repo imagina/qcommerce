@@ -98,10 +98,11 @@
 <script>
 //Components
 import selectProductConfig from '@imagina/qcommerce/_components/selectProductConfig'
+import eventBus from '@imagina/qsite/_plugins/eventBus'
 
 export default {
   beforeDestroy() {
-    this.$eventBus.$off('qcommerce.quote.addProduct')
+    eventBus.off('qcommerce.quote.addProduct')
   },
   props: {},
   components: {selectProductConfig},
@@ -203,7 +204,7 @@ export default {
     },
     //Manage Add product
     manageAddProduct() {
-      this.$eventBus.$on('qcommerce.quote.addProduct', product => {
+      eventBus.on('qcommerce.quote.addProduct', product => {
         this.$refs.selectProductConfig.load({
           productId: product.id,
           actionLabel: this.$tr('isite.cms.label.add'),
