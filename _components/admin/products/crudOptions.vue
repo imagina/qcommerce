@@ -109,7 +109,7 @@
           </div>
           <!--Options-->
           <div class="input-title">Option *</div>
-          <crud :crud-data="import('@imagina/qcommerce/_crud/productOptions')" v-model="modal.optionSelected"
+          <crud :crud-data="import('modules/qcommerce/_crud/productOptions')" v-model="modal.optionSelected"
                 type="select" @created="getOptions" :crud-props="{label : `${$tr('isite.cms.form.option')} *`}"
                 :config="{options : {label : 'description', value : 'id'}}"/>
           <!--btn dave option-->

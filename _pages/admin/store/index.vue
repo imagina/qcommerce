@@ -1,7 +1,7 @@
 <template>
   <div id="pageId">
     <!---Component CRUD-->
-    <crud :crud-data="import('@imagina/qcommerce/_crud/stores')" />
+    <crud :crud-data="import('modules/qcommerce/_crud/stores')" />
   </div>
 </template>
 <script>

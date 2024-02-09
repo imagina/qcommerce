@@ -106,10 +106,10 @@
 </template>
 
 <script>
-import orderStatusHistory from '@imagina/qcommerce/_components/admin/orders/orderStatusHistory';
-import orderItems from '@imagina/qcommerce/_components/frontend/orders/orderItems';
-import addStatusOrder from '@imagina/qcommerce/_components/admin/orders/addStatusOrder'
-import advanceChat from '@imagina/qchat/_components/advancedChat'
+import orderStatusHistory from 'modules/qcommerce/_components/admin/orders/orderStatusHistory';
+import orderItems from 'modules/qcommerce/_components/frontend/orders/orderItems';
+import addStatusOrder from 'modules/qcommerce/_components/admin/orders/addStatusOrder'
+import advanceChat from 'modules/qchat/_components/advancedChat'
 
 export default {
   components: {

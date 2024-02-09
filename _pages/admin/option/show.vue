@@ -15,8 +15,8 @@
 
 <script>
   // Components
-  import formOptions from '@imagina/qcommerce/_components/admin/options/form'
-  import indexValuesByOptions from '@imagina/qcommerce/_components/admin/optionValues/indexValuesByOptions'
+  import formOptions from 'modules/qcommerce/_components/admin/options/form'
+  import indexValuesByOptions from 'modules/qcommerce/_components/admin/optionValues/indexValuesByOptions'
 
   export default {
     components: {

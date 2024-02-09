@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import nestedoptionValues from '@imagina/qcommerce/_components/admin/optionValues/nested'
-import optionValuesForm from '@imagina/qcommerce/_pages/admin/optionValues/form'
+import nestedoptionValues from 'modules/qcommerce/_components/admin/optionValues/nested'
+import optionValuesForm from 'modules/qcommerce/_pages/admin/optionValues/form'
 
 export default {
   components: {

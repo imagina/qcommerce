@@ -26,7 +26,7 @@
     </q-modal>
 </template>
 <script>
-  import qcommerceService from '@imagina/qcommerce/_services/index'
+  import qcommerceService from 'modules/qcommerce/_services/index'
   export default {
     props: {
       value: {default: false}

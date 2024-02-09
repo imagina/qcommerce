@@ -1,10 +1,10 @@
-import alert from '@imagina/qsite/_plugins/alert';
-import helper from '@imagina/qsite/_plugins/helper';
+import alert from 'modules/qsite/_plugins/alert';
+import helper from 'modules/qsite/_plugins/helper';
 import axios from 'axios';
-import config from '@imagina/qsite/_config/master/index'
-import eCommerceService from '@imagina/qcommerce/_services/index'
+import config from 'modules/qsite/_config/master/index'
+import eCommerceService from 'modules/qcommerce/_services/index'
 import store from 'src/store/index'
-import remember from "@imagina/qsite/_plugins/remember";
+import remember from "modules/qsite/_plugins/remember";
 
 export const GET_CART = ({commit, state, dispatch}, refresh = false) => {
   return new Promise(async (resolve, reject) => {

@@ -1,5 +1,5 @@
 //plugins
-import crud from '@imagina/qcrud/_services/baseService'
+import crud from 'modules/qcrud/_services/baseService'
 
 
 //Get product and set as current product

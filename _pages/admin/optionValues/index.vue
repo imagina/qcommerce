@@ -1,7 +1,7 @@
 <template>
   <div id="pageId" class="q-layout-page layout-padding">
     <!---Component CRUD-->
-    <crud :crud-data="import('@imagina/qcommerce/_crud/productOptionValues')" />
+    <crud :crud-data="import('modules/qcommerce/_crud/productOptionValues')" />
   </div>
 </template>
 <script>

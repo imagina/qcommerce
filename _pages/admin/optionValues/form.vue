@@ -68,7 +68,7 @@
 
 <script>
 //[ptc]import {required} from 'vuelidate/lib/validators'
-import uploadMedia from '@imagina/qmedia/_components/form'
+import uploadMedia from 'modules/qmedia/_components/form'
 
 export default {
   components: {

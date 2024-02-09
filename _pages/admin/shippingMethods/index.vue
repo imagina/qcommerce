@@ -58,7 +58,7 @@
 </template>
 <script>
 //Components
-import icommerceagree from '@imagina/qcommerce/_components/admin/shippingMethods/agree'
+import icommerceagree from 'modules/qcommerce/_components/admin/shippingMethods/agree'
 import icommerceflatrate from '@imagina/qcommerce/_components/admin/shippingMethods/flatrate'
 import icommercefreeshipping from '@imagina/qcommerce/_components/admin/shippingMethods/freeshipping'
 import icommercelocaldelivery from '@imagina/qcommerce/_components/admin/shippingMethods/localdelivery'
