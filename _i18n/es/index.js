@@ -1,5 +1,5 @@
-import layout from '@imagina/qcommerce/_i18n/es/layout'
-import sidebar from '@imagina/qcommerce/_i18n/es/sidebar'
+import layout from 'modules/qcommerce/_i18n/es/layout'
+import sidebar from 'modules/qcommerce/_i18n/es/sidebar'
 
 export default {
   layout,

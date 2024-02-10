@@ -36,7 +36,7 @@
                             emit-value map-options :options="optionsRate"
                   />-->
                   <!--Crud tax rate-->
-                  <crud :crud-data="import('@imagina/qcommerce/_crud/taxRates')"
+                  <crud :crud-data="import('modules/qcommerce/_crud/taxRates')"
                         type="select" :crud-props="{label:`${$tr('icommerce.cms.form.taxRate')}*`}"
                         v-model="rate.taxRateId" :config="{options: {label: 'name', value: 'id'}}"
                   />

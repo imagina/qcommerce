@@ -97,8 +97,8 @@
 </template>
 <script>
 //Components
-import selectProductConfig from '@imagina/qcommerce/_components/selectProductConfig'
-import eventBus from '@imagina/qsite/_plugins/eventBus'
+import selectProductConfig from 'modules/qcommerce/_components/selectProductConfig'
+import eventBus from 'modules/qsite/_plugins/eventBus'
 
 export default {
   beforeDestroy() {
@@ -130,7 +130,7 @@ export default {
     //Crud Products Custom Data
     crudProductsProps() {
       return {
-        crudData: import('@imagina/qcommerce/_crud/products'),
+        crudData: import('modules/qcommerce/_crud/products'),
         title: this.$trp('isite.cms.label.product'),
         customData: {
           create: false,
@@ -139,7 +139,7 @@ export default {
             allowToggleView: false,
             grid: {
               //colClass: 'col-12 col-sm-6 col-lg-3 col-xl-2',
-              component: () => import('@imagina/qcommerce/_components/admin/quotes/productCard')
+              component: () => import('modules/qcommerce/_components/admin/quotes/productCard')
             },
             filters: {
               status: {value: '1'},

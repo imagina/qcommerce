@@ -1,6 +1,6 @@
-import products from '@imagina/qcommerce/_store/products/index'
-import cart from '@imagina/qcommerce/_store/cart/index'
-import orders from '@imagina/qcommerce/_store/orders/index'
+import products from 'modules/qcommerce/_store/products/index'
+import cart from 'modules/qcommerce/_store/cart/index'
+import orders from 'modules/qcommerce/_store/orders/index'
 
 export default {
   products,

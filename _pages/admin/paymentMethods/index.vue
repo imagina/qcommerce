@@ -58,12 +58,12 @@
 </template>
 <script>
 //Components
-import icommercepaypal from '@imagina/qcommerce/_components/admin/paymentMethods/paypal'
-import icommercepayu from '@imagina/qcommerce/_components/admin/paymentMethods/payu'
-import icommercecheckmo from '@imagina/qcommerce/_components/admin/paymentMethods/checkmo'
-import icommerceauthorize from '@imagina/qcommerce/_components/admin/paymentMethods/authorize'
-import icommercecredibanco from '@imagina/qcommerce/_components/admin/paymentMethods/credibanco'
-import icommercexpay from '@imagina/qcommerce/_components/admin/paymentMethods/xPay'
+import icommercepaypal from 'modules/qcommerce/_components/admin/paymentMethods/paypal'
+import icommercepayu from 'modules/qcommerce/_components/admin/paymentMethods/payu'
+import icommercecheckmo from 'modules/qcommerce/_components/admin/paymentMethods/checkmo'
+import icommerceauthorize from 'modules/qcommerce/_components/admin/paymentMethods/authorize'
+import icommercecredibanco from 'modules/qcommerce/_components/admin/paymentMethods/credibanco'
+import icommercexpay from 'modules/qcommerce/_components/admin/paymentMethods/xPay'
 
 export default {
   props: {},

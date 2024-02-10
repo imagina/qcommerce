@@ -360,7 +360,7 @@
                         />
                       </div>
                       <!--Crud item types-->
-                      <crud :crud-data="import('@imagina/qcommerce/_crud/itemTypes')"
+                      <crud :crud-data="import('modules/qcommerce/_crud/itemTypes')"
                             type="select"
                             :crud-props="{label:`${$tr('icommerce.cms.form.itemType')}`, 'data-testid': 'itemTypeId'}"
                             v-model="locale.formTemplate.itemTypeId"
@@ -368,7 +368,7 @@
                             v-if="false"
                       />
                       <!--Crud manufacturer-->
-                      <crud :crud-data="import('@imagina/qcommerce/_crud/taxClasses')"
+                      <crud :crud-data="import('modules/qcommerce/_crud/taxClasses')"
                             type="select"
                             :crud-props="{label:`${$tr('icommerce.cms.form.taxClass')}`, 'data-testid': 'taxClassId'}"
                             v-model="locale.formTemplate.taxClassId"
@@ -376,7 +376,7 @@
                             v-if="$auth.hasAccess('icommerce.taxclasses.manage')"
                       />
                       <!--Crud manufacturer-->
-                      <crud :crud-data="import('@imagina/qcommerce/_crud/manufacturers')"
+                      <crud :crud-data="import('modules/qcommerce/_crud/manufacturers')"
                             type="select"
                             :crud-props="{label:`${$tr('icommerce.cms.form.manufacturer')}`,'data-testid': 'manufacturerId', clearable : true}"
                             v-model="locale.formTemplate.manufacturerId"
@@ -445,7 +445,7 @@
                         <div class="full-width">
                           <div class="q-pa-sm" v-if="productId">
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productDiscounts')"
+                                :crud-data="import('modules/qcommerce/_crud/productDiscounts')"
                                 :custom-data="{read: {requestParams: {include: 'department', filter: {productId: productId} } }, formRight:{productId: {value: productId} } }"
                             />
                           </div>
@@ -468,7 +468,7 @@
                           <div class="q-pa-sm" v-if="productId">
                             <!--Product Warehouse-->
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
+                                :crud-data="import('modules/qcommerce/_crud/productWarehouse.vue')"
                                 :custom-data="customCrudData.productWarehouse"
                             />
                             <!--Product Options ValueWarehouse-->

@@ -53,7 +53,7 @@
               <div class="input-title relative-position q-mb-md">
                 {{ `${$tr('icommerce.cms.form.optionValue')} *` }}
                 <!--Crud Option Value-->
-                <crud :crud-data="import('@imagina/qcommerce/_crud/productOptionValues')"
+                <crud :crud-data="import('modules/qcommerce/_crud/productOptionValues')"
                       type="button-create" @created="getOptionValues" class="absolute-right"
                       :custom-data="{read: {requestParams: {filter: {optionId: form.optionId} } }, formLeft: { optionId: { value: form.optionId } } }"/>
               </div>
