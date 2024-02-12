@@ -37,7 +37,7 @@
               this.id > 0 ? $tr('icommerce.cms.sidebar.adminValuesEdit') : $tr('icommerce.cms.sidebar.adminValuesCreate')
             }}</span>
           </q-toolbar-title>
-          <q-btn flat round dense icon="close" v-close-popup/>
+          <q-btn flat round dense icon="fa fa-close" v-close-popup/>
         </q-toolbar>
         <q-card-section>
           <option-values-form :option-id="$route.params.id" :id="id" @updated="closeNewModal"></option-values-form>
