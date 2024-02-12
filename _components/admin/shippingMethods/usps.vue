@@ -85,7 +85,7 @@
   //Plugins
   import _cloneDeep from 'lodash.clonedeep'
   //Components
-  import uploadImg from '@imagina/qmedia/_components/form'
+  import uploadImg from 'modules/qmedia/_components/form'
 
 
   export default {

@@ -21,7 +21,7 @@
 
 <script>
 	// SERVICES
-	import eCommerceService from '@imagina/qcommerce/_services/index'
+	import eCommerceService from 'modules/qcommerce/_services/index'
 	export default {
 		data(){
 			return {

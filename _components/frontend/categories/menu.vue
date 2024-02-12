@@ -43,7 +43,7 @@
 </template>
 <script>
   //Components
-  import recursiveItem from '@imagina/qsite/_components/master/recursiveItem'
+  import recursiveItem from 'modules/qsite/_components/master/recursiveItem'
 
   export default {
     props: {

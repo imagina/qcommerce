@@ -63,7 +63,7 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import optionValuesForm from '@imagina/qcommerce/_pages/admin/optionValues/form'
+  import optionValuesForm from 'modules/qcommerce/_pages/admin/optionValues/form'
   export default {
     name: 'nestedDraggable',
     components: {

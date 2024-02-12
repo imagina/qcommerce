@@ -473,7 +473,7 @@
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
+                                :crud-data="import('modules/qcommerce/_crud/productOptValueWarehouse.vue')"
                                 :custom-data="customCrudData.productOptValueWarehouse"
                             />
                           </div>
@@ -507,9 +507,9 @@
 </template>
 
 <script>
-import recursiveList from '@imagina/qsite/_components/master/recursiveListSelect'
-import crudOptions from '@imagina/qcommerce/_components/admin/products/crudOptions'
-import ckEditor from '@imagina/qsite/_components/master/ckEditor'
+import recursiveList from 'modules/qsite/_components/master/recursiveListSelect'
+import crudOptions from 'modules/qcommerce/_components/admin/products/crudOptions'
+import ckEditor from 'modules/qsite/_components/master/ckEditor'
 //Plugins
 import {scroll} from 'quasar'
 
@@ -848,7 +848,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/productCategories'),
+            crudData: import('modules/qcommerce/_crud/productCategories'),
             customData: {
               read: {
                 requestParams: {include: 'parent', refresh: true}
@@ -867,7 +867,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/quantityClasses'),
+            crudData: import('modules/qcommerce/_crud/quantityClasses'),
 
             crudProps: {
               label: `${this.$tr('icommerce.cms.sidebar.quantityClasses')}`
@@ -879,7 +879,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/weightClasses'),
+            crudData: import('modules/qcommerce/_crud/weightClasses'),
 
             crudProps: {
               label: `${this.$tr('icommerce.cms.sidebar.weightClasses')}`
@@ -891,7 +891,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/lengthClasses'),
+            crudData: import('modules/qcommerce/_crud/lengthClasses'),
 
             crudProps: {
               label: `${this.$tr('icommerce.cms.sidebar.lengthClasses')}`
@@ -903,7 +903,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/volumeClasses'),
+            crudData: import('modules/qcommerce/_crud/volumeClasses'),
 
             crudProps: {
               label: `${this.$tr('icommerce.cms.sidebar.volumeClasses')}`
@@ -915,7 +915,7 @@ export default {
           type: 'crud',
           props: {
             crudType: 'select',
-            crudData: import('@imagina/qcommerce/_crud/productCategories'),
+            crudData: import('modules/qcommerce/_crud/productCategories'),
             customData: {
               read: {
                 requestParams: {include: 'parent', refresh: true}

@@ -70,13 +70,13 @@
 </template>
 <script>
   //Services
-  import commerceServices from '@imagina/qcommerce/_services/index'
+  import commerceServices from 'modules/qcommerce/_services/index'
 
   //Plugins
   import _cloneDeep from 'lodash.clonedeep'
 
   //components
-  import uploadImg from '@imagina/qmedia/_components/form'
+  import uploadImg from 'modules/qmedia/_components/form'
 
   export default {
     props: {

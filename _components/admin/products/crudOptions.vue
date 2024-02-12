@@ -127,8 +127,8 @@
 
 <script>
 //components
-import recursiveOptions from '@imagina/qcommerce/_components/admin/products/recursiveOptionsList'
-import crudOptionValues from '@imagina/qcommerce/_components/admin/products/crudOptionValues'
+import recursiveOptions from 'modules/qcommerce/_components/admin/products/recursiveOptionsList'
+import crudOptionValues from 'modules/qcommerce/_components/admin/products/crudOptionValues'
 
 export default {
   props: {

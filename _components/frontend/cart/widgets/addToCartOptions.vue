@@ -61,11 +61,11 @@
   import _cloneDeep from 'lodash.clonedeep'
 
   // SERVICES
-  import commerceServices from '@imagina/qcommerce/_services/index'
+  import commerceServices from 'modules/qcommerce/_services/index'
 
   // COMPONENTS
-  import productOptionValues from '@imagina/qcommerce/_components/frontend/products/widgets/selectOptionsProduct'
-  import selectQuantity from '@imagina/qcommerce/_components/selectQuantity'
+  import productOptionValues from 'modules/qcommerce/_components/frontend/products/widgets/selectOptionsProduct'
+  import selectQuantity from 'modules/qcommerce/_components/selectQuantity'
 
   export default {
     name: 'productOptions',
