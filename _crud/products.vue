@@ -208,7 +208,7 @@ export default {
             type: 'crud',
             props: {
               crudType: 'select',
-              crudData: import('@imagina/qcommerce/_crud/productCategories'),
+              crudData: import('modules/qcommerce/_crud/productCategories'),
               customData: {
                 read: {
                   requestParams: {include: 'parent', refresh: true}

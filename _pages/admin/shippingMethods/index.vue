@@ -59,13 +59,13 @@
 <script>
 //Components
 import icommerceagree from 'modules/qcommerce/_components/admin/shippingMethods/agree'
-import icommerceflatrate from '@imagina/qcommerce/_components/admin/shippingMethods/flatrate'
-import icommercefreeshipping from '@imagina/qcommerce/_components/admin/shippingMethods/freeshipping'
-import icommercelocaldelivery from '@imagina/qcommerce/_components/admin/shippingMethods/localdelivery'
-import icommercepickup from '@imagina/qcommerce/_components/admin/shippingMethods/pickup'
-import icommerceurbanshipping from '@imagina/qcommerce/_components/admin/shippingMethods/urbanshipping'
-import icommerceusps from '@imagina/qcommerce/_components/admin/shippingMethods/usps'
-import icommerceups from '@imagina/qcommerce/_components/admin/shippingMethods/ups'
+import icommerceflatrate from 'modules/qcommerce/_components/admin/shippingMethods/flatrate'
+import icommercefreeshipping from 'modules/qcommerce/_components/admin/shippingMethods/freeshipping'
+import icommercelocaldelivery from 'modules/qcommerce/_components/admin/shippingMethods/localdelivery'
+import icommercepickup from 'modules/qcommerce/_components/admin/shippingMethods/pickup'
+import icommerceurbanshipping from 'modules/qcommerce/_components/admin/shippingMethods/urbanshipping'
+import icommerceusps from 'modules/qcommerce/_components/admin/shippingMethods/usps'
+import icommerceups from 'modules/qcommerce/_components/admin/shippingMethods/ups'
 
 export default {
   props: {},

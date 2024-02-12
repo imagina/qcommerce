@@ -27,7 +27,7 @@
 
 <script>
   // Services
-  import icommerceService from '@imagina/qcommerce/_services/index';
+  import icommerceService from 'modules/qcommerce/_services/index';
   export default {
     props:{
       btnLabel:{
