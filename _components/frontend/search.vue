@@ -27,6 +27,7 @@
 </template>
 <script>
   import qcommerceService from 'modules/qcommerce/_services/index'
+  import { eventBus } from 'src/plugins/utils'
   export default {
     props: {
       modelValue: {default: false}
@@ -58,7 +59,7 @@
       }
     },
     created(){
-      this.$root.$on("toggleSearchLocal", this.toggleSearchLocal);
+      eventBus.on("toggleSearchLocal", this.toggleSearchLocal);
     },
     mounted(){
      this.initForm()

@@ -80,7 +80,7 @@
 </template>
 
 <script>
-
+import { eventBus } from 'src/plugins/utils'
   export default {
     components: {
     },
@@ -92,7 +92,7 @@
     mounted() {
       this.$nextTick(function () {
         this.initForm()
-        this.$root.$on('page.data.refresh', () => this.initForm())//Listen refresh event
+        eventBus.on('page.data.refresh', () => this.initForm())//Listen refresh event
       })
     },
     data() {

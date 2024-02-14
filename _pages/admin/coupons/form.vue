@@ -151,6 +151,7 @@
 </template>
 
 <script>
+import { eventBus } from 'src/plugins/utils'
 export default {
   components: {},
   computed: {
@@ -252,7 +253,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.initForm()
-      this.$root.$on('page.data.refresh', () => this.initForm())
+      eventBus.on('page.data.refresh', () => this.initForm())
     })
   },
   methods: {
