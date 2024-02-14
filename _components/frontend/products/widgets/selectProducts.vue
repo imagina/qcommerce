@@ -1,7 +1,7 @@
 <template>
   <div id="widgetSelectProducts">
     <q-select outlined dense v-model="productSlug" emit-value map-options
-              :options="products" @input="$emit('update:modelValue',productSlug)"
+              :options="products" @update:modelValue="$emit('update:modelValue',productSlug)"
               :style="'width: '+width+' !important'"/>
   </div>
 </template>

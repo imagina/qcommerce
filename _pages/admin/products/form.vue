@@ -76,7 +76,7 @@
                   </q-tab-panel>
                   <q-tab-panel name="content">
                     <!--name-->
-                    <q-input v-model="locale.formTemplate.name" @input="setSlug()" outlined dense
+                    <q-input v-model="locale.formTemplate.name" @update:modelValue="setSlug()" outlined dense
                              data-testid="name"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
                              :label="`${$tr('isite.cms.form.name')} (${locale.language})*`"/>
@@ -147,7 +147,7 @@
                                  :label="$tr('isite.cms.form.sku')"/>
                         <!--Price-->
                         <q-input data-testid="price" outlined dense type="number" v-model="locale.formTemplate.price"
-                                 :label="$tr('isite.cms.form.price')" @input="calculateAllPriceLists"/>
+                                 :label="$tr('isite.cms.form.price')" @update:modelValue="calculateAllPriceLists"/>
                         <!--Price List Enable-->
                         <div class="full-width" v-if="priceListEnable">
                           <div class="row q-py-sm">
@@ -167,7 +167,7 @@
                                v-for="(list, i) in locale.formTemplate.priceLists">
                             <div class="col-6">
                               <dynamic-field :field="dynamicFields.priceLists" v-model="list.priceListId"
-                                             @input="list.price = calculatePriceFromlist(list.priceListId)"/>
+                                             @update:modelValue="list.price = calculatePriceFromlist(list.priceListId)"/>
                             </div>
                             <div class="col-4">
                               <q-input data-testid="price" v-model="list.price" outlined dense

@@ -11,7 +11,7 @@
           >
         <q-expansion-item v-for="item in productOptions" :key="item.id" expand-icon-class="hidden">
           <template slot="header">
-            <q-radio v-model="optionSelected" :val="item.id" @input="vEmit()"/>
+            <q-radio v-model="optionSelected" :val="item.id" @update:modelValue="vEmit()"/>
             <q-item-section>{{item.description}}</q-item-section>
             <q-item-section side>
               <div>
@@ -28,7 +28,7 @@
           </template>
           <recursive-options-list v-if="item.children" :list-items="item.children"
                                   :parent-id="item.id" v-model="optionSelected" @add="vEmitAddOption(optionSelected)"
-                                  @delete="vEmitDelete(optionSelected)" @input="vEmit"/>
+                                  @delete="vEmitDelete(optionSelected)" @update:modelValue="vEmit"/>
         </q-expansion-item>
     </draggable>
   </q-list>
