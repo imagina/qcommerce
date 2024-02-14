@@ -27,38 +27,40 @@
                 </q-tooltip>
               </q-btn>
             </div>
-            <div v-if="locale.formTemplate.rates" v-for="(rate,i) in locale.formTemplate.rates" :key="i" class="col-12 q-py-xs">
-              <div class="row q-col-gutter-sm">
-                <div class="col-4">
-                  <!--<q-select outlined dense bg-color="white" v-model="rate.taxRateId"
-                            :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                            :label="`${$tr('icommerce.cms.form.taxRate')}*`" style="width: 100%;"
-                            emit-value map-options :options="optionsRate"
-                  />-->
-                  <!--Crud tax rate-->
-                  <crud :crud-data="import('modules/qcommerce/_crud/taxRates')"
-                        type="select" :crud-props="{label:`${$tr('icommerce.cms.form.taxRate')}*`}"
-                        v-model="rate.taxRateId" :config="{options: {label: 'name', value: 'id'}}"
-                  />
-                </div>
-                <div class="col-4">
-                  <q-select outlined dense bg-color="white" v-model="rate.based"
-                            :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                            :label="`${$tr('icommerce.cms.form.taxBased')}*`" style="width: 100%;"
-                            emit-value map-options :options="optionsBased"
-                  />
-                </div>
-                <div class="col-2 col-sm-3">
-                  <q-input type="number" outlined dense v-model="rate.priority"
-                           :label="`${$tr('icommerce.cms.form.priority')}`"
-                           :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
-                </div>
-                <div class="col-2 col-sm-1 text-right">
-                  <q-btn color="red" :loading="loading" @click="deleteRateItem(i)"
-                         icon="fas fa-trash" />
+            <template v-for="(rate, i) in locale.formTemplate.rates">
+              <div v-if="locale.formTemplate.rates" :key="i" class="col-12 q-py-xs">
+                <div class="row q-col-gutter-sm">
+                  <div class="col-4">
+                    <!--<q-select outlined dense bg-color="white" v-model="rate.taxRateId"
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                              :label="`${$tr('icommerce.cms.form.taxRate')}*`" style="width: 100%;"
+                              emit-value map-options :options="optionsRate"
+                    />-->
+                    <!--Crud tax rate-->
+                    <crud :crud-data="import('modules/qcommerce/_crud/taxRates')"
+                          type="select" :crud-props="{label:`${$tr('icommerce.cms.form.taxRate')}*`}"
+                          v-model="rate.taxRateId" :config="{options: {label: 'name', value: 'id'}}"
+                    />
+                  </div>
+                  <div class="col-4">
+                    <q-select outlined dense bg-color="white" v-model="rate.based"
+                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                              :label="`${$tr('icommerce.cms.form.taxBased')}*`" style="width: 100%;"
+                              emit-value map-options :options="optionsBased"
+                    />
+                  </div>
+                  <div class="col-2 col-sm-3">
+                    <q-input type="number" outlined dense v-model="rate.priority"
+                             :label="`${$tr('icommerce.cms.form.priority')}`"
+                             :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
+                  </div>
+                  <div class="col-2 col-sm-1 text-right">
+                    <q-btn color="red" :loading="loading" @click="deleteRateItem(i)"
+                           icon="fas fa-trash" />
+                  </div>
                 </div>
               </div>
-            </div>
+            </template>
           </div>
           <q-page-sticky
                   position="bottom-right"
