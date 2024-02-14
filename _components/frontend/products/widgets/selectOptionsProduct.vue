@@ -142,7 +142,7 @@
           let optionData = _cloneDeep(this.initData)
           optionData.required = item.required ? true : false
           optionData.optionId = item.id
-          this.$set(this.section, item.id, optionData)
+          this.section[item.id] = optionData
         })
       },
       //Set option
