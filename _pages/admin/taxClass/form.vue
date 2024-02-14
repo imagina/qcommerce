@@ -27,8 +27,8 @@
                 </q-tooltip>
               </q-btn>
             </div>
-            <template v-for="(rate, i) in locale.formTemplate.rates">
-              <div v-if="locale.formTemplate.rates" :key="i" class="col-12 q-py-xs">
+            <template v-for="(rate, i) in locale.formTemplate.rates" :key="i">
+              <div v-if="locale.formTemplate.rates" class="col-12 q-py-xs">
                 <div class="row q-col-gutter-sm">
                   <div class="col-4">
                     <!--<q-select outlined dense bg-color="white" v-model="rate.taxRateId"

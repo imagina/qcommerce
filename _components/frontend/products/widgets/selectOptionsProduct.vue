@@ -1,7 +1,7 @@
 <template>
   <div id="recursiveListOptionsComponent">
-    <template v-for="(option, index) in optionsList">
-      <div v-if="optionsList.length" :key="index">
+    <template v-for="(option, index) in optionsList" :key="index">
+      <div v-if="optionsList.length">
         <div class="content-option" v-if="option.productOptionValues &&  option.productOptionValues.length">
           <!--Title Option-->
           <div class="title-option q-title q-mb-sm">
