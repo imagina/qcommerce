@@ -52,6 +52,7 @@
 <script>
 import nestedoptionValues from 'modules/qcommerce/_components/admin/optionValues/nested'
 import optionValuesForm from 'modules/qcommerce/_pages/admin/optionValues/form'
+import { eventBus } from 'src/plugins/utils'
 
 export default {
   components: {
@@ -73,8 +74,8 @@ export default {
   created() {
     this.$nextTick(() => {
       this.getItems()
-      this.$root.$on('updateoptionValues', this.handlerUpdateoptionValues)
-      this.$root.$on('showEdit', this.showEdit)
+      eventBus.on('updateoptionValues', this.handlerUpdateoptionValues)
+      eventBus.on('showEdit', this.showEdit)
     })
   },
   computed: {
