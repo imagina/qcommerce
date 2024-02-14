@@ -98,7 +98,7 @@
 <script>
 //Components
 import selectProductConfig from 'modules/qcommerce/_components/selectProductConfig'
-import eventBus from 'modules/qsite/_plugins/eventBus'
+import { eventBus } from 'src/plugins/utils'
 
 export default {
   beforeDestroy() {

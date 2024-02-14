@@ -2,7 +2,7 @@
   <div id="addCartOptions" class="relative-position">
     <!--Select Options Product -->
     <productOptionValues v-model="template.productOptions" :additional-price="additionalPrice"
-                         :options="template.options" @input="updateTotal"/>
+                         :options="template.options" @update:modelValue="updateTotal"/>
     <!--Summary-->
     <q-list no-border class="backend-page">
       <!--Quantity-->

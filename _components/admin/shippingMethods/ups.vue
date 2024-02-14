@@ -107,7 +107,7 @@
 
   export default {
     props: {
-      value: {default: false},
+      modelValue: {default: false},
       itemId: {default: false},
       item: {
         default: () => {
@@ -115,19 +115,20 @@
         },
       },
     },
+    emits: ['update:modelValue','updated'],
     components: {uploadImg},
     watch: {
-      value(newValue) {
-        this.show = this.value
+      modelValue(newValue) {
+        this.show = this.modelValue
       },
       show(newValue) {
-        this.$emit('input', this.show)
+        this.$emit('update:modelValue', this.show)
         this.initForm()
       }
     },
     mounted() {
       this.$nextTick(function () {
-        this.show = this.value//Assign props value to show modal
+        this.show = this.modelValue//Assign props value to show modal
 
       })
     },
@@ -171,7 +172,7 @@
         //initialize item data
         if (this.item)
           this.locale.form = _cloneDeep(this.item)
-        this.show = this.value//Assign props value to show modal
+        this.show = this.modelValue//Assign props value to show modal
         this.loading = false
       },
 

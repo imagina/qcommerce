@@ -33,6 +33,7 @@
 //[ptc]import {required} from 'vuelidate/lib/validators'
 
 export default {
+  emits: ['orderHistoryCreated'],
   data() {
     return {
       loading: false,

@@ -93,7 +93,7 @@
               <template v-slot:append>
                 <q-icon name="fas fa-calendar-day"/>
                 <q-popup-proxy ref="qDateStart" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="form.dateStart" @input="$refs.qDateStart.hide()"/>
+                  <q-date v-model="form.dateStart" @update:modelValue="$refs.qDateStart.hide()"/>
                 </q-popup-proxy>
               </template>
             </q-input>
@@ -105,7 +105,7 @@
               <template v-slot:append>
                 <q-icon name="fas fa-calendar-day"/>
                 <q-popup-proxy ref="qDateEnd" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="form.dateEnd" @input="$refs.qDateEnd.hide()"/>
+                  <q-date v-model="form.dateEnd" @update:modelValue="$refs.qDateEnd.hide()"/>
                 </q-popup-proxy>
               </template>
             </q-input>

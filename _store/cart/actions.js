@@ -1,5 +1,4 @@
-import alert from 'modules/qsite/_plugins/alert';
-import helper from 'modules/qsite/_plugins/helper';
+import { alert, helper } from 'src/plugins/utils';
 import eCommerceService from 'modules/qcommerce/_services/index'
 import store from 'src/store/index'
 

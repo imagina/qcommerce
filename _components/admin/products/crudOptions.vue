@@ -16,7 +16,7 @@
           </div>
           <!--Options-->
           <recursive-options v-model="template.currentOption" :list-items="productOptions"
-                             ref="optionList" @input="setDataOption()" v-else
+                             ref="optionList" @update:modelValue="setDataOption()" v-else
                              @add="addOption(template.currentOption)"
                              @delete="deleteOption(template.currentOption)"/>
           <!--Add new option-->
@@ -55,7 +55,7 @@
           <!--Required-->
           <div class="inline-block q-ml-lg">
             <div class="input-title capitalize">{{ $tr('isite.cms.form.required') }}</div>
-            <q-toggle v-model="template.form.required" @input="updateProductOption()"/>
+            <q-toggle v-model="template.form.required" @update:modelValue="updateProductOption()"/>
           </div>
           <!--Form-->
           <div class="row q-col-gutter-sm q-mt-sm">
@@ -69,7 +69,7 @@
                   :options="template.parentValues"
                   placeholder="Select opion value..."
                   :append-to-body="true"
-                  @input="updateProductOption()"
+                  @update:modelValue="updateProductOption()"
               />
             </div>
             <!--Option Value-->

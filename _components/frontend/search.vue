@@ -29,10 +29,10 @@
   import qcommerceService from 'modules/qcommerce/_services/index'
   export default {
     props: {
-      value: {default: false}
+      modelValue: {default: false}
     },
+    emits: ['update:modelValue'],
     data(){
-
       return {
         searchValue: '',
         products: [],
@@ -40,11 +40,11 @@
       }
     },
     watch: {
-      value(newValue) {
-        this.show = this.value
+      modelValue(newValue) {
+        this.show = newValue
       },
       show(newValue) {
-        this.$emit('input', this.show)
+        this.$emit('update:modelValue', this.show)
         this.initForm()
       }
     },

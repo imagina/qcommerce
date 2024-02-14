@@ -17,7 +17,7 @@
           <!--Search-->
           <q-input clearable v-model="table.filter.search" dense outlined debounce="800"
                    :placeholder="`${$tr('isite.cms.label.search',{capitalize : true})}...`"
-                   @input="getDataTable">
+                   @update:modelValue="getDataTable">
             <template v-slot:append>
               <q-icon name="search"/>
             </template>
@@ -41,7 +41,7 @@
             <q-tooltip :delay="300">{{ $tr('isite.cms.label.edit') }}</q-tooltip>
           </q-btn>
           <!--status button-->
-          <q-toggle color="green" v-model="props.row.status" class="q-px-xs" @input="update(props.row)">
+          <q-toggle color="green" v-model="props.row.status" class="q-px-xs" @update:modelValue="update(props.row)">
             <q-tooltip :delay="300">{{ `${$tr('isite.cms.label.enabled')}/${$tr('isite.cms.label.disabled')}` }}
             </q-tooltip>
           </q-toggle>

@@ -13,7 +13,7 @@
         <template #item="{ element }">
           <q-expansion-item :key="element.id" expand-icon-class="hidden">
             <template slot="header">
-              <q-radio v-model="optionSelected" :val="element.id" @input="vEmit()"/>
+              <q-radio v-model="optionSelected" :val="element.id" @update:modelValue="vEmit()"/>
               <q-item-section>{{element.description}}</q-item-section>
               <q-item-section side>
                 <div>
@@ -30,7 +30,7 @@
             </template>
             <recursive-options-list v-if="item.children" :list-items="item.children"
                                     :parent-id="item.id" v-model="optionSelected" @add="vEmitAddOption(optionSelected)"
-                                    @delete="vEmitDelete(optionSelected)" @input="vEmit"/>
+                                    @delete="vEmitDelete(optionSelected)" @update:modelValue="vEmit"/>
           </q-expansion-item>
         </template>
     </draggable>
@@ -47,14 +47,15 @@
     props: {
       listItems: { default: false },
       parentId: { default: 0 },
-      value: { default: null }
+      modelValue: { default: null }
     },
+    emits: ['update:modelValue', 'add', 'delete'],
     watch: {
       listItems () {
         this.init()
       },
-      value () {
-        this.optionSelected = this.value
+      modelValue () {
+        this.optionSelected = this.modelValue
       }
     },
     mounted () {
@@ -82,7 +83,7 @@
         return (response == -1) ? false : true
       },
       vEmit () {
-        this.$emit('input', this.optionSelected)
+        this.$emit('update:modelValue', this.optionSelected)
       },
       vEmitAddOption (optionId) {
         this.optionSelected = optionId

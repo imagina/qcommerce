@@ -16,7 +16,7 @@
               v-model="section[option.id].singleOption"
               :options="getOptionsSelect(option.productOptionValues)"
               placeholder="Select a option..."
-              @input="setOptions(option.id,[section[option.id].singleOption])"
+              @update:modelValue="setOptions(option.id,[section[option.id].singleOption])"
             />
           </div>
           <!-- If option type is radio -->
@@ -24,13 +24,13 @@
             <div class="text-left q-gutter-sm">
               <q-radio v-for="(value, key) in option.productOptionValues" :key="key"
                        v-model="section[option.id].singleOption" :val="value.optionValueId" dense
-                       @input="setOptions(option.id,[section[option.id].singleOption])" :label="getLabel(value)"/>
+                       @update:modelValue="setOptions(option.id,[section[option.id].singleOption])" :label="getLabel(value)"/>
             </div>
           </div>
           <!-- If option type is checkbox -->
           <div v-if="option.type == 'checkbox'">
             <q-checkbox
-              @input="setOptions(option.id,section[option.id].multiOption)"
+              @update:modelValue="setOptions(option.id,section[option.id].multiOption)"
               v-for="(value, index2) in option.productOptionValues"
               :key="index2"
               v-model="section[option.id].multiOption"
@@ -45,7 +45,7 @@
         <div v-if="section[option.id].singleOption && (option.children && option.children.length)">
           <productOptionValues
             v-model="section[option.id].children"
-            @input="vEmit()"
+            @update:modelValue="vEmit()"
             :options="option.children"
             :additional-price="additionalPrice"
             :parentOptionValueId="section[option.id].singleOption"/>
@@ -69,6 +69,7 @@
       parentOptionValueId: {default: 0,},
       additionalPrice: {default: true}
     },
+    emits: ['update:modelValue'],
     watch: {
       options() {
         this.init()
@@ -211,23 +212,27 @@
         })
 
         //Emmit response
-        this.$emit('input', {options: options, total: total, required: required})
+        this.$emit('update:modelValue', {options: options, total: total, required: required})
       },
     },
   }
 </script>
 
 <style lang="scss">
-  #recursiveListOptionsComponent
-    .content-option
-      padding 10px 0px
+  #recursiveListOptionsComponent {
+    .content-option {
+      padding: 10px 0px;
 
-      .title-option
-        text-transform capitalize
-        font-size 14px
-        text-align left
+      .title-option {
+        text-transform: capitalize;
+        font-size: 14px;
+        text-align: left;
+      }
+    }
 
-    .q-radio__label, .q-checkbox__label
-      font-size 12px
-      color $grey
+    .q-radio__label, .q-checkbox__label {
+      font-size: 12px;
+      color: $grey;
+    }
+  }
 </style>
