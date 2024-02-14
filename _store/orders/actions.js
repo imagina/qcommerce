@@ -1,8 +1,4 @@
-import alert from 'modules/qsite/_plugins/alert'
-import helper from 'modules/qsite/_plugins/helper'
-import axios from 'axios'
 import eCommerceService from 'modules/qcommerce/_services/index'
-import remember from 'modules/qsite/_plugins/remember'
 
 export const GET_ORDERS_PENDING = ({ commit, state, dispatch }, Vue) => {
   return new Promise(async (resolve, reject) => {
