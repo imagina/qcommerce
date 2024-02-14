@@ -1,7 +1,7 @@
 <template>
   <div id="recursiveListOptionsComponent">
-    <template v-for="(option, index) in optionsList">
-      <div v-if="optionsList.length" :key="index">
+    <template v-for="(option, index) in optionsList" :key="index">
+      <div v-if="optionsList.length">
         <div class="content-option" v-if="option.productOptionValues &&  option.productOptionValues.length">
           <!--Title Option-->
           <div class="title-option q-title q-mb-sm">
@@ -219,16 +219,20 @@
 </script>
 
 <style lang="scss">
-  #recursiveListOptionsComponent
-    .content-option
-      padding 10px 0px
+  #recursiveListOptionsComponent {
+    .content-option {
+      padding: 10px 0px;
 
-      .title-option
-        text-transform capitalize
-        font-size 14px
-        text-align left
+      .title-option {
+        text-transform: capitalize;
+        font-size: 14px;
+        text-align: left;
+      }
+    }
 
-    .q-radio__label, .q-checkbox__label
-      font-size 12px
-      color $grey
+    .q-radio__label, .q-checkbox__label {
+      font-size: 12px;
+      color: $grey;
+    }
+  }
 </style>

@@ -3,33 +3,36 @@
     <!-- Dropdwon Item -->
       <draggable
           tag="div"
-          v-if="productOptions.length>0"
+          v-if="productOptions.length > 0"
           v-bind="dragOptions"
           :list="productOptions"
           :group="{ name: 'g1' }"
           @change="vEmit"
-          >
-        <q-expansion-item v-for="item in productOptions" :key="item.id" expand-icon-class="hidden">
-          <template slot="header">
-            <q-radio v-model="optionSelected" :val="item.id" @update:modelValue="vEmit()"/>
-            <q-item-section>{{item.description}}</q-item-section>
-            <q-item-section side>
-              <div>
-                <q-btn icon="fas fa-plus" color="positive" v-if="permitChildren(item)"
-                       size="xs" @click="vEmitAddOption(item.id)" round unelevated>
-                  <q-tooltip>{{`${$tr('isite.cms.label.add')} ${$tr('isite.cms.label.option')}`}}</q-tooltip>
-                </q-btn>
-                <q-btn icon="far fa-trash-alt" color="red" round unelevated
-                       class="q-ml-xs" size="xs" @click="vEmitDelete(item.id)">
-                  <q-tooltip>{{`${$tr('isite.cms.label.delete')}`}}</q-tooltip>
-                </q-btn>
-              </div>
-            </q-item-section>
-          </template>
-          <recursive-options-list v-if="item.children" :list-items="item.children"
-                                  :parent-id="item.id" v-model="optionSelected" @add="vEmitAddOption(optionSelected)"
-                                  @delete="vEmitDelete(optionSelected)" @update:modelValue="vEmit"/>
-        </q-expansion-item>
+          item-key="name"
+      >
+        <template #item="{ element }">
+          <q-expansion-item :key="element.id" expand-icon-class="hidden">
+            <template slot="header">
+              <q-radio v-model="optionSelected" :val="element.id" @update:modelValue="vEmit()"/>
+              <q-item-section>{{element.description}}</q-item-section>
+              <q-item-section side>
+                <div>
+                  <q-btn icon="fas fa-plus" color="positive" v-if="permitChildren(element)"
+                         size="xs" @click="vEmitAddOption(element.id)" round unelevated>
+                    <q-tooltip>{{`${$tr('isite.cms.label.add')} ${$tr('isite.cms.label.option')}`}}</q-tooltip>
+                  </q-btn>
+                  <q-btn icon="far fa-trash-alt" color="red" round unelevated
+                         class="q-ml-xs" size="xs" @click="vEmitDelete(element.id)">
+                    <q-tooltip>{{`${$tr('isite.cms.label.delete')}`}}</q-tooltip>
+                  </q-btn>
+                </div>
+              </q-item-section>
+            </template>
+            <recursive-options-list v-if="item.children" :list-items="item.children"
+                                    :parent-id="item.id" v-model="optionSelected" @add="vEmitAddOption(optionSelected)"
+                                    @delete="vEmitDelete(optionSelected)" @update:modelValue="vEmit"/>
+          </q-expansion-item>
+        </template>
     </draggable>
   </q-list>
 </template>
