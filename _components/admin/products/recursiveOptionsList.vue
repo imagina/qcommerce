@@ -44,14 +44,15 @@
     props: {
       listItems: { default: false },
       parentId: { default: 0 },
-      value: { default: null }
+      modelValue: { default: null }
     },
+    emits: ['update:modelValue', 'add', 'delete'],
     watch: {
       listItems () {
         this.init()
       },
-      value () {
-        this.optionSelected = this.value
+      modelValue () {
+        this.optionSelected = this.modelValue
       }
     },
     mounted () {
@@ -79,7 +80,7 @@
         return (response == -1) ? false : true
       },
       vEmit () {
-        this.$emit('input', this.optionSelected)
+        this.$emit('update:modelValue', this.optionSelected)
       },
       vEmitAddOption (optionId) {
         this.optionSelected = optionId

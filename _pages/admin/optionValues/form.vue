@@ -71,6 +71,7 @@
 import uploadMedia from 'modules/qmedia/_components/form'
 
 export default {
+  emits: ['updated'],
   components: {
     uploadMedia
   },

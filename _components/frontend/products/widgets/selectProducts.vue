@@ -1,22 +1,23 @@
 <template>
   <div id="widgetSelectProducts">
     <q-select outlined dense v-model="productSlug" emit-value map-options
-              :options="products" @input="$emit('input',productSlug)"
+              :options="products" @input="$emit('update:modelValue',productSlug)"
               :style="'width: '+width+' !important'"/>
   </div>
 </template>
 <script>
 export default {
   props: {
-    value: {default: false},
+    modelValue: {default: false},
     categoryId: {default: false},
     width: {default: 'auto'}
   },
+  emits: ['update:modelValue'],
   components: {},
   watch: {},
   mounted() {
     this.$nextTick(function () {
-      this.productSlug = this.value
+      this.productSlug = this.modelValue
       this.getData()
     })
   },

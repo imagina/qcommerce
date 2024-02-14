@@ -69,6 +69,7 @@
       parentOptionValueId: {default: 0,},
       additionalPrice: {default: true}
     },
+    emits: ['update:modelValue'],
     watch: {
       options() {
         this.init()
@@ -211,7 +212,7 @@
         })
 
         //Emmit response
-        this.$emit('input', {options: options, total: total, required: required})
+        this.$emit('update:modelValue', {options: options, total: total, required: required})
       },
     },
   }
