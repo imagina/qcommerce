@@ -1,55 +1,57 @@
 <template>
   <div id="recursiveListOptionsComponent">
-    <div v-for="(option, index) in optionsList" v-if="optionsList.length" :key="index">
-      <div class="content-option" v-if="option.productOptionValues &&  option.productOptionValues.length">
-        <!--Title Option-->
-        <div class="title-option q-title q-mb-sm">
-          <q-icon name="fas fa-caret-right" color="primary"/>
-          {{option.description}}
-          <!--Label required-->
-          <q-chip v-if="option.required" :label="$tr('isite.cms.label.required')" size="xs" color="red" outline/>
-        </div>
-        <!-- If option type is select -->
-        <div v-if="option.type == 'select'">
-          <tree-select
-            v-model="section[option.id].singleOption"
-            :options="getOptionsSelect(option.productOptionValues)"
-            placeholder="Select a option..."
-            @input="setOptions(option.id,[section[option.id].singleOption])"
-          />
-        </div>
-        <!-- If option type is radio -->
-        <div v-if="option.type == 'radio'" class="row text-center">
-          <div class="text-left q-gutter-sm">
-            <q-radio v-for="(value, key) in option.productOptionValues" :key="key"
-                     v-model="section[option.id].singleOption" :val="value.optionValueId" dense
-                     @input="setOptions(option.id,[section[option.id].singleOption])" :label="getLabel(value)"/>
+    <template v-for="(option, index) in optionsList">
+      <div v-if="optionsList.length" :key="index">
+        <div class="content-option" v-if="option.productOptionValues &&  option.productOptionValues.length">
+          <!--Title Option-->
+          <div class="title-option q-title q-mb-sm">
+            <q-icon name="fas fa-caret-right" color="primary"/>
+            {{option.description}}
+            <!--Label required-->
+            <q-chip v-if="option.required" :label="$tr('isite.cms.label.required')" size="xs" color="red" outline/>
+          </div>
+          <!-- If option type is select -->
+          <div v-if="option.type == 'select'">
+            <tree-select
+              v-model="section[option.id].singleOption"
+              :options="getOptionsSelect(option.productOptionValues)"
+              placeholder="Select a option..."
+              @input="setOptions(option.id,[section[option.id].singleOption])"
+            />
+          </div>
+          <!-- If option type is radio -->
+          <div v-if="option.type == 'radio'" class="row text-center">
+            <div class="text-left q-gutter-sm">
+              <q-radio v-for="(value, key) in option.productOptionValues" :key="key"
+                       v-model="section[option.id].singleOption" :val="value.optionValueId" dense
+                       @input="setOptions(option.id,[section[option.id].singleOption])" :label="getLabel(value)"/>
+            </div>
+          </div>
+          <!-- If option type is checkbox -->
+          <div v-if="option.type == 'checkbox'">
+            <q-checkbox
+              @input="setOptions(option.id,section[option.id].multiOption)"
+              v-for="(value, index2) in option.productOptionValues"
+              :key="index2"
+              v-model="section[option.id].multiOption"
+              :true-value="value.optionValueId"
+              false-value=""
+              :val="value.optionValueId">
+              <p class="inline-block q-subheading q-ma-none">{{getLabel(value)}}</p>
+            </q-checkbox>
           </div>
         </div>
-        <!-- If option type is checkbox -->
-        <div v-if="option.type == 'checkbox'">
-          <q-checkbox
-            @input="setOptions(option.id,section[option.id].multiOption)"
-            v-for="(value, index2) in option.productOptionValues"
-            :key="index2"
-            v-model="section[option.id].multiOption"
-            :true-value="value.optionValueId"
-            false-value=""
-            :val="value.optionValueId">
-            <p class="inline-block q-subheading q-ma-none">{{getLabel(value)}}</p>
-          </q-checkbox>
+        <!--Children options-->
+        <div v-if="section[option.id].singleOption && (option.children && option.children.length)">
+          <productOptionValues
+            v-model="section[option.id].children"
+            @input="vEmit()"
+            :options="option.children"
+            :additional-price="additionalPrice"
+            :parentOptionValueId="section[option.id].singleOption"/>
         </div>
       </div>
-      <!--Children options-->
-      <div v-if="section[option.id].singleOption && (option.children && option.children.length)">
-        <productOptionValues
-          v-model="section[option.id].children"
-          @input="vEmit()"
-          :options="option.children"
-          :additional-price="additionalPrice"
-          :parentOptionValueId="section[option.id].singleOption"/>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
