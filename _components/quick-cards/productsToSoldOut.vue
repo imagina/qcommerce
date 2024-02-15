@@ -31,7 +31,7 @@ export default {
           include : 'categories'
         },
         information: {
-          image: {field: 'mediaFiles', format: val => val ? val.mainimage.mediumThumb : null},
+          image: {field: 'mediaFiles', format: val => val ? val?.mainimage.mediumThumb : null},
           text1: {
             field: 'categories',
             format: val => val ? val.map(item => {

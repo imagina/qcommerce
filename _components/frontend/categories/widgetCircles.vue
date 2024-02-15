@@ -11,7 +11,7 @@
         <div class="flex flex-center text-white border">
           <div
             class="flex flex-center text-white circle text-center"
-            :style="formatImage(category.mainImage.path)">
+            :style="formatImage(category?.mainImage.path)">
             {{category.title}}
             <q-btn
               :label="btnLabel"

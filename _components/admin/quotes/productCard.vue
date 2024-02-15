@@ -2,7 +2,7 @@
   <div id="tagetProductQuoteComponent" @click="eventBus.emit('qcommerce.quote.addProduct', row)">
     <q-card class="box box-auto-height">
       <!--Product image-->
-      <img :src="row.mediaFiles.mainimage.mediumThumb" v-if="false">
+      <img :src="row?.mediaFiles?.mainimage.mediumThumb" v-if="false">
       <!--Product Data-->
       <q-card-section class="q-py-sm">
         <!--Category-->

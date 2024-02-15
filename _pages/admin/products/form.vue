@@ -416,7 +416,7 @@
                       <!--Video-->
                       <q-input data-testid="optionsVideo" v-model="locale.formTemplate.options.video" outlined dense
                                :label="$tr('isite.cms.form.video')"/>
-                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields.mainImage"
+                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields?.mainImage"
                                      :item-id="productId"/>
                       <dynamic-field v-model="locale.formTemplate.mediasMulti" :field="dynamicFields.gallery"
                                      :item-id="productId"/>
