@@ -190,7 +190,7 @@ export default {
               delayed: () => {
                 return new Promise(resolve => {
                   //get core locales
-                  const locales = this.$store.getters['qsiteApp/getSettingValueByName']('core::locales')
+                  const locales = this.$getSetting('core::locales')
                   const requestParams = {
                     refresh: true,
                     params: {filter: {settingGroupName: 'availableLocales'}}

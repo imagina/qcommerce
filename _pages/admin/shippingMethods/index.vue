@@ -36,7 +36,7 @@
         <q-td slot="body-cell-actions" slot-scope="props" :props="props">
           <!--Edit button-->
           <q-btn color="green" icon="fas fa-pen" size="sm"
-                 v-if="$auth.hasAccess('icommerce.payment-methods.edit')"
+                 v-if="$hasAccess('icommerce.payment-methods.edit')"
                  @click="itemToEdit = props.row; formItemShow = true">
             <q-tooltip :delay="300">{{ $tr('isite.cms.label.edit') }}</q-tooltip>
           </q-btn>
