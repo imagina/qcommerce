@@ -157,7 +157,7 @@ export default {
       return {
         showReviewsProduct: (config('app.mode') == 'iadmin') ? false :
             parseInt(this.$getSetting('icommerce::showReviewsProduct') || 0),
-        chatByOrderEnable: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::chatByOrderEnable') || 0)
+        chatByOrderEnable: parseInt(this.$getSetting('icommerce::chatByOrderEnable') || 0)
       }
     },
     //Return orderID
