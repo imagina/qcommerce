@@ -373,7 +373,7 @@
                             :crud-props="{label:`${$tr('icommerce.cms.form.taxClass')}`, 'data-testid': 'taxClassId'}"
                             v-model="locale.formTemplate.taxClassId"
                             :config="{options: {label: 'name', value: 'id'}}"
-                            v-if="$auth.hasAccess('icommerce.taxclasses.manage')"
+                            v-if="$hasAccess('icommerce.taxclasses.manage')"
                       />
                       <!--Crud manufacturer-->
                       <crud :crud-data="import('modules/qcommerce/_crud/manufacturers')"
@@ -589,7 +589,7 @@ export default {
       modalShow: {
         category: false
       },
-      priceListEnable: this.$auth.hasAccess('icommercepricelist.pricelists.manage'),
+      priceListEnable: this.$hasAccess('icommercepricelist.pricelists.manage'),
       extraFields: [],
       modalForms: {
         content: {
@@ -651,7 +651,7 @@ export default {
           type: 'productWarehouse',
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
-          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionability')
+          vIf: this.$getSetting('icommerce::warehouseFunctionability')
         },
         home: {
           show: false,
@@ -784,7 +784,7 @@ export default {
     canManageRecordMaster() {
       let response = true
 
-      if (this.productId && !this.$auth.hasAccess('isite.master.records.edit')) {
+      if (this.productId && !this.$hasAccess('isite.master.records.edit')) {
         response = false
         //Validate if record is master
         let record = this.locale.formTemplate
@@ -792,7 +792,7 @@ export default {
           this.$router.push({name: 'app.home'})
         }
       }
-      if (!this.productId && !this.$auth.hasAccess('isite.master.records.create')) {
+      if (!this.productId && !this.$hasAccess('isite.master.records.create')) {
         response = false
       }
 
@@ -1316,7 +1316,7 @@ export default {
         Object.keys(this.extraFields).forEach((key) => {
           let field = this.extraFields[key]
           //Validate field permission
-          if (field.permission && !this.$auth.hasAccess(field.permission)) return
+          if (field.permission && !this.$hasAccess(field.permission)) return
           //Add to data locale to field
           if (field.isTranslatable) {
             dataLocale.fieldsTranslatable[field.name || key] = field.value
