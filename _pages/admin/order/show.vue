@@ -156,8 +156,8 @@ export default {
     settings() {
       return {
         showReviewsProduct: (config('app.mode') == 'iadmin') ? false :
-            parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::showReviewsProduct') || 0),
-        chatByOrderEnable: parseInt(this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::chatByOrderEnable') || 0)
+            parseInt(this.$getSetting('icommerce::showReviewsProduct') || 0),
+        chatByOrderEnable: parseInt(this.$getSetting('icommerce::chatByOrderEnable') || 0)
       }
     },
     //Return orderID
@@ -252,7 +252,7 @@ export default {
     },
     //validate if can edit order
     canEditOrder() {
-      return ((config('app.mode') == 'iadmin') && this.$auth.hasAccess('icommerce.orders.edit')) ? true : false
+      return ((config('app.mode') == 'iadmin') && this.$hasAccess('icommerce.orders.edit')) ? true : false
     },
     //Edit order status form
     form() {
