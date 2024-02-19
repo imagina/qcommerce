@@ -32,8 +32,11 @@ export default {
               format: val => val.option.description, align: 'left',
             },
             {
-              name: 'value', label: this.$tr('icommerce.cms.form.optionValue'), field: 'productOptionValue',
-              format: val => val.optionValue.description, align: 'left',
+              name: 'fullName',
+              label: this.$tr('icommerce.cms.form.optionValue'),
+              field: 'fullName',
+              align: 'left',
+              format: val => val || '-'
             },
             {
               name: 'warehouse',
