@@ -693,7 +693,7 @@ export default {
         fields: {
           parentId: '',
           status: 1,
-          categoryId: 0,
+          categoryId: null,
           categories: [],
           addedById: this.$store.state.quserAuth.userId,
           sku: 0,
