@@ -104,15 +104,22 @@ export default {
           },
           productOptionValueId: {
             value: null,
-            type: 'select',
+            type: 'treeSelect',
             props: {
               label: `${this.$tr('icommerce.cms.form.optionValue')}`,
-              clearable: true
+              clearable: true,
+              disableBranchNodes: true
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qcommerce.productOptionValues',
               requestParams: {include: 'option,optionValue'},
-              select: {label: item => `${item.option.description} - ${item.optionValue}`, id: 'id'},
+              format: (data) => {
+                return this.$array.tree(data.map(item => ({
+                  ...item,
+                  title: `${item.option.description}: ${item.optionValue}`,
+                  parentId: data.find(element => element.optionValueId == (item.parentOptionValueId || 0))?.id || 0
+                })))
+              },
               loadedOptions: (data) => this.productOptionValues = data
             }
           },

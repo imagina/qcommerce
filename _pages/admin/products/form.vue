@@ -651,7 +651,7 @@ export default {
           type: 'productWarehouse',
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
-          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionability')
+          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality')
         },
         home: {
           show: false,
@@ -693,7 +693,7 @@ export default {
         fields: {
           parentId: '',
           status: 1,
-          categoryId: 0,
+          categoryId: null,
           categories: [],
           addedById: this.$store.state.quserAuth.userId,
           sku: 0,
