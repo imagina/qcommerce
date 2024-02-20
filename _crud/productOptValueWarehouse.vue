@@ -28,10 +28,6 @@ export default {
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
-              name: 'option', label: this.$tr('isite.cms.form.option'), field: 'productOptionValue',
-              format: val => val.option.description, align: 'left',
-            },
-            {
               name: 'fullName',
               label: this.$tr('icommerce.cms.form.optionValue'),
               field: 'fullName',
@@ -115,14 +111,13 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qcommerce.productOptionValues',
-              requestParams: {include: 'option,optionValue'},
-              format: (data) => {
-                return this.$array.tree(data.map(item => ({
-                  ...item,
-                  title: `${item.option.description}: ${item.optionValue}`,
-                  parentId: data.find(element => element.optionValueId == (item.parentOptionValueId || 0))?.id || 0
-                })))
+              requestParams: {
+                include: 'option,optionValue',
+                filter: {
+                  productId: this.$route.params.id || null//Get the id from route
+                }
               },
+              select: {label: item => `${item.option.description}: ${item.optionValue}`, id: 'id'},
               loadedOptions: (data) => this.productOptionValues = data
             }
           },
