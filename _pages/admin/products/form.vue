@@ -187,7 +187,9 @@
                         </div>
                         <!--Quantity-->
                         <q-input data-testid="quantity" outlined dense v-model="locale.formTemplate.quantity"
-                                 :label="$tr('isite.cms.form.quantity')" type="number"/>
+                                 :label="$tr('isite.cms.form.quantity')" type="number"
+                                 :readonly="settings.isWarehouseEnable"
+                        />
                         <!--Quantity Class-->
                         <dynamic-field v-model="locale.formTemplate.quantityClassId"
                                        :field="dynamicFields.quantityClassId"/>
@@ -1007,6 +1009,12 @@ export default {
         }
       }
     },
+    //Return settings
+    settings() {
+      return {
+        isWarehouseEnable: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+      }
+    }
   },
   methods: {
     //validate fields from home tab
