@@ -962,7 +962,7 @@ export default {
           read: {
             title: this.$tr('icommerce.cms.form.generalWarehouse'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: {include: 'product,warehouse',filter: {productId: this.productId}}
+            requestParams: {include: 'product,warehouse', filter: {productId: this.productId}}
           },
           formLeft: {
             productId: {
@@ -986,7 +986,7 @@ export default {
             excludeActions: ['sync', 'recommendations'],
             requestParams: {
               include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',
-              filter: {include: 'product,warehouse',productId: this.productId}
+              filter: {include: 'product,warehouse', productId: this.productId}
             }
           },
           formLeft: {
@@ -1010,10 +1010,17 @@ export default {
   },
   methods: {
     //validate fields from home tab
-    async validateFieldsHomeTab() {
-      const {name, slug, summary, description, categoryId, categories} = this.locale.formTemplate;
-      if (name.trim() === '' || slug.trim() === '' || summary.trim() === '' || description.trim() === '' || categoryId === 0 || categories.length === 0) return false;
-      return true
+    validateFieldsHomeTab() {
+      const formData = this.locale.formTemplate;
+      var response = true;
+      //Validate empty strings
+      ['name', 'slug', 'summary', 'description'].forEach(key => {
+        if (!formData[key] || !formData[key].trim().length) response = false
+      })
+      //Validate Categories
+      if (!formData.categoryId || !formData.categories.length) response = false;
+      //Default response
+      return response
     },
     //back to home panel
     async backHomePanel() {
@@ -1153,7 +1160,7 @@ export default {
     },
     //Create Product
     async createItem() {
-      if (await this.validateFieldsHomeTab()) {
+      if (this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         this.$crud.create(configName, this.getDataForm()).then(response => {
@@ -1169,7 +1176,7 @@ export default {
     },
     //Update Product
     async updateItem() {
-      if (await this.validateFieldsHomeTab()) {
+      if (this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         let requestData = {...this.getDataForm(), id: this.productId}
