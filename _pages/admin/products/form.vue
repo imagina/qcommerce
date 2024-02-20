@@ -35,15 +35,28 @@
                 <q-tab-panels v-model="lastPanelOpen" keep-alive animated class="rounded-borders q-pa-none">
                   <q-tab-panel name="home">
                     <div class="row q-col-gutter-md q-mb-md">
-                      <div v-for="modalForm in modalForms" class="col-12 col-md-6 col-xl-4"
-                           v-if="modalForm.type !== 'home' && (modalForm.vIf != undefined ? modalForm.vIf : true)"
-                           @click="() => showNewForm(modalForm.type)">
-                        <div class="relative-position card">
-                          <q-icon name="fal fa-edit" color="primary" class="absolute-right q-pr-md q-pt-md"/>
-                          <div class="box-title text-primary q-mb-sm ">{{ $tr(modalForm.title) }}</div>
-                          <p class="text-body2">{{ $tr(modalForm.content) }}</p>
+                      <template
+                        v-for="(modalForm, index) in modalForms"
+                        :key="index"
+                      >
+                        <div
+                          class="col-12 col-md-6 col-xl-4"
+                          v-if="modalForm.type !== 'home' && (modalForm.vIf != undefined ? modalForm.vIf : true)"
+                          @click="() => showNewForm(modalForm.type)"
+                        >
+                          <div class="relative-position card">
+                            <q-icon
+                              name="fal fa-edit"
+                              color="primary"
+                              class="absolute-right q-pr-md q-pt-md"
+                            />
+                            <div class="box-title text-primary q-mb-sm ">
+                              {{ $tr(modalForm.title) }}
+                            </div>
+                            <p class="text-body2">{{ $tr(modalForm.content) }}</p>
+                          </div>
                         </div>
-                      </div>
+                      </template>
                     </div>
                     <!-- Save Actions -->
                     <div class="text-right">
