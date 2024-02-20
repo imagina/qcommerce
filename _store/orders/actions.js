@@ -7,7 +7,7 @@ export const GET_ORDERS_PENDING = ({ commit, state, dispatch }, Vue) => {
     eCommerceService.crud.index('apiRoutes.qcommerce.orders', params).then(response => {
       commit('SET_ORDERS_PENDING', response.data)
       eventBus.emit('new-order')
-      eventBus.root.$emit('orders-updated')
+      eventBus.emit('orders-updated')
       resolve(true)
     }).catch(error => {
       console.error('[GET ORDERS ACTION]', error)
