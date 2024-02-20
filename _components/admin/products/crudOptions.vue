@@ -79,7 +79,7 @@
             </div>
             <!--Option Values-->
             <div class="col-12 q-mt-md" v-if="!showFieldForm">
-              <crud-option-values :product-option="template.form"/>
+              <crud-option-values :product-option="template.form" :allow-quantity="allowQuantity"/>
             </div>
           </div>
         </div>
@@ -172,6 +172,13 @@ export default {
       let types = ['text', 'textarea']
       let response = types.indexOf(this.template.form.type)
       return (response == -1) ? false : true
+    },
+    //Validate if is warehouse enable and has children the selected option
+    allowQuantity() {
+      const isWarehouseEnable = this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+      const currentOption = this.template.form
+      //Validate if is warehouse
+      return !isWarehouseEnable && !currentOption.children.length
     }
   },
   methods: {
@@ -194,7 +201,7 @@ export default {
 
           // fix: backend does not provide required field when is false
           this.productOptionsRoot.forEach(item => {
-            if(!item.hasOwnProperty('required')){
+            if (!item.hasOwnProperty('required')) {
               item.required = false
             }
           })
@@ -279,8 +286,8 @@ export default {
 
       // fix: required toggle
       this.productOptionsRoot.find((element) => {
-        if(element.id == this.template.currentOption){
-          if(this.template.form?.required != undefined){
+        if (element.id == this.template.currentOption) {
+          if (this.template.form?.required != undefined) {
             element.required = this.template.form.required
           }
         }

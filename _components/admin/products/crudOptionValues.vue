@@ -83,6 +83,7 @@
               <!--Quantity-->
               <q-input v-model="form.quantity" type="number" outlined dense
                        :label="`${$tr('isite.cms.form.quantity')} *`"
+                       :readonly="!allowQuantity"
                        :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
               <div class="input-title">{{ $tr('isite.cms.form.stock') }}</div>
               <tree-select
@@ -187,6 +188,7 @@
 export default {
   props: {
     productOption: {defalt: false},
+    allowQuantity: {type: Boolean, default: true}
   },
   watch: {
     productOption: {
