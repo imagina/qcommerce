@@ -20,7 +20,7 @@
             <div class="col-6 text-right q-py-xs relative-position">
               <!--:to="{name: 'qcommerce.admin.optionValues.update', params: {optionId: $route.params.id, id: optionValue.id}}"-->
               <q-btn
-                @click="eventBus.$emit('showEdit',optionValue.id)"
+                @click="eventBus.emit('showEdit',optionValue.id)"
                 icon="fas fa-pen"
                 size="xs"
                 class="q-mr-sm"
