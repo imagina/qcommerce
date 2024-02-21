@@ -79,7 +79,7 @@
             </div>
             <!--Option Values-->
             <div class="col-12 q-mt-md" v-if="!showFieldForm">
-              <crud-option-values :product-option="template.form" :allow-quantity="allowQuantity"/>
+              <crud-option-values :product-option="template.form"/>
             </div>
           </div>
         </div>
@@ -172,13 +172,6 @@ export default {
       let types = ['text', 'textarea']
       let response = types.indexOf(this.template.form.type)
       return (response == -1) ? false : true
-    },
-    //Validate if is warehouse enable and has children the selected option
-    allowQuantity() {
-      const isWarehouseEnable = this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
-      const currentOption = this.template.form
-      //Validate if is warehouse
-      return !isWarehouseEnable && !currentOption.children.length
     }
   },
   methods: {

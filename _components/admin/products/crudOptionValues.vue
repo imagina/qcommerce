@@ -81,10 +81,7 @@
                 }"/>
               </div>
               <!--Quantity-->
-              <q-input v-model="form.quantity" type="number" outlined dense
-                       :label="`${$tr('isite.cms.form.quantity')} *`"
-                       :readonly="!allowQuantity"
-                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
+              <dynamic-field v-model="form.quantity" :field="quantityCustomProps"/>
               <div class="input-title">{{ $tr('isite.cms.form.stock') }}</div>
               <tree-select
                   data-testid="stockStatus"
@@ -187,8 +184,7 @@
 <script>
 export default {
   props: {
-    productOption: {defalt: false},
-    allowQuantity: {type: Boolean, default: true}
+    productOption: {defalt: false}
   },
   watch: {
     productOption: {
@@ -235,7 +231,7 @@ export default {
         optionId: null,
         optionValueId: null,
         parentOptionValueId: null,
-        quantity: null,
+        quantity: 0,
         stockStatus: 1,
         subtract: 1,
         price: null,
@@ -279,6 +275,34 @@ export default {
         {name: 'weight', label: this.$trp('isite.cms.form.weight'), field: 'weight'},
         {name: 'actions', label: this.$trp('isite.cms.form.actions')},
       ]
+    },
+
+    validations() {
+      return {
+        isWarehouseEnable: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false,
+        hasNestedOptions: this.productOption.children?.length ? true : false
+      }
+    },
+    quantityCustomProps() {
+      var defaultProps = {
+        type: 'input',
+        props: {
+          label: this.$tr('isite.cms.form.quantity'),
+          type: 'number',
+          rules: [val => !!val || $tr('isite.cms.message.fieldRequired')]
+        }
+      }
+
+      if (this.validations.isWarehouseEnable || this.validations.hasNestedOptions) {
+        defaultProps.help = {
+          description: this.validations.isWarehouseEnable ? `${this.$tr('icommerce.cms.fieldEditableOnlyWarehouse')}` :
+              `${this.$tr('icommerce.cms.changeOnlyNestedOptionValue')}`
+        }
+        defaultProps.props.readonly = true
+        defaultProps.props.rules = []
+      }
+
+      return defaultProps
     }
   },
   methods: {

@@ -186,6 +186,8 @@
                           </div>
                         </div>
                         <!--Quantity-->
+                        <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity"/>
+
                         <q-input data-testid="quantity" outlined dense v-model="locale.formTemplate.quantity"
                                  :label="$tr('isite.cms.form.quantity')" type="number"
                                  :readonly="settings.isWarehouseEnable"
@@ -803,6 +805,20 @@ export default {
     //Dynamic fields
     dynamicFields() {
       return {
+        quantity: {
+          value: 0,
+          type: 'input',
+          help: this.settings.isWarehouseEnable ? {
+            description: this.$tr('icommerce.cms.fieldEditableOnlyWarehouse')
+          } : {},
+          props: {
+            outlined: true,
+            dense: true,
+            label: this.$tr('isite.cms.form.quantity'),
+            type: "number",
+            readonly: this.settings.isWarehouseEnable
+          }
+        },
         discounts: {
           value: null,
           type: 'select',
