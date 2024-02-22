@@ -6,27 +6,27 @@
       v-bind="dragOptions"
       :list="optionValues"
       :group="{ name: 'g1' }"
-      item-key="name"
+      item-key="id"
     >
-      <template #item="{ optionValue }">
+      <template #item="{ element }">
         <div
           class="list-group-item"
-          :key="optionValue.id">
+          :key="element.id">
           <div class="row justify-between q-mb-xs q-mt-xs">
             <div class="col-6 q-py-xs">
               <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
-              {{optionValue.description}}
+              {{element.description}}
             </div>
             <div class="col-6 text-right q-py-xs relative-position">
               <!--:to="{name: 'qcommerce.admin.optionValues.update', params: {optionId: $route.params.id, id: optionValue.id}}"-->
               <q-btn
-                @click="eventBus.emit('showEdit',optionValue.id)"
+                @click="eventBus.emit('showEdit',element.id)"
                 icon="fas fa-pen"
                 size="xs"
                 class="q-mr-sm"
                 color="green"/>
               <q-btn
-                @click="dialogDeleteItem = true; itemIdToDelete = optionValue"
+                @click="dialogDeleteItem = true; itemIdToDelete = element"
                 icon="fas fa-trash-alt"
                 size="xs"
                 color="red"/>
@@ -35,9 +35,9 @@
               <q-separator/>
             </div>
           </div>
-          <nestedDraggable v-if="optionValue.children"
-                           :class="`${optionValue.children.length} ?: q-mb-xs`"
-                           :optionValues="optionValue.children"/>
+          <nestedDraggable v-if="element.children"
+                           :class="`${element.children.length} ?: q-mb-xs`"
+                           :optionValues="element.children"/>
         </div>
       </template>
     </draggable>

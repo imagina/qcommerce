@@ -8,10 +8,10 @@
           :list="productOptions"
           :group="{ name: 'g1' }"
           @change="vEmit"
-          item-key="name"
+          item-key="id"
       >
         <template #item="{ element }">
-          <q-expansion-item :key="element.id" expand-icon-class="hidden">
+          <q-expansion-item expand-icon-class="hidden">
             <template slot="header">
               <q-radio v-model="optionSelected" :val="element.id" @update:modelValue="vEmit()"/>
               <q-item-section>{{element.description}}</q-item-section>
