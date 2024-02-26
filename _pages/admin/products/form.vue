@@ -655,7 +655,7 @@ export default {
           type: 'productWarehouse',
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
-          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality')
+          vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
         },
         home: {
           show: false,
