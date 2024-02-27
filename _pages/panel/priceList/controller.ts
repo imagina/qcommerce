@@ -2,13 +2,18 @@ import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} f
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
 import {PriceList, PriceListData} from '@imagina/qcommerce/_pages/panel/priceList/interface'
+import { dom } from 'quasar';
 
 interface StateProps {
-  data: PriceListData[],
-  loading: boolean
+  priceLists: PriceListData[],
+  priceListsClone: PriceListData[],
+  loading: boolean,
+  widtParent: null | number,
+  heightChild: null | number
 }
 
 export default function controller(props: any, emit: any) {
+  const { height } = dom
   const proxy = getCurrentInstance()!.proxy
 
   // Refs
@@ -18,21 +23,28 @@ export default function controller(props: any, emit: any) {
 
   // States
   const state = reactive<StateProps>({
-    data: [],
-    loading: false
+    priceLists: [],
+    priceListsClone: [],
+    loading: false,
+    widtParent: null,
+    heightChild: null
   })
 
   // Computed
   const computeds = {
-    priceLists: computed(() => {
-      return state.data.sort((a, b) => a.title.localeCompare(b.title));
+    excludeActions: computed(() => {
+      const actions: string[] = [];
+
+      if(state.loading) actions.push('refresh')
+
+      return actions
     })
   }
 
   // Methods
   const methods = {
     // Get price list paginated
-    getData(page = 1) {
+    getData(page = 1, refresh) {
       const requestParams = {
         page,
         take: 5,
@@ -42,17 +54,17 @@ export default function controller(props: any, emit: any) {
         }
       }
 
-      return service.getCategories(true, requestParams)
+      return service.getCategories(refresh, requestParams)
     },
     // Recursive function to get paged priceList and process them
-    fetchData(page, attempts = 3, batchSize = 5) {
+    fetchData(page, attempts = 3, batchSize = 5, refresh = false) {
       state.loading = true
       // Array to store request promises
       const batchPromises: Promise<PriceList>[] = [];
 
       // Generate promises for batch requests
       for (let i = 0; i < batchSize; i++) {
-        batchPromises.push(methods.getData(page + i));
+        batchPromises.push(methods.getData(page + i, refresh));
       }
 
       // Wait for all promises to resolve
@@ -63,7 +75,7 @@ export default function controller(props: any, emit: any) {
           // If there is data in the response, process and continue recursion if necessary
           const page = response.meta.page;
           if(!metaData || metaData?.currentPage < page.currentPage) metaData = page;
-          state.data = [...state.data, ...response.data];
+          state.priceLists = [...state.priceLists, ...response.data];
         })
 
 
@@ -73,13 +85,12 @@ export default function controller(props: any, emit: any) {
             ? 5
             : diffPages
 
-          console.warn(metaData, diffPages, batch, batchSize)
-          methods.fetchData(metaData.currentPage + 1, 3, batch);
+          methods.fetchData(metaData.currentPage + 1, 3, batch, refresh);
         }
 
         //Stop Loading
         if(metaData.currentPage == metaData.lastPage) {
-          console.timeEnd('Test');
+          state.priceListsClone = state.priceLists
           state.loading = false
         }
 
@@ -100,13 +111,41 @@ export default function controller(props: any, emit: any) {
 
       })
 
+    },
+    // Search Data
+    searchPriceList(val) {
+      console.warn("search", val)
+      if(val) {
+        state.priceLists = state.priceListsClone.filter((list) => {
+          return list.title.toLowerCase().includes(val.toLowerCase())
+        })
+        console.warn("search", state)
+      } else {
+        state.priceLists = state.priceListsClone
+      }
+    },
+    refreshData(refresh) {
+      if(refresh) {
+        state.priceLists = []
+        state.priceListsClone = []
+      }
+
+      methods.fetchData(1, 3, 1, refresh)
+    },
+    //Set heigth and width of pageActions
+    onResize (size, element) {
+      if(element === 'parent') state.widtParent = size.width
+      else state.heightChild = size.height
+    },
+    openNewTab(url) {
+      // Open URL in a new tab or window
+      window.open(url, "_blank");
     }
   }
 
   // Mounted
   onMounted(() => {
-    console.time('Test');
-    methods.fetchData(1, 3, 1); // Start loading from page 1
+    methods.refreshData(false); // Start loading from page 1
   })
 
 
