@@ -1,19 +1,15 @@
 import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} from "vue";
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
-import {PriceList, PriceListData} from '@imagina/qcommerce/_pages/panel/priceList/interface'
-import { dom } from 'quasar';
+import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/panel/priceList/interface'
 
 interface StateProps {
-  priceLists: PriceListData[],
-  priceListsClone: PriceListData[],
+  data: PriceListData[],
   loading: boolean,
-  widtParent: null | number,
-  heightChild: null | number
+  searchParam: string | null
 }
 
 export default function controller(props: any, emit: any) {
-  const { height } = dom
   const proxy = getCurrentInstance()!.proxy
 
   // Refs
@@ -23,19 +19,75 @@ export default function controller(props: any, emit: any) {
 
   // States
   const state = reactive<StateProps>({
-    priceLists: [],
-    priceListsClone: [],
+    data: [],
     loading: false,
-    widtParent: null,
-    heightChild: null
+    searchParam: null
   })
 
   // Computed
   const computeds = {
+    priceLists: computed(() => {
+      let search = state.searchParam
+
+      if(!search) return state.data
+
+      search = search.toLowerCase();
+      let response: any[] = []
+
+      state.data.forEach(priceList => {
+        if(priceList.title.toLowerCase().includes(search ?? '')) {
+          response.push(priceList)
+        } else {
+          const ownProducts = priceList.ownProducts;
+          const productsFiltered = ownProducts.filter((product) => {
+            return product.name.toLowerCase().includes(search ?? '')
+          })
+
+          if(productsFiltered.length) {
+            const priceListResponse = proxy.$clone(priceList)
+            priceListResponse.ownProducts = productsFiltered;
+            response.push(priceListResponse)
+          }
+        }
+
+      })
+
+      return response
+    }),
     excludeActions: computed(() => {
       const actions: string[] = [];
 
       if(state.loading) actions.push('refresh')
+
+      return actions
+    }),
+    extraActions: computed(() => {
+      let actions: any[] = [];
+
+      if(!state.loading) actions = [
+        ...actions,
+        'search',
+        //Print
+        {
+          label: proxy.$tr('isite.cms.label.print'),
+          props: {
+            icon: 'fa-light fa-print'
+          },
+          action: () => {
+
+            const priceListElements = document.getElementById('print');
+            priceListElements.classList.remove('price-container')
+            priceListElements.classList.add('print-custom')
+
+
+            window.print()
+
+            priceListElements.classList.remove('print-custom')
+            priceListElements.classList.add('price-container')
+
+          }
+        }
+      ]
 
       return actions
     })
@@ -75,7 +127,8 @@ export default function controller(props: any, emit: any) {
           // If there is data in the response, process and continue recursion if necessary
           const page = response.meta.page;
           if(!metaData || metaData?.currentPage < page.currentPage) metaData = page;
-          state.priceLists = [...state.priceLists, ...response.data];
+          const filterPriceList = response.data.filter(price => price.ownProducts.length)
+          state.data = [...state.data, ...filterPriceList];
         })
 
 
@@ -90,7 +143,6 @@ export default function controller(props: any, emit: any) {
 
         //Stop Loading
         if(metaData.currentPage == metaData.lastPage) {
-          state.priceListsClone = state.priceLists
           state.loading = false
         }
 
@@ -114,33 +166,17 @@ export default function controller(props: any, emit: any) {
     },
     // Search Data
     searchPriceList(val) {
-      console.warn("search", val)
-      if(val) {
-        state.priceLists = state.priceListsClone.filter((list) => {
-          return list.title.toLowerCase().includes(val.toLowerCase())
-        })
-        console.warn("search", state)
-      } else {
-        state.priceLists = state.priceListsClone
-      }
+      state.searchParam = val;
     },
     refreshData(refresh) {
-      if(refresh) {
-        state.priceLists = []
-        state.priceListsClone = []
-      }
+      if(refresh) state.data = []
 
       methods.fetchData(1, 3, 1, refresh)
-    },
-    //Set heigth and width of pageActions
-    onResize (size, element) {
-      if(element === 'parent') state.widtParent = size.width
-      else state.heightChild = size.height
     },
     openNewTab(url) {
       // Open URL in a new tab or window
       window.open(url, "_blank");
-    }
+    },
   }
 
   // Mounted
