@@ -29,4 +29,19 @@ export default {
       breadcrumb: ['qcommerce.orders']
     }
   },
+  priceList: {
+    permission: 'icommercepricelist.pricelists.index',
+    activated: true,
+    path: '/store/price-list',
+    name: 'qcommerce.panel.shipping.priceList.index',
+    page: () => import('@imagina/qcommerce/_pages/panel/priceList/index'),
+    layout: () => import('@imagina/qsite/_layouts/master'),
+    title: 'icommerce.cms.sidebar.productList',
+    icon: 'fa-light fa-list',
+    authenticated: true,
+    subHeader: {
+     refresh: true,
+     breadcrumb: ['qcommerce.orders']
+    }
+  },
 }
