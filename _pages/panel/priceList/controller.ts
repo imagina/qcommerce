@@ -48,11 +48,11 @@ export default function controller(props: any, emit: any) {
     fetchData(page, attempts = 3, batchSize = 5) {
       state.loading = true
       // Array to store request promises
-      const batchPromises = [];
+      const batchPromises: Promise<PriceList>[] = [];
 
       // Generate promises for batch requests
       for (let i = 0; i < batchSize; i++) {
-        batchPromises.push(this.getData(page + i));
+        batchPromises.push(methods.getData(page + i));
       }
 
       // Wait for all promises to resolve
@@ -61,7 +61,8 @@ export default function controller(props: any, emit: any) {
         // Process the responses
         res.forEach(response => {
           // If there is data in the response, process and continue recursion if necessary
-          metaData = response.meta.page;
+          const page = response.meta.page;
+          if(!metaData || metaData?.currentPage < page.currentPage) metaData = page;
           state.data = [...state.data, ...response.data];
         })
 
@@ -78,6 +79,7 @@ export default function controller(props: any, emit: any) {
 
         //Stop Loading
         if(metaData.currentPage == metaData.lastPage) {
+          console.timeEnd('Test');
           state.loading = false
         }
 
@@ -103,6 +105,7 @@ export default function controller(props: any, emit: any) {
 
   // Mounted
   onMounted(() => {
+    console.time('Test');
     methods.fetchData(1, 3, 1); // Start loading from page 1
   })
 
