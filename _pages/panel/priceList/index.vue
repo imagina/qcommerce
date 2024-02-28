@@ -3,39 +3,53 @@
     <!--Page Actions-->
     <div class="q-mb-md box box-auto-height" >
       <page-actions :title="$tr($route.meta.title)" :extra-actions="extraActions" @search="searchPriceList"
-                  @refresh="refreshData(true)" :exclude-actions="excludeActions" />
+                    @refresh="refreshData(true)" :exclude-actions="excludeActions" />
     </div>
 
 
     <div id="print" class="scroll price-container">
-      <div class="text-center print-img">
+      <div class="text-center show-print q-pb-sm">
         <q-avatar size="150px">
-          <img :src="this.$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path">
+          <img :src="$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path">
         </q-avatar>
       </div>
       <!--Content-->
       <div class="relative-position q-mt-md price-list">
-        <div v-for="priceList in priceLists" :key="priceList.id" class="q-my-sm price-list__content">
-          <q-toolbar class="bg-primary text-white shadow-2">
-            <q-toolbar-title>{{ priceList.title }}</q-toolbar-title>
-          </q-toolbar>
+        <template v-if="!loading">
+          <div v-for="priceList in priceLists" :key="priceList.id" class="q-mt-xs price-list__content">
+            <a class="text-center text-primary show-print" :href="priceList.url">{{priceList.title}}</a>
+            <q-toolbar class="bg-primary text-white no-print">
+              <q-toolbar-title>{{ priceList.title }}</q-toolbar-title>
+            </q-toolbar>
 
-          <q-list bordered>
-            <q-item v-for="product in priceList.ownProducts" :key="product.id" class="q-my-sm" clickable v-ripple
-                    @click.native="openNewTab(product.url)">
-              <q-item-section>
-                <q-item-label>{{ product.name }}</q-item-label>
-              </q-item-section>
+            <q-list bordered>
+              <q-item v-for="product in priceList.ownProducts" :key="product.id" class="q-py-none" clickable v-ripple
+                      tag="a" :href="product.url" target="_blank">
+                <q-item-section>
+                  <q-item-label>{{ product.name }}</q-item-label>
+                </q-item-section>
 
-              <q-item-section side>
-                <q-item-label caption>${{ $trn(product.price) }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </div>
+                <q-item-section side>
+                  <q-item-label caption>${{ $trn(product.price) }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
+        </template>
 
         <!--Loading-->
         <inner-loading :visible="loading"/>
+      </div>
+
+      <div class="row show-print q-pt-sm">
+        <div v-for="(data, key) of contactData" class="q-mr-md">
+          <p>{{ key }}:</p>
+          <ul>
+            <li v-for="phone of contactData[key]">
+              {{phone}}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -54,41 +68,26 @@ export default defineComponent({
 </script>
 <style lang="stylus">
 #panelPriceList {
+  .show-print {
+    display: none;
+  }
 
   .pageActionsPrice {
     z-index: 999;
   }
 
-
   .price-container {
     height: calc(100vh - 320px);
-
-    .print-img {
-      display: none;
-    }
-  }
-
-  .print-custom {
-    .print-img {
-      display: block;
-    }
-
-    .price-list {
-      .price-list__content {
-        display: grid;
-      }
-
-    }
   }
 
   .price-list {
+    min-height 50%;
     column-count: 3;
     column-gap: 20px;
 
     .price-list__content {
       width: 100%;
       display: inline-block;
-      max-width: 320px;
       box-sizing: border-box;
     }
 
@@ -108,10 +107,52 @@ export default defineComponent({
       }
     }
 
+  }
+}
 
-    .print-grid {
-      display: grid;
+@media print {
+  #panelPriceList {
+    visibility: visible
+    #print * {
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+  }
+
+  body {
+    visibility: hidden;
+  }
+
+
+  #print {
+    height: auto !important;
+
+    .no-print {
+      display: none;
+    }
+
+    .show-print {
+      display: block;
+    }
+
+    .price-list {
+      column-count: 3 !important;
+      column-gap: 20px;
+
+      .price-list__content {
+        width: 100%;
+        display: grid;
+        box-sizing: border-box;
+
+        .q-item {
+          padding: 4px;
+        }
+
+      }
+
     }
   }
 }
+
 </style>

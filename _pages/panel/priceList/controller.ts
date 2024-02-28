@@ -2,11 +2,14 @@ import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} f
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
 import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/panel/priceList/interface'
+import printJS from 'print-js'
+import {compileScript} from "vue/packages/compiler-sfc";
 
 interface StateProps {
   data: PriceListData[],
   loading: boolean,
-  searchParam: string | null
+  searchParam: string | null,
+  contactData: any
 }
 
 export default function controller(props: any, emit: any) {
@@ -21,7 +24,12 @@ export default function controller(props: any, emit: any) {
   const state = reactive<StateProps>({
     data: [],
     loading: false,
-    searchParam: null
+    searchParam: null,
+    contactData: {
+      phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
+      addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
+      emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
+    }
   })
 
   // Computed
@@ -69,22 +77,13 @@ export default function controller(props: any, emit: any) {
         'search',
         //Print
         {
-          label: proxy.$tr('isite.cms.label.print'),
           props: {
-            icon: 'fa-light fa-print'
+            label: proxy.$tr('isite.cms.label.download'),
+            icon: 'fa-light fa-file-pdf'
           },
           action: () => {
-
-            const priceListElements = document.getElementById('print');
-            priceListElements.classList.remove('price-container')
-            priceListElements.classList.add('print-custom')
-
-
+            const element = document.getElementById('print')
             window.print()
-
-            priceListElements.classList.remove('print-custom')
-            priceListElements.classList.add('price-container')
-
           }
         }
       ]
