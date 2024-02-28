@@ -1,11 +1,12 @@
 import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} from "vue";
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
-import {PriceList, PriceListData} from '@imagina/qcommerce/_pages/panel/priceList/interface'
+import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/panel/priceList/interface'
 
 interface StateProps {
   data: PriceListData[],
-  loading: boolean
+  loading: boolean,
+  searchParam: string | null
 }
 
 export default function controller(props: any, emit: any) {
@@ -19,20 +20,83 @@ export default function controller(props: any, emit: any) {
   // States
   const state = reactive<StateProps>({
     data: [],
-    loading: false
+    loading: false,
+    searchParam: null
   })
 
   // Computed
   const computeds = {
     priceLists: computed(() => {
-      return state.data.sort((a, b) => a.title.localeCompare(b.title));
+      let search = state.searchParam
+
+      if(!search) return state.data
+
+      search = search.toLowerCase();
+      let response: any[] = []
+
+      state.data.forEach(priceList => {
+        if(priceList.title.toLowerCase().includes(search ?? '')) {
+          response.push(priceList)
+        } else {
+          const ownProducts = priceList.ownProducts;
+          const productsFiltered = ownProducts.filter((product) => {
+            return product.name.toLowerCase().includes(search ?? '')
+          })
+
+          if(productsFiltered.length) {
+            const priceListResponse = proxy.$clone(priceList)
+            priceListResponse.ownProducts = productsFiltered;
+            response.push(priceListResponse)
+          }
+        }
+
+      })
+
+      return response
+    }),
+    excludeActions: computed(() => {
+      const actions: string[] = [];
+
+      if(state.loading) actions.push('refresh')
+
+      return actions
+    }),
+    extraActions: computed(() => {
+      let actions: any[] = [];
+
+      if(!state.loading) actions = [
+        ...actions,
+        'search',
+        //Print
+        {
+          label: proxy.$tr('isite.cms.label.print'),
+          props: {
+            icon: 'fa-light fa-print'
+          },
+          action: () => {
+
+            const priceListElements = document.getElementById('print');
+            priceListElements.classList.remove('price-container')
+            priceListElements.classList.add('print-custom')
+
+
+            window.print()
+
+            priceListElements.classList.remove('print-custom')
+            priceListElements.classList.add('price-container')
+
+          }
+        }
+      ]
+
+      return actions
     })
   }
 
   // Methods
   const methods = {
     // Get price list paginated
-    getData(page = 1) {
+    getData(page = 1, refresh) {
       const requestParams = {
         page,
         take: 5,
@@ -42,17 +106,17 @@ export default function controller(props: any, emit: any) {
         }
       }
 
-      return service.getCategories(true, requestParams)
+      return service.getCategories(refresh, requestParams)
     },
     // Recursive function to get paged priceList and process them
-    fetchData(page, attempts = 3, batchSize = 5) {
+    fetchData(page, attempts = 3, batchSize = 5, refresh = false) {
       state.loading = true
       // Array to store request promises
       const batchPromises: Promise<PriceList>[] = [];
 
       // Generate promises for batch requests
       for (let i = 0; i < batchSize; i++) {
-        batchPromises.push(methods.getData(page + i));
+        batchPromises.push(methods.getData(page + i, refresh));
       }
 
       // Wait for all promises to resolve
@@ -63,7 +127,8 @@ export default function controller(props: any, emit: any) {
           // If there is data in the response, process and continue recursion if necessary
           const page = response.meta.page;
           if(!metaData || metaData?.currentPage < page.currentPage) metaData = page;
-          state.data = [...state.data, ...response.data];
+          const filterPriceList = response.data.filter(price => price.ownProducts.length)
+          state.data = [...state.data, ...filterPriceList];
         })
 
 
@@ -73,13 +138,11 @@ export default function controller(props: any, emit: any) {
             ? 5
             : diffPages
 
-          console.warn(metaData, diffPages, batch, batchSize)
-          methods.fetchData(metaData.currentPage + 1, 3, batch);
+          methods.fetchData(metaData.currentPage + 1, 3, batch, refresh);
         }
 
         //Stop Loading
         if(metaData.currentPage == metaData.lastPage) {
-          console.timeEnd('Test');
           state.loading = false
         }
 
@@ -100,13 +163,25 @@ export default function controller(props: any, emit: any) {
 
       })
 
-    }
+    },
+    // Search Data
+    searchPriceList(val) {
+      state.searchParam = val;
+    },
+    refreshData(refresh) {
+      if(refresh) state.data = []
+
+      methods.fetchData(1, 3, 1, refresh)
+    },
+    openNewTab(url) {
+      // Open URL in a new tab or window
+      window.open(url, "_blank");
+    },
   }
 
   // Mounted
   onMounted(() => {
-    console.time('Test');
-    methods.fetchData(1, 3, 1); // Start loading from page 1
+    methods.refreshData(false); // Start loading from page 1
   })
 
 
