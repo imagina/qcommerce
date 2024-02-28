@@ -2,7 +2,6 @@ import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} f
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
 import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/panel/priceList/interface'
-import printJS from 'print-js'
 import {compileScript} from "vue/packages/compiler-sfc";
 
 interface StateProps {
