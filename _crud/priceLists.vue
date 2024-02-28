@@ -1,9 +1,15 @@
 <template></template>
 <script>
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           entityName: config("main.qcommerce.entityNames.priceList"),
           apiRoute: 'apiRoutes.qcommerce.priceLists',
           permission: 'icommercepricelist.pricelists',
@@ -28,6 +34,7 @@
           },
           delete: true,
           formLeft: {
+            id: {value: ''},
             name: {
               isTranslatable: true,
               value: '',
