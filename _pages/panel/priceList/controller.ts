@@ -64,18 +64,19 @@ export default function controller(props: any, emit: any) {
     excludeActions: computed(() => {
       const actions: string[] = [];
 
-      if (state.loading) actions.push('refresh')
+      if(state.loading) actions.push('refresh')
 
       return actions
     }),
     extraActions: computed(() => {
       let actions: any[] = [];
 
-      if (!state.loading) actions = [
+      if(!state.loading) actions = [
         ...actions,
         'search',
         //Print
         {
+          label: proxy.$tr('isite.cms.label.print'),
           props: {
             label: proxy.$tr('isite.cms.label.download'),
             icon: 'fa-light fa-file-pdf'
@@ -121,7 +122,7 @@ export default function controller(props: any, emit: any) {
         res.forEach(response => {
           // If there is data in the response, process and continue recursion if necessary
           const page = response.meta.page;
-          if (!metaData || metaData?.currentPage < page.currentPage) metaData = page;
+          if(!metaData || metaData?.currentPage < page.currentPage) metaData = page;
           const filterPriceList = response.data.filter(price => price.ownProducts.length)
           state.data = [...state.data, ...filterPriceList];
         })
@@ -137,12 +138,12 @@ export default function controller(props: any, emit: any) {
         }
 
         //Stop Loading
-        if (metaData.currentPage == metaData.lastPage) {
+        if(metaData.currentPage == metaData.lastPage) {
           state.loading = false
         }
 
       }).catch(error => {
-        if (error.message == 'canceled') return
+        if(error.message == 'canceled') return
 
         console.error("Error In Load PriceList: ", error)
         if (attempts > 1) {
@@ -164,7 +165,7 @@ export default function controller(props: any, emit: any) {
       state.searchParam = val;
     },
     refreshData(refresh) {
-      if (refresh) state.data = []
+      if(refresh) state.data = []
 
       methods.fetchData(1, 3, 1, refresh)
     },

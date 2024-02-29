@@ -1,9 +1,9 @@
 <template>
   <div id="panelPriceList" class="q-pa-md relative-position">
     <!--Page Actions-->
-    <div class="q-mb-md box box-auto-height">
+    <div class="q-mb-md box box-auto-height" >
       <page-actions :title="$tr($route.meta.title)" :extra-actions="extraActions" @search="searchPriceList"
-                    @refresh="refreshData(true)" :exclude-actions="excludeActions"/>
+                    @refresh="refreshData(true)" :exclude-actions="excludeActions" />
     </div>
 
 
