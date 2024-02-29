@@ -20,11 +20,6 @@ a {
   text-align: center;
 }
 
-.q-avatar {
-  border-top: 1px solid;
-  font-size: 150px;
-}
-
 .price-list {
   column-count: 3;
   column-gap: 6px;

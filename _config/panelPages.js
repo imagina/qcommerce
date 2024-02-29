@@ -38,6 +38,9 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master'),
     title: 'icommerce.cms.sidebar.adminPriceLists',
     icon: 'fa-light fa-list',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+      refresh: true
+    }
   },
 }
