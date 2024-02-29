@@ -76,7 +76,6 @@ export default function controller(props: any, emit: any) {
         'search',
         //Print
         {
-          label: proxy.$tr('isite.cms.label.print'),
           props: {
             label: proxy.$tr('isite.cms.label.download'),
             icon: 'fa-light fa-file-pdf'
