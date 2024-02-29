@@ -1,8 +1,8 @@
 import {computed, reactive, ref, onMounted, toRefs, watch, getCurrentInstance} from "vue";
 import service from '@imagina/qcommerce/_pages/panel/priceList/services'
+import {stylePrint} from '@imagina/qcommerce/_pages/panel/priceList/model'
 import store from '@imagina/qcommerce/_pages/panel/priceList/store'
 import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/panel/priceList/interface'
-import {compileScript} from "vue/packages/compiler-sfc";
 
 interface StateProps {
   data: PriceListData[],
@@ -36,13 +36,13 @@ export default function controller(props: any, emit: any) {
     priceLists: computed(() => {
       let search = state.searchParam
 
-      if(!search) return state.data
+      if (!search) return state.data
 
       search = search.toLowerCase();
       let response: any[] = []
 
       state.data.forEach(priceList => {
-        if(priceList.title.toLowerCase().includes(search ?? '')) {
+        if (priceList.title.toLowerCase().includes(search ?? '')) {
           response.push(priceList)
         } else {
           const ownProducts = priceList.ownProducts;
@@ -50,7 +50,7 @@ export default function controller(props: any, emit: any) {
             return product.name.toLowerCase().includes(search ?? '')
           })
 
-          if(productsFiltered.length) {
+          if (productsFiltered.length) {
             const priceListResponse = proxy.$clone(priceList)
             priceListResponse.ownProducts = productsFiltered;
             response.push(priceListResponse)
@@ -80,10 +80,7 @@ export default function controller(props: any, emit: any) {
             label: proxy.$tr('isite.cms.label.download'),
             icon: 'fa-light fa-file-pdf'
           },
-          action: () => {
-            const element = document.getElementById('print')
-            window.print()
-          }
+          action: methods.printPriceList
         }
       ]
 
@@ -171,10 +168,40 @@ export default function controller(props: any, emit: any) {
 
       methods.fetchData(1, 3, 1, refresh)
     },
-    openNewTab(url) {
-      // Open URL in a new tab or window
-      window.open(url, "_blank");
-    },
+    //Print PDF
+    printPriceList() {
+      const print = document.getElementById('print')
+      const printWindow = window.open('', 'PRINT', 'height=1000,width=1000');
+      const bodyStyles = document.body.style;
+      const pageTitle = document.title;
+
+      const bodyStylesObj = {};
+      for (let i = 0; i < bodyStyles.length; i++) {
+        const propertyName = bodyStyles[i];
+        const propertyValue = bodyStyles.getPropertyValue(propertyName);
+        bodyStylesObj[propertyName] = propertyValue;
+      }
+
+      if(!printWindow || !print) return
+
+      printWindow.document.write(`<html><head><title>${pageTitle}</title><style type="text/css">${stylePrint}</style></head><body style="`);
+      // Incluir los estilos obtenidos en el atributo style del body
+      for (const [property, value] of Object.entries(bodyStylesObj)) {
+        printWindow.document.write(`${property}: ${value};`);
+      }
+      printWindow.document.write('" >');
+      printWindow.document.write(print.innerHTML);
+      printWindow.document.write('</body></html>');
+
+      printWindow.document.close(); // necessary for IE >= 10
+      printWindow.focus(); // necessary for IE >= 10*/
+
+
+      setTimeout(function () {
+        printWindow.print();
+        printWindow.close();
+      }, 100)
+    }
   }
 
   // Mounted
