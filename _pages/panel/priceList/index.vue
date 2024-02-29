@@ -9,9 +9,7 @@
 
     <div id="print">
       <div class="text-center show-print q-pb-sm custom-border">
-        <q-avatar size="150px">
-          <img :src="$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path">
-        </q-avatar>
+        <img id="logoPriceList" height="150" :src="contactData.img">
       </div>
       <!--Content-->
       <div class="relative-position q-mt-md price-list">
@@ -46,7 +44,7 @@
       </div>
 
       <div class="row show-print footer-print">
-        <div v-for="(data, key) of contactData" class="q-mr-md">
+        <div v-for="(data, key) of contactData" v-if="key !== 'img'" class="q-mr-md">
           <p>{{ key }}:</p>
           <ul>
             <li v-for="phone of contactData[key]">

@@ -7,8 +7,7 @@ import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/pa
 interface StateProps {
   data: PriceListData[],
   loading: boolean,
-  searchParam: string | null,
-  contactData: any
+  searchParam: string | null
 }
 
 export default function controller(props: any, emit: any) {
@@ -23,12 +22,7 @@ export default function controller(props: any, emit: any) {
   const state = reactive<StateProps>({
     data: [],
     loading: false,
-    searchParam: null,
-    contactData: {
-      phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
-      addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
-      emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
-    }
+    searchParam: null
   })
 
   // Computed
@@ -61,13 +55,7 @@ export default function controller(props: any, emit: any) {
 
       return response
     }),
-    excludeActions: computed(() => {
-      const actions: string[] = [];
-
-      if(state.loading) actions.push('refresh')
-
-      return actions
-    }),
+    excludeActions: computed(() => state.loading ? ['refresh'] : []),
     extraActions: computed(() => {
       let actions: any[] = [];
 
@@ -85,7 +73,13 @@ export default function controller(props: any, emit: any) {
       ]
 
       return actions
-    })
+    }),
+    contactData: computed(() => ({
+      img: proxy.$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path,
+      phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
+      addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
+      emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
+    }))
   }
 
   // Methods
@@ -196,11 +190,16 @@ export default function controller(props: any, emit: any) {
       printWindow.document.close(); // necessary for IE >= 10
       printWindow.focus(); // necessary for IE >= 10*/
 
+      const logoPriceList = printWindow.document.getElementById('logoPriceList');
 
-      setTimeout(function () {
+      const clodeWindow = () => {
         printWindow.print();
         printWindow.close();
-      }, 100)
+      }
+
+      if(!logoPriceList) clodeWindow()
+      // Register an event to know when the image is loaded inside printWindow
+      logoPriceList?.addEventListener('load', clodeWindow);
     }
   }
 
