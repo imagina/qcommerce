@@ -82,7 +82,7 @@ export default function controller(props: any, emit: any) {
     })),
     infoRedirect: computed(() => {
       return {
-        show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== urlTogo,
+        show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== 'qcommerce.panel.shipping.priceList.index',
         fields: {
           helpText: {
             type: "banner",
