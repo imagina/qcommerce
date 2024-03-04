@@ -6,6 +6,10 @@
                     @refresh="refreshData(true)" :exclude-actions="excludeActions" />
     </div>
 
+    <div class="row col-12 q-col-gutter-md" v-if="infoRedirect.show">
+      <dynamic-field v-for="(field, name) in infoRedirect.fields" :key="name"
+                     :field="field" class="col-12"/>
+    </div>
 
     <div id="print">
       <div class="text-center show-print q-pb-sm custom-border">
