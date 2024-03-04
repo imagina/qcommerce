@@ -81,10 +81,8 @@ export default function controller(props: any, emit: any) {
       emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
     })),
     infoRedirect: computed(() => {
-      const urlTogo = 'qcommerce.panel.shipping.priceList.index'
       return {
         show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== urlTogo,
-        urlPanel: urlTogo,
         fields: {
           helpText: {
             type: "banner",
@@ -95,7 +93,7 @@ export default function controller(props: any, emit: any) {
                   props: {
                     label: proxy.$tr('icommerce.cms.label.explorePriceList')
                   },
-                  action: () => proxy.$router.push({name: urlTogo})
+                  action: () => proxy.$router.push({name: 'qcommerce.panel.shipping.priceList.index'})
                 }
               ]            }
           },
