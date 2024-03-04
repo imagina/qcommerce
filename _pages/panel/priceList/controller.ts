@@ -79,7 +79,30 @@ export default function controller(props: any, emit: any) {
       phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
       addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
       emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
-    }))
+    })),
+    infoRedirect: computed(() => {
+      const urlTogo = 'qcommerce.panel.shipping.priceList.index'
+      return {
+        show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== urlTogo,
+        urlPanel: urlTogo,
+        fields: {
+          helpText: {
+            type: "banner",
+            props: {
+              message: proxy.$tr('icommerce.cms.label.bannerPriceList'),
+              actions: [
+                {
+                  props: {
+                    label: proxy.$tr('icommerce.cms.label.explorePriceList')
+                  },
+                  action: () => proxy.$router.push({name: urlTogo})
+                }
+              ]            }
+          },
+        }
+
+      };
+    }),
   }
 
   // Methods
