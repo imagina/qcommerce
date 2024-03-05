@@ -7,7 +7,8 @@ import {PriceList, PriceListData, OwnProduct} from '@imagina/qcommerce/_pages/pa
 interface StateProps {
   data: PriceListData[],
   loading: boolean,
-  searchParam: string | null
+  searchParam: string | null,
+  expiresIn: number | null
 }
 
 export default function controller(props: any, emit: any) {
@@ -22,7 +23,8 @@ export default function controller(props: any, emit: any) {
   const state = reactive<StateProps>({
     data: [],
     loading: false,
-    searchParam: null
+    searchParam: null,
+    expiresIn: null
   })
 
   // Computed
@@ -153,6 +155,7 @@ export default function controller(props: any, emit: any) {
 
         //Stop Loading
         if(metaData.currentPage == metaData.lastPage) {
+          state.expiresIn = res[res.length -1]?.expiresIn
           state.loading = false
         }
 
