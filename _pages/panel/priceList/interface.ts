@@ -1,6 +1,8 @@
 export interface PriceList {
   data: PriceListData[];
   meta: Meta;
+  expiresIn: number,
+  status: number
 }
 
 export interface PriceListData {

@@ -3,7 +3,7 @@
     <!--Page Actions-->
     <div class="q-mb-md box box-auto-height" >
       <page-actions :title="$tr($route.meta.title)" :extra-actions="extraActions" @search="searchPriceList"
-                    @refresh="refreshData(true)" :exclude-actions="excludeActions" />
+                    :expires-in="expiresIn" @refresh="refreshData(true)" :exclude-actions="excludeActions" />
     </div>
 
     <div class="row col-12 q-col-gutter-md" v-if="infoRedirect.show">
