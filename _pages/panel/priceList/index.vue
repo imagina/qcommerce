@@ -12,34 +12,38 @@
     </div>
 
     <div id="print">
-      <div class="text-center show-print q-pb-sm custom-border">
-        <img id="logoPriceList" height="150" :src="contactData.img">
+      <div class="text-center show-print custom-logo custom-border">
+        <img id="logoPriceList" height="100" :src="contactData.img">
       </div>
       <!--Content-->
-      <div class="relative-position q-mt-md price-list">
+      <div class="relative-position q-mt-md price-list row">
         <template v-if="!loading">
-          <div v-for="priceList in priceLists" :key="priceList.id" class="q-mt-xs price-list__content">
-            <a class="text-center text-primary show-print title" :href="priceList.url"
-               target="_blank">{{ priceList.title }}</a>
-            <q-toolbar class="bg-primary text-white no-print">
-              <q-toolbar-title class="text-body1">{{ priceList.title }}</q-toolbar-title>
-            </q-toolbar>
+          <div v-for="(categories, key) in priceLists" :key="key" :class="`q-px-xs col-12 col-md-${col}`">
+            <div v-for="priceList in categories" :key="priceList.id" class="q-mt-md">
+              <div class="text-center show-print title">
+                <a :href="priceList.url"
+                   target="_blank">{{ priceList.title }}</a>
+              </div>
+              <q-toolbar class="bg-primary text-white no-print">
+                <q-toolbar-title class="text-body1">{{ priceList.title }}</q-toolbar-title>
+              </q-toolbar>
 
-            <q-list bordered>
-              <q-item v-for="product in priceList.ownProducts" :key="product.id" class="q-py-none" clickable v-ripple
-                      tag="a" :href="product.url" target="_blank">
-                <q-item-section>
-                  <q-item-label class="text-body2">{{ product.name }}</q-item-label>
-                </q-item-section>
+              <q-list bordered>
+                <q-item v-for="product in priceList.ownProducts" :key="product.id" class="q-py-none" clickable v-ripple
+                        tag="a" :href="product.url" target="_blank">
+                  <q-item-section>
+                    <q-item-label class="text-body2">{{ product.name }}</q-item-label>
+                  </q-item-section>
 
-                <q-item-section side>
-                  <q-item-label class="text-blue-grey text-weight-bold" caption>${{
-                      $trn(product.price)
-                    }}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
+                  <q-item-section side>
+                    <q-item-label class="text-blue-grey text-weight-bold" caption>${{
+                        $trn(product.price)
+                      }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
           </div>
         </template>
 
@@ -100,31 +104,6 @@ export default defineComponent({
 
   .price-list {
     min-height 30vh;
-    column-count: 3;
-    column-gap: 6px;
-
-    .price-list__content {
-      width: 100%;
-      display: inline-block;
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 900px) {
-      column-count: 2;
-
-      .price-list__content {
-        max-width: 400px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      column-count: 1;
-
-      .price-list__content {
-        max-width: none;
-      }
-    }
-
   }
 }
 </style>
