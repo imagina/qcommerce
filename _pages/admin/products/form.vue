@@ -417,6 +417,8 @@
                                :label="$tr('isite.cms.form.video')"/>
                       <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields.mainImage"
                                      :item-id="productId"/>
+                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields.sizereference"
+                                     :item-id="productId"/>
                       <dynamic-field v-model="locale.formTemplate.mediasMulti" :field="dynamicFields.gallery"
                                      :item-id="productId"/>
                     </div>
@@ -955,6 +957,15 @@ export default {
           props: {
             label: this.$tr('isite.cms.form.gallery'),
             zone: 'gallery',
+            entity: 'Modules\\Icommerce\\Entities\\Product',
+            entityId: this.productId ? this.productId : null
+          }
+        },
+        sizereference: {
+          type: 'media',
+          props: {
+            label: this.$tr('icommerce.cms.label.data_sheet'),
+            zone: 'sizereference',
             entity: 'Modules\\Icommerce\\Entities\\Product',
             entityId: this.productId ? this.productId : null
           }
