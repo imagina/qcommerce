@@ -54,14 +54,6 @@ a {
   margin-top: 12px;
 }
 
-.text-body1 {
-  font-size: 1rem;
-}
-
-.text-primary {
-  color: var(--q-color-primary);
-}
-
 .q-item {
   color: black;
   display: flex;
@@ -74,14 +66,20 @@ a {
 }
 
 .text-body2 {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .text-caption {
-  font-size: 0.7rem;
+  font-size: 0.5rem;
 }
 
 .title {
+  background-color: var(--q-color-primary);
+}
+
+.title a {
+  color: white;
+  font-size: 0.7rem;
   margin: 8px 0;
 }
 
@@ -147,6 +145,14 @@ a {
   max-width: 100%;
 }
 
+.custom-logo {
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
 .custom-border {
     border-bottom: 1px solid #607d8b;
+}
+@media print {
+  body {-webkit-print-color-adjust: exact;}
 }`

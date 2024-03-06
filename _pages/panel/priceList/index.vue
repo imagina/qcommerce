@@ -12,16 +12,16 @@
     </div>
 
     <div id="print">
-      <div class="text-center show-print q-pb-sm custom-border">
-        <img id="logoPriceList" height="150" :src="contactData.img">
+      <div class="text-center show-print custom-logo custom-border">
+        <img id="logoPriceList" height="100" :src="contactData.img">
       </div>
       <!--Content-->
       <div class="relative-position q-mt-md price-list row">
         <template v-if="!loading">
           <div v-for="(categories, key) in priceLists" :key="key" :class="`q-px-xs col-12 col-md-${col}`">
             <div v-for="priceList in categories" :key="priceList.id" class="q-mt-md">
-              <div class="text-center show-print">
-                <a class="text-primary title" :href="priceList.url"
+              <div class="text-center show-print title">
+                <a :href="priceList.url"
                    target="_blank">{{ priceList.title }}</a>
               </div>
               <q-toolbar class="bg-primary text-white no-print">
