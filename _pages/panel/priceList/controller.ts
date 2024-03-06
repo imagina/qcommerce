@@ -29,38 +29,67 @@ export default function controller(props: any, emit: any) {
 
   // Computed
   const computeds = {
+    // Computes price lists array based on search parameter and number of columns
     priceLists: computed(() => {
       let search = state.searchParam
 
-      if (!search) return state.data
+      const widthWindow = proxy.$q.screen.width
+      // Length of the data
+      const dataLength = state.data.length
+      // Number of columns to display
+      let numColumns = 3
+
+      if (dataLength === 1 || widthWindow <= 700) numColumns = 1
+      else if (dataLength === 2 || widthWindow <= 900) numColumns = 2
+
+
+      let response: any = Array.from({ length: numColumns }, () => [])
+      let colNum = 0
+
+      // If no search parameter, simply distribute price lists across columns
+      if (!search) {
+        state.data.forEach(priceList => {
+          response[colNum].push(priceList)
+          // Update column number, ensuring it loops back to 0 after reaching the last column
+          colNum = (colNum + 1) % numColumns;
+        })
+        return response
+      }
 
       search = search.toLowerCase();
-      let response: any[] = []
 
       state.data.forEach(priceList => {
+        // Check if price list title matches search or if any product within the price list matches search
         if (priceList.title.toLowerCase().includes(search ?? '')) {
-          response.push(priceList)
+          response[colNum].push(priceList)
         } else {
+          // Filter products within the price list for matches with search
           const ownProducts = priceList.ownProducts;
           const productsFiltered = ownProducts.filter((product) => {
             return product.name.toLowerCase().includes(search ?? '')
           })
 
+          // If there are matching products, create a new price list with filtered products and add to response
           if (productsFiltered.length) {
             const priceListResponse = proxy.$clone(priceList)
             priceListResponse.ownProducts = productsFiltered;
-            response.push(priceListResponse)
+            response[colNum].push(priceListResponse)
           }
         }
 
+        // Update column number, ensuring it loops back to 0 after reaching the last column
+        colNum = (colNum + 1) % numColumns;
       })
 
       return response
     }),
+    // Computes excluded actions based on loading state
     excludeActions: computed(() => state.loading ? ['refresh'] : []),
+    // Computes extra actions based on loading state
     extraActions: computed(() => {
       let actions: any[] = [];
 
+      // If not loading, add search and print actions
       if(!state.loading) actions = [
         ...actions,
         'search',
@@ -76,15 +105,19 @@ export default function controller(props: any, emit: any) {
 
       return actions
     }),
+    // Computes contact data object using store getters
     contactData: computed(() => ({
       img: proxy.$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path,
       phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
       addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
       emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
     })),
+    // Computes information redirection object based on current route
     infoRedirect: computed(() => {
       return {
-        show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== 'qcommerce.panel.shipping.priceList.index',
+        // Determines if redirection info should be shown
+        show: proxy.$route.name === 'qcommerce.public.shipping.priceList.index',
+        // Fields for redirection info
         fields: {
           helpText: {
             type: "banner",
@@ -97,12 +130,25 @@ export default function controller(props: any, emit: any) {
                   },
                   action: () => proxy.$router.push({name: 'qcommerce.panel.shipping.priceList.index'})
                 }
-              ]            }
+              ]
+            }
           },
         }
 
       };
     }),
+    // Function computes column width based on data length and window width
+    col: computed(() => {
+      //Width of the window
+      const widthWindow = proxy.$q.screen.width
+      // Length of the data
+      const dataLength = state.data.length
+
+      //cacl class of column
+      if (dataLength === 1 || widthWindow <= 700) return 12
+      else if (dataLength === 2 || widthWindow <= 900) return 6
+      else return 4; // Default value
+    })
   }
 
   // Methods
@@ -216,14 +262,14 @@ export default function controller(props: any, emit: any) {
 
       const logoPriceList = printWindow.document.getElementById('logoPriceList');
 
-      const clodeWindow = () => {
+      const closeWindow = () => {
         printWindow.print();
         printWindow.close();
       }
 
-      if(!logoPriceList) clodeWindow()
+      if(!logoPriceList) closeWindow()
       // Register an event to know when the image is loaded inside printWindow
-      logoPriceList?.addEventListener('load', clodeWindow);
+      logoPriceList?.addEventListener('load', closeWindow);
     }
   }
 
