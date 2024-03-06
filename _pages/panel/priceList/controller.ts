@@ -84,7 +84,7 @@ export default function controller(props: any, emit: any) {
     })),
     infoRedirect: computed(() => {
       return {
-        show: proxy.$auth.hasAccess('icommercepricelist.pricelists.index') && proxy.$route.name !== 'qcommerce.panel.shipping.priceList.index',
+        show: proxy.$route.name === 'qcommerce.public.shipping.priceList.index',
         fields: {
           helpText: {
             type: "banner",
@@ -97,7 +97,8 @@ export default function controller(props: any, emit: any) {
                   },
                   action: () => proxy.$router.push({name: 'qcommerce.panel.shipping.priceList.index'})
                 }
-              ]            }
+              ]
+            }
           },
         }
 
