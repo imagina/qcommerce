@@ -875,6 +875,9 @@ export default {
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
             },
+            config: {
+              filterByQuery: true
+            }
           },
         },
         quantityClassId: {
@@ -941,6 +944,9 @@ export default {
               multiple: true,
               useChips: true,
             },
+            config: {
+              filterByQuery: true
+            }
           },
         },
         mainImage: {
