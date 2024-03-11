@@ -52,11 +52,11 @@
       </div>
 
       <div class="row show-print footer-print">
-        <div v-for="(data, key) of contactData" v-if="key !== 'img'" class="q-mr-md">
-          <p>{{ key }}:</p>
+        <div v-for="(contact, key) of contactData" :key="key" v-if="key !== 'img'" class="q-mr-md">
+          <p>{{ contact.label }}:</p>
           <ul>
-            <li v-for="phone of contactData[key]">
-              {{ phone }}
+            <li v-for="data of contact.data">
+              {{ data }}
             </li>
           </ul>
         </div>
