@@ -108,9 +108,18 @@ export default function controller(props: any, emit: any) {
     // Computes contact data object using store getters
     contactData: computed(() => ({
       img: proxy.$store.getters['qsiteApp/getSettingMediaByName']('isite::logo1').path,
-      phones: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones'),
-      addresses: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses'),
-      emails: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails'),
+      phones: {
+        label: proxy.$tr('isite.cms.label.phoneNumber'),
+        data: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::phones')
+      },
+      addresses: {
+        label: proxy.$tr('isite.cms.label.address'),
+        data: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::addresses')
+      },
+      emails: {
+        label: proxy.$tr('isite.cms.label.email'),
+        data: proxy.$store.getters['qsiteApp/getSettingValueByName']('isite::emails')
+      },
     })),
     // Computes information redirection object based on current route
     infoRedirect: computed(() => {
