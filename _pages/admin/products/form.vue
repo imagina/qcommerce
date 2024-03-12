@@ -751,6 +751,7 @@ export default {
           description: '',
           metaTitle: '',
           metaDescription: '',
+          advancedSummary: ''
         },
       }
     },
