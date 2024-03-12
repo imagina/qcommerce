@@ -90,6 +90,8 @@
                              data-testid="summary"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
                              :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3"/>
+                    <dynamic-field v-model="locale.formTemplate.advancedSummary" :field="dynamicFields.advancedSummary"
+                                   :item-id="productId" :language="locale.language"/>
                     <!--Description-->
                     <div class="input-title">{{ `${$tr('isite.cms.form.description')} (${locale.language})*` }}</div>
                     <q-field v-model="locale.formTemplate.description" borderless
@@ -749,6 +751,7 @@ export default {
           description: '',
           metaTitle: '',
           metaDescription: '',
+          advancedSummary: ''
         },
       }
     },
@@ -982,7 +985,17 @@ export default {
           props: {
             label: this.$tr('icommerce.cms.form.availableDate')
           }
-        }
+        },
+        advancedSummary: {
+          value: '',
+          type: 'html',
+          isTranslatable: true,
+          help: {description: this.$tr('icommerce.cms.form.advancedSummaryHelp')},
+          props: {
+            label: `${this.$tr('icommerce.cms.advancedSummary')}`,
+
+          }
+        },
       }
     },
     //custom crudData for productWarehouse
