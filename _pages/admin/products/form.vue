@@ -973,7 +973,7 @@ export default {
         sizereference: {
           type: 'media',
           props: {
-            label: this.$tr('icommerce.cms.label.data_sheet'),
+            label: this.$tr('icommerce.cms.label.dataSheet'),
             zone: 'sizereference',
             entity: 'Modules\\Icommerce\\Entities\\Product',
             entityId: this.productId ? this.productId : null
