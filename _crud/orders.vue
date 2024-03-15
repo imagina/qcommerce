@@ -20,6 +20,14 @@ export default {
               align: 'left'
             },
             {
+              name: 'warehouse',
+              label: this.$tr('icommerce.cms.label.warehouse'),
+              field: 'warehouse',
+              format: val => val ? val.title : '-',
+              align: 'left',
+              vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+            },
+            {
               name: 'total',
               label: this.$tr('icommerce.cms.form.total'),
               field: 'total',
@@ -38,8 +46,9 @@ export default {
               format: val => val ? this.$trd(val) : '-',
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
-          ],
+          ].filter(item => item.vIf ?? true),
           requestParams: {
+            include: 'warehouse',
             filter: {
               order: {
                 field: 'id',
@@ -49,17 +58,26 @@ export default {
           },
           filters: {
             status: {
-              label: `${this.$tr('isite.cms.form.status')}:`,
               value: null,
               type: 'select',
-              isRequired: true,
-              isTranslatable: false,
               props: {
                 label: `${this.$tr('isite.cms.form.status')}:`,
                 clearable: true
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.orderStatus'
+              }
+            },
+            warehouseId: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.label.warehouse')}:`,
+                clearable: true,
+                vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.warehouses'
               }
             },
           }

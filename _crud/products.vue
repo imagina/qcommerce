@@ -220,6 +220,9 @@ export default {
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
               },
+              config: {
+                filterByQuery: true
+              }
             },
           },
           price: {

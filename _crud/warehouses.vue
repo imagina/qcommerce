@@ -155,6 +155,33 @@ export default {
               label: `${this.$tr('isite.cms.form.description')}`,
             }
           },
+          usersToNotify: {
+            value: [],
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.usersToNotify'),
+              multiple: true,
+              useChips: true
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.quser.users',
+              select: {label: 'fullName', id: 'id'},
+              filterByQuery: true
+            }
+          },
+          emailsToNotify: {
+            value: [],
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.emailsToNotify'),
+              useInput: true,
+              useChips: true,
+              multiple: true,
+              hideDropdownIcon: true,
+              inputDebounce: "0",
+              newValueMode: "add-unique"
+            }
+          },
         },
         formRight: {
           status: {

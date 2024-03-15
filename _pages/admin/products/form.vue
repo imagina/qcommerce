@@ -202,8 +202,7 @@
                           </div>
                         </div>
                         <!--Quantity-->
-                        <q-input data-testid="quantity" outlined dense v-model="locale.formTemplate.quantity"
-                                 :label="$tr('isite.cms.form.quantity')" type="number"/>
+                        <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity"/>
                         <!--Quantity Class-->
                         <dynamic-field v-model="locale.formTemplate.quantityClassId"
                                        :field="dynamicFields.quantityClassId"/>
@@ -819,6 +818,20 @@ export default {
     //Dynamic fields
     dynamicFields() {
       return {
+        quantity: {
+          value: 0,
+          type: 'input',
+          help: this.settings.isWarehouseEnable ? {
+            description: this.$tr('icommerce.cms.fieldEditableOnlyWarehouse')
+          } : {},
+          props: {
+            outlined: true,
+            dense: true,
+            label: this.$tr('isite.cms.form.quantity'),
+            type: "number",
+            readonly: this.settings.isWarehouseEnable
+          }
+        },
         discounts: {
           value: null,
           type: 'select',
@@ -878,6 +891,9 @@ export default {
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
             },
+            config: {
+              filterByQuery: true
+            }
           },
         },
         quantityClassId: {
@@ -944,6 +960,9 @@ export default {
               multiple: true,
               useChips: true,
             },
+            config: {
+              filterByQuery: true
+            }
           },
         },
         mainImage: {
@@ -1043,13 +1062,26 @@ export default {
         }
       }
     },
+    //Return settings
+    settings() {
+      return {
+        isWarehouseEnable: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+      }
+    }
   },
   methods: {
     //validate fields from home tab
-    async validateFieldsHomeTab() {
-      const {name, slug, summary, description, categoryId, categories} = this.locale.formTemplate;
-      if (name.trim() === '' || slug.trim() === '' || summary.trim() === '' || description.trim() === '' || categoryId === 0 || categories.length === 0) return false;
-      return true
+    validateFieldsHomeTab() {
+      const formData = this.locale.formTemplate;
+      var response = true;
+      //Validate empty strings
+      ['name', 'slug', 'summary', 'description'].forEach(key => {
+        if (!formData[key] || !formData[key].trim().length) response = false
+      })
+      //Validate Categories
+      if (!formData.categoryId || !formData.categories.length) response = false;
+      //Default response
+      return response
     },
     //back to home panel
     async backHomePanel() {
@@ -1189,7 +1221,7 @@ export default {
     },
     //Create Product
     async createItem() {
-      if (await this.validateFieldsHomeTab()) {
+      if (this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         this.$crud.create(configName, this.getDataForm()).then(response => {
@@ -1205,7 +1237,7 @@ export default {
     },
     //Update Product
     async updateItem() {
-      if (await this.validateFieldsHomeTab()) {
+      if (this.validateFieldsHomeTab()) {
         this.loading = true
         let configName = 'apiRoutes.qcommerce.products'
         let requestData = {...this.getDataForm(), id: this.productId}
