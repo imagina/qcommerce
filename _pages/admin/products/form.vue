@@ -103,6 +103,9 @@
                              data-testid="summary"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
                              :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3"/>
+                    <!--Advaced Summary-->
+                    <dynamic-field v-model="locale.formTemplate.advancedSummary" :field="dynamicFields.advancedSummary"
+                                   :item-id="productId" :language="locale.language"/>
                     <!--Description-->
                     <div class="input-title">{{ `${$tr('isite.cms.form.description')} (${locale.language})*` }}</div>
                     <q-field v-model="locale.formTemplate.description" borderless
@@ -430,6 +433,8 @@
                       <q-input data-testid="optionsVideo" v-model="locale.formTemplate.options.video" outlined dense
                                :label="$tr('isite.cms.form.video')"/>
                       <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields?.mainImage"
+                                     :item-id="productId"/>
+                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields?.sizereference"
                                      :item-id="productId"/>
                       <dynamic-field v-model="locale.formTemplate.mediasMulti" :field="dynamicFields.gallery"
                                      :item-id="productId"/>
@@ -760,6 +765,7 @@ export default {
           description: '',
           metaTitle: '',
           metaDescription: '',
+          advancedSummary: ''
         },
       }
     },
@@ -958,13 +964,31 @@ export default {
             entityId: this.productId ? this.productId : null
           }
         },
+        sizereference: {
+          type: 'media',
+          props: {
+            label: this.$tr('icommerce.cms.label.dataSheet'),
+            zone: 'sizereference',
+            entity: 'Modules\\Icommerce\\Entities\\Product',
+            entityId: this.productId ? this.productId : null
+          }
+        },
         dateAvailable: {
           value: this.$moment().format('YYYY/MM/DD'),
           type: 'date',
           props: {
             label: this.$tr('icommerce.cms.form.availableDate')
           }
-        }
+        },
+        advancedSummary: {
+          value: '',
+          type: 'html',
+          isTranslatable: true,
+          help: {description: this.$tr('icommerce.cms.form.advancedSummaryHelp')},
+          props: {
+            label: `${this.$tr('icommerce.cms.advancedSummary')}`,
+          }
+        },
       }
     },
     //custom crudData for productWarehouse
