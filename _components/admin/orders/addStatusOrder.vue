@@ -23,7 +23,7 @@
       />
     </div>
     <div class="q-mt-md">
-      <q-btn unelevated rounded label="save" color="primary" icon="save" @click="saveOrderHistoryStatus()"/>
+      <q-btn unelevated rounded label="save" color="primary" icon="fa-light fa-save" @click="saveOrderHistoryStatus()"/>
     </div>
 
   </div>
