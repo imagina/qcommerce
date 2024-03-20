@@ -21,12 +21,32 @@
             columns: [
               {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', align: 'left'},
               {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'name', align: 'left'},
-              {name: 'criteria', label: this.$tr('isite.cms.form.type'), field: 'criteria', align: 'left', format: val => this.$tr('icommerce.cms.options.'+val)},
               {name: 'status', label: this.$tr('icommerce.cms.form.status'), field: 'status', align: 'left'},
-              {name: 'value', label: this.$tr('icommerce.cms.form.value'), field: 'value', align: 'left', format: val => this.$trn(val)},
+              {name: 'criteria', label: this.$tr('isite.cms.form.type'), field: 'criteria', align: 'left', format: val => this.$tr('icommerce.cms.options.'+val)},
+              {
+                name: 'operationPrefix', label: this.$tr('icommerce.cms.form.operationPrefix'), field: 'operationPrefix', align: 'left',
+                format: val => val === '+' ? this.$tr('icommerce.cms.options.add') : this.$tr('icommerce.cms.options.subtract'),
+              },
+              {
+                name: 'value', label: this.$tr('icommerce.cms.form.value'), field: row => row, align: 'left',
+                format: val => val.criteria === "percentage" ? `${val.value}%` : `${this.$trn(val.value)}`
+              },
+              {
+                name: 'related', label: this.$tr('isite.cms.label.department'), field: 'related', align: 'left',
+                format: val => val ? val.title : this.$tr('isite.cms.label.all')
+              },
+
+              {
+                name: 'createdAt', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
+                format: val => val ? this.$trd(val) : '-',
+              },
+              {
+                name: 'updatedAt', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt', align: 'left',
+                format: val => val ? this.$trd(val) : '-',
+              },
               {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
             ],
-            requestParams: {},
+            requestParams: {include: 'related'},
             filters: {},
           },
           update: {
@@ -45,6 +65,21 @@
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
               }
+            },
+            status: {
+              value: '1',
+              type: 'select',
+              props: {
+                label: `${this.$tr('isite.cms.form.status')}:`,
+                clearable: true,
+                options: [
+                  {label: this.$tr('isite.cms.label.enabled'), value: 1},
+                  {label: this.$tr('isite.cms.label.disabled'), value: 0}
+                ],
+                rules: [
+                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
+                ],
+              },
             },
             criteria:{
               type: 'select',
@@ -71,23 +106,6 @@
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
               }
-            },
-          },
-          formRight: {
-            status: {
-              value: '1',
-              type: 'select',
-              props: {
-                label: `${this.$tr('isite.cms.form.status')}:`,
-                clearable: true,
-                options: [
-                  {label: this.$tr('isite.cms.label.enabled'), value: 1},
-                  {label: this.$tr('isite.cms.label.disabled'), value: 0}
-                ],
-                rules: [
-                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
-                ],
-              },
             },
             value: {
               value: '',
