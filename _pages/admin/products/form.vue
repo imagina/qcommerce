@@ -149,44 +149,7 @@
                                  :label="$tr('isite.cms.form.sku')"/>
                         <!--Price-->
                         <q-input data-testid="price" outlined dense type="number" v-model="locale.formTemplate.price"
-                                 :label="$tr('isite.cms.form.price')" @input="calculateAllPriceLists"/>
-                        <!--Price List Enable-->
-                        <div class="full-width" v-if="priceListEnable">
-                          <div class="row q-py-sm">
-                            <div class="col-8">
-                              {{ $tr('icommerce.cms.form.priceLists') }}
-                            </div>
-                            <div class="col-4 text-right">
-                              <q-btn icon="fas fa-plus" color="green" size="sm"
-                                     @click="()=> { locale.form.priceLists.push({price: 0, priceListId: null}) }">
-                                <q-tooltip>
-                                  {{ $tr('isite.cms.label.add') }}
-                                </q-tooltip>
-                              </q-btn>
-                            </div>
-                          </div>
-                          <div class="row q-col-gutter-md q-pt-md"
-                               v-for="(list, i) in locale.formTemplate.priceLists">
-                            <div class="col-6">
-                              <dynamic-field :field="dynamicFields.priceLists" v-model="list.priceListId"
-                                             @input="list.price = calculatePriceFromlist(list.priceListId)"/>
-                            </div>
-                            <div class="col-4">
-                              <q-input data-testid="price" v-model="list.price" outlined dense
-                                       :label="$tr('isite.cms.form.price')" type="number"
-                                       :readonly="checkPriceList(list.priceListId)"
-                                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
-                            </div>
-                            <div class="col-2 text-right">
-                              <q-btn icon="fas fa-trash" color="red" size="sm" class="q-mt-sm"
-                                     @click="locale.form.priceLists.splice(i,1)">
-                                <q-tooltip>
-                                  {{ $tr('isite.cms.label.delete') }}
-                                </q-tooltip>
-                              </q-btn>
-                            </div>
-                          </div>
-                        </div>
+                                 :label="$tr('isite.cms.form.price')"/>
                         <!--Quantity-->
                         <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity"/>
                         <!--Quantity Class-->
@@ -492,6 +455,29 @@
                       </q-card-section>
                     </q-card>
                   </q-tab-panel>
+                  <q-tab-panel name="priceList">
+                    <q-card>
+                      <q-card-section class="q-pa-sm">
+                        <div class="full-width">
+                          <div class="q-pa-sm" v-if="productId">
+                            <!--Product Price List-->
+                            <crud
+                                :crud-data="import('@imagina/qcommerce/_crud/productList.vue')"
+                                :custom-data="customCrudData.productPriceList"
+                            />
+                          </div>
+                          <div v-else class="text-center q-pa-sm">
+                            <div class="q-my-md">
+                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
+                              {{ `${$tr('icommerce.cms.message.warnWarehouse')}...` }}
+                            </div>
+                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
+                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                          </div>
+                        </div>
+                      </q-card-section>
+                    </q-card>
+                  </q-tab-panel>
                 </q-tab-panels>
                 <!-- Back action -->
                 <div v-if="lastPanelOpen != 'home'" class="q-px-md text-right">
@@ -585,14 +571,11 @@ export default {
         categories: [],
         products: [],
         relatedProducts: [],
-        priceLists: [],
-        savedPriceLists: [],
       },
       buttonActions: {label: '', value: 1},
       modalShow: {
         category: false
       },
-      priceListEnable: this.$auth.hasAccess('icommercepricelist.pricelists.manage'),
       extraFields: [],
       modalForms: {
         content: {
@@ -655,6 +638,13 @@ export default {
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
           vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+        },
+        priceList: {
+          show: false,
+          type: 'priceList',
+          title: this.$tr('icommerce.cms.form.priceLists'),
+          content: this.$tr('icommercepricelist.cms.form.productPriceListContent'),
+          vIf: !!this.$auth.hasAccess('icommercepricelist.productlist.manage')
         },
         home: {
           show: false,
@@ -719,10 +709,8 @@ export default {
           rating: 3,
           points: 0,
           relatedProducts: [],
-          tags: [],
           productOptions: [],
           discounts: [],
-          priceLists: [],
           mediasSingle: {},
           mediasMulti: {},
           options: {
@@ -831,19 +819,6 @@ export default {
           },
           loadOptions: {
             apiRoute: 'apiRoutes.qdiscountable.discounts',
-            select: {label: 'name', id: 'id'}
-          }
-        },
-        priceLists: {
-          value: null,
-          type: 'select',
-          testId: 'priceLists',
-          props: {
-            label: this.$tr('icommerce.cms.form.priceLists') + '*',
-            rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
-          },
-          loadOptions: {
-            apiRoute: 'apiRoutes.qcommerce.priceLists',
             select: {label: 'name', id: 'id'}
           }
         },
@@ -1047,7 +1022,38 @@ export default {
               }
             },
           }
-        }
+        },
+        productPriceList: {
+          read: {
+            title: this.$tr('icommerce.cms.form.priceLists'),
+            excludeActions: ['sync', 'recommendations'],
+            requestParams: {include: 'product,priceList', filter: {productId: this.productId}}
+          },
+          formLeft: {
+            productId: {
+              value: this.productId,
+              type: 'select',
+              required: true,
+              props: {
+                label: `${this.$tr('isite.cms.form.product')}*`,
+                readonly: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.products',
+                select: {label: 'name', id: 'id'}
+              }
+            },
+            productPrice: {
+              value: this.locale.formTemplate.price,
+              type: 'input',
+              fakeFieldName: 'product',
+              props: {
+                label: `${this.$tr('isite.cms.form.product')}*`,
+                vIf: false
+              },
+            },
+          },
+        },
       }
     },
     //Return settings
@@ -1093,8 +1099,6 @@ export default {
       if (this.locale.success) this.$refs.localeComponent.vReset()//Reset locale
       await this.getData()//Get Data Item
       //await this.getCategories()//Get categories
-      if (this.priceListEnable)
-        await this.getPriceLists()//Get Price lists
       this.success = true//Activate status of page
       this.updateOptions
       this.loading = false
@@ -1124,23 +1128,6 @@ export default {
         })
       })
     },
-    //Get product categories
-    getPriceLists() {
-      let configName = 'apiRoutes.qcommerce.priceLists'
-      let params = {//Params to request
-        refresh: true,
-      }
-      //Request
-      this.$crud.index(configName, params).then(response => {
-        this.priceListEnable = true
-        this.optionsTemplate.priceLists = response.data
-        //this.locale.fields.categoryId = response.data.length ? response.data[0].id : null
-      }).catch(error => {
-        this.$apiResponse.handleError(error, () => {
-          this.priceListEnable = false
-        })
-      })
-    },
     //Get product if is edit
     getData() {
       return new Promise((resolve, reject) => {
@@ -1151,7 +1138,7 @@ export default {
           let params = {
             refresh: true,
             params: {
-              include: 'relatedProducts,categories,category,parent,discounts,manufacturer,priceLists',
+              include: 'relatedProducts,categories,category,parent,discounts,manufacturer',
               filter: {allTranslations: true}
             }
           }
@@ -1185,11 +1172,6 @@ export default {
       orderData.relatedProducts.forEach((item, key) => {
         orderData.relatedProducts[key] = item.id
       })
-      if (orderData.priceLists) {
-        orderData.priceLists.forEach((item, key) => {
-          orderData.priceLists[key] = {priceListId: item.id, price: item.price}
-        })
-      }
 
       //Set default related products options
       if (data.relatedProducts && data.relatedProducts.length) {
@@ -1199,7 +1181,6 @@ export default {
         ...orderData,
         dateAvailable: orderData.dateAvailable ? orderData.dateAvailable.replaceAll("-", "/") : this.$moment().format('YYYY/MM/DD')
       })
-      this.calculateAllPriceLists()
       setTimeout(() => {
         /*this.locale.formTemplate.categoryId = orderData.categoryId
         this.locale.formTemplate.taxClassId = orderData.taxClassId
@@ -1300,44 +1281,6 @@ export default {
       if (!this.productId) {
         let title = this.$clone(this.locale.formTemplate.name)
         this.locale.formTemplate.slug = this.$clone(this.$helper.getSlug(title))
-      }
-    },
-    checkPriceList(id = null) {
-      if (id) {
-        let selectedPriceList = this.$array.findByTag(this.optionsTemplate.priceLists, 'id', id)
-        return selectedPriceList.criteria == 'percentage'
-      }
-      return false
-    },
-    calculatePriceFromlist(id = null) {
-      if (id) {
-        let selectedPriceList = this.$array.findByTag(this.optionsTemplate.priceLists, 'id', id)
-        let price = parseInt(this.$clone(this.locale.form.price))
-        if (selectedPriceList.criteria == 'percentage') {
-          if (selectedPriceList.operationPrefix == '-') {
-            return price - (price * (selectedPriceList.value / 100))
-          } else {
-            return price + (price * (selectedPriceList.value / 100))
-          }
-        } else {
-          let selectedPriceList = this.$array.findByTag(this.optionsTemplate.savedPriceLists, 'priceListId', id)
-          return selectedPriceList.price
-        }
-      }
-      return 0
-    },
-    calculateAllPriceLists() {
-      if (this.locale.form.priceLists) {
-        if (this.locale.form.priceLists.length > 0) {
-          this.optionsTemplate.savedPriceLists = this.locale.form.priceLists
-          let priceLists = this.locale.form.priceLists.map(item => {
-            return {
-              priceListId: item.priceListId,
-              price: this.calculatePriceFromlist(item.priceListId)
-            }
-          })
-          this.locale.form.priceLists = priceLists
-        }
       }
     },
     //Get extra fields
