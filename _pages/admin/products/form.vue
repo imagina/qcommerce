@@ -436,11 +436,13 @@
                             <crud
                                 :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
                                 :custom-data="customCrudData.productWarehouse"
+                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
                                 :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
                                 :custom-data="customCrudData.productOptValueWarehouse"
+                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -1332,7 +1334,30 @@ export default {
         this.locale = this.$clone(dataLocale)//Add fields
         return resolve(true)
       })
-    }
+    },
+    //Get productdata when update or create warerhouse
+    getDataProduct() {
+      this.loading = true
+      const productId = this.$clone(this.productId)
+      if (productId) {
+        let configName = 'apiRoutes.qcommerce.products'
+        //Params
+        let params = {
+          refresh: true,
+        }
+        //Request
+        this.$crud.show(configName, productId, params).then(response => {
+          this.locale.formTemplate.quantity = response.data.quantity
+          this.loading = false
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            console.error(error)
+            this.loading = false
+          })
+        })
+      } else this.loading = false
+    },
   }
 }
 </script>
