@@ -643,8 +643,8 @@ export default {
           show: false,
           type: 'priceList',
           title: this.$tr('icommerce.cms.form.priceLists'),
-          content: this.$tr('icommerce.cms.form.productPriceListContent'),
-          vIf: !!this.$auth.hasAccess('icommercepricelist.pricelists.manage')
+          content: this.$tr('icommercepricelist.cms.form.productPriceListContent'),
+          vIf: !!this.$auth.hasAccess('icommercepricelist.productlist.manage')
         },
         home: {
           show: false,
@@ -1025,7 +1025,7 @@ export default {
         },
         productPriceList: {
           read: {
-            title: this.$tr('icommerce.cms.form.priceList'),
+            title: this.$tr('icommerce.cms.form.priceLists'),
             excludeActions: ['sync', 'recommendations'],
             requestParams: {include: 'product,priceList', filter: {productId: this.productId}}
           },

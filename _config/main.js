@@ -24,7 +24,8 @@ export default {
     volumeClasses: 'volumeClasses',
     quantityClasses: 'quantityClasses',
     warehouses: 'warehouses',
-    productWarehouse: 'productWarehouse'
+    productWarehouse: 'productWarehouse',
+    productList: 'productList'
   },
   //Quick Cards
   quickCards: [

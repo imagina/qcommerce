@@ -70,8 +70,7 @@
               value: '1',
               type: 'select',
               props: {
-                label: `${this.$tr('isite.cms.form.status')}:`,
-                clearable: true,
+                label: `${this.$tr('isite.cms.form.status')}*`,
                 options: [
                   {label: this.$tr('isite.cms.label.enabled'), value: 1},
                   {label: this.$tr('isite.cms.label.disabled'), value: 0}
@@ -84,7 +83,7 @@
             criteria:{
               type: 'select',
               props:{
-                label: this.$tr('isite.cms.form.type'),
+                label: `${this.$tr('isite.cms.form.type')}*`,
                 options:[
                   {label: this.$tr('icommerce.cms.options.fixed'), value: 'fixed'},
                   {label: this.$tr('icommerce.cms.options.percentage'), value: 'percentage'},
@@ -95,9 +94,10 @@
               }
             },
             operationPrefix:{
+              value: '-',
               type: 'select',
               props:{
-                label: this.$tr('icommerce.cms.form.operationPrefix'),
+                label: `${this.$tr('icommerce.cms.form.operationPrefix')}*`,
                 options:[
                   {label: this.$tr('icommerce.cms.options.subtract'), value: '-'},
                   {label: this.$tr('icommerce.cms.options.add'), value: '+'},
@@ -105,29 +105,32 @@
                 rules: [
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
+                vIf: !!(this.crudInfo.criteria !== 'fixed')
               }
             },
             value: {
-              value: '',
+              value: '0',
               type: 'input',
+              required: !(this.crudInfo.criteria !== 'fixed'),
               props : {
                 label: `${this.$tr('icommerce.cms.form.value')}*`,
                 rules: [
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
                 type: 'number',
+                vIf: !!(this.crudInfo.criteria !== 'fixed')
               }
             },
             relatedId: {
               value: '0',
               type: 'select',
+              required: true,
               loadOptions: {
                 apiRoute: 'apiRoutes.quser.departments',
                 select: {label: 'title', id: 'id'}
               },
               props: {
-                label: `${this.$tr('isite.cms.label.department')}:`,
-                clearable : true,
+                label: `${this.$tr('isite.cms.label.department')}*`,
                 options:[
                   {label: this.$trp('isite.cms.label.all'), value: 0, id: 0}
                 ]
@@ -136,8 +139,24 @@
             relatedEntity:{
               value: 'Modules\\Iprofile\\Entities\\Department'
             }
+          },
+          handleFormUpdates: (formData, changedFields, formType) => {
+            return new Promise(resolve => {
+
+              if (changedFields.length === 1 && changedFields.includes('criteria')) {
+                if (formData.criteria == 'fixed') {
+                  formData.value = 0
+                  formData.operationPrefix = '-'
+                }
+              }
+
+              resolve(formData)
+            })
           }
         }
+      },
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     }
   }

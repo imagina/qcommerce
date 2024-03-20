@@ -16,7 +16,7 @@ export default {
         apiRoute: 'apiRoutes.qcommerce.productLists',
         permission: 'icommercepricelist.pricelists',
         create: {
-          title: this.$tr('icommerce.cms.newProductList'),
+          title: this.$tr('icommercepricelist.cms.form.newProductList'),
         },
         read: {
           columns: [
@@ -57,7 +57,7 @@ export default {
           filters: {},
         },
         update: {
-          title: this.$tr('icommerce.cms.updateProductList'),
+          title: this.$tr('icommercepricelist.cms.form.updateProductList'),
           requestParams: {include: 'product,priceList'}
         },
         delete: true,
