@@ -98,8 +98,6 @@
   </q-dialog>
 </template>
 <script>
-  //Plugins
-  //[ptc]import {required} from 'vuelidate/lib/validators'
   import _cloneDeep from 'lodash.clonedeep'
 
   //Components

@@ -1,7 +1,6 @@
 <template>
   <div class="row">
     <div class="col-md-12 flex flex-center">
-      <!-- [ptc]: Change tag -->
       <router-link
         v-for="(category, index) in categories"
         :key="index"

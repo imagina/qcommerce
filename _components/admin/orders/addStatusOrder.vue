@@ -30,7 +30,6 @@
 </template>
 
 <script>
-//[ptc]import {required} from 'vuelidate/lib/validators'
 
 export default {
   emits: ['orderHistoryCreated'],
@@ -44,12 +43,6 @@ export default {
         notify: false,
         comment: ''
       }
-    }
-  },
-  validations: {
-    form: {
-      //[ptc]orderId: {required},
-      //[ptc]status: {required}
     }
   },
   created() {

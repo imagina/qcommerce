@@ -67,7 +67,6 @@
 </template>
 
 <script>
-//[ptc]import {required} from 'vuelidate/lib/validators'
 import uploadMedia from 'modules/qmedia/_components/form'
 
 export default {

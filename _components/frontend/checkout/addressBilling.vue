@@ -56,7 +56,6 @@
 
 <script>
   import Treeselect from '@riophae/vue-treeselect'
-  //[ptc]import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
   export default {
     data(){
