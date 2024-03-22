@@ -339,8 +339,8 @@ export default {
     crud: import('@imagina/qcommerce/_crud/priceLists'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'icommerce.cms.sidebar.adminPriceLists',
-    icon: 'fas fa-dollar-sign',
+    title: 'Listas (PT)',
+    icon: 'fa-light fa-list',
     authenticated: true,
     subHeader: {refresh: true}
   },
@@ -468,6 +468,19 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'icommerce.cms.sidebar.warehouses',
     icon: 'fa-light fa-warehouse',
+    authenticated: true,
+    subHeader: {refresh: true}
+  },
+  productLists: {
+    permission: 'icommercepricelist.productlist.manage',
+    activated: true,
+    path: '/productLists',
+    name: 'qcommerce.admin.productLists.index',
+    crud: import('@imagina/qcommerce/_crud/productList'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'Precios (PT)',
+    icon: 'fa-light fa-hand-holding-usd',
     authenticated: true,
     subHeader: {refresh: true}
   },

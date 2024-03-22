@@ -5,6 +5,8 @@ export default {
     return {
       crudId: this.$uid(),
       loadOptionsPriceList: [],
+      loadProducts: [],
+      selectedProduct: null,
       priceProductList: 0
     }
   },
@@ -53,8 +55,7 @@ export default {
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
-          requestParams: {},
-          filters: {},
+          requestParams: {include: 'product,priceList'},
         },
         update: {
           title: this.$tr('icommercepricelist.cms.form.updateProductList'),
@@ -67,12 +68,12 @@ export default {
             type: 'select',
             required: true,
             props: {
-              label: `${this.$tr('isite.cms.form.product')}*`,
-              readonly: true
+              label: `${this.$tr('isite.cms.form.product')}*`
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qcommerce.products',
               select: {label: 'name', id: 'id'},
+              loadedOptions: (data) => this.loadProducts = data
             }
           },
           priceListId: {
@@ -140,6 +141,22 @@ export default {
                 };
               }
             } else if (changedFields.length > 1 && changedFields.includes('price')) this.priceProductList = formData.price
+            else if (changedFields.length === 1 && changedFields.includes('productId')) {
+              if(!!formData.priceListId) {
+                resolve(formData)
+                return
+              }
+
+              const product = this.loadProducts.find(product => product.id == formData.productId)
+
+              if (product) {
+                this.selectedProduct = product
+                formData = {
+                  ...formData,
+                  price: this.calculatePriceFromlist(formData.priceListId, product.price)
+                };
+              }
+            }
 
             resolve(formData)
           })
@@ -156,6 +173,7 @@ export default {
         let selectedPriceList = this.$array.findByTag(this.loadOptionsPriceList, 'id', id)
 
         if (selectedPriceList.criteria == 'percentage') {
+          if(!price) price = this.selectedProduct?.price || 0;
           const valuePriceList = (price * (selectedPriceList.value / 100));
           if (selectedPriceList.operationPrefix == '-') return price - valuePriceList
           else return price + valuePriceList
@@ -164,7 +182,7 @@ export default {
         }
       }
       return 0
-    },
+    }
   }
 }
 </script>
