@@ -339,7 +339,7 @@ export default {
     crud: import('@imagina/qcommerce/_crud/priceLists'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'Listas (PT)',
+    title: 'icommercepricelist.cms.sidebar.priceLists',
     icon: 'fa-light fa-list',
     authenticated: true,
     subHeader: {refresh: true}
@@ -479,7 +479,7 @@ export default {
     crud: import('@imagina/qcommerce/_crud/productList'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'Precios (PT)',
+    title: 'icommercepricelist.cms.sidebar.productList',
     icon: 'fa-light fa-hand-holding-usd',
     authenticated: true,
     subHeader: {refresh: true}
