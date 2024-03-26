@@ -169,7 +169,6 @@ export default {
   },
   methods: {
     calculatePriceFromlist(id = null, price = 0) {
-      console.warn(id, price)
       if (id) {
         let selectedPriceList = this.$array.findByTag(this.loadOptionsPriceList, 'id', id)
 
