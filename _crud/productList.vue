@@ -142,7 +142,7 @@ export default {
               }
             } else if (changedFields.length > 1 && changedFields.includes('price')) this.priceProductList = formData.price
             else if (changedFields.length === 1 && changedFields.includes('productId')) {
-              if(!!formData.priceListId) {
+              if(!formData.priceListId) {
                 resolve(formData)
                 return
               }
@@ -169,6 +169,7 @@ export default {
   },
   methods: {
     calculatePriceFromlist(id = null, price = 0) {
+      console.warn(id, price)
       if (id) {
         let selectedPriceList = this.$array.findByTag(this.loadOptionsPriceList, 'id', id)
 
