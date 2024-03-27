@@ -86,16 +86,15 @@
                        :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
               <div class="input-title">{{ $tr('isite.cms.form.stock') }}</div>
               <tree-select
-                  data-testid="stockStatus"
-                  :clearable="false"
-                  :append-to-body="true"
-                  :options="[
+                v-model="form.stockStatus"
+                :options="[
                   {label: this.$tr('isite.cms.label.available'), id: 1},
                   {label: this.$tr('isite.cms.label.soldOut'), id: 0}
                 ]"
-                  value-consists-of="BRANCH_PRIORITY"
-                  v-model="form.stockStatus"
-                  class="q-mb-md"
+                data-testid="stockStatus"
+                :clearable="false"
+                value-consists-of="BRANCH_PRIORITY"
+                class="q-mb-md"
               />
               <!--Subtrack-->
               <div class="input-title">
