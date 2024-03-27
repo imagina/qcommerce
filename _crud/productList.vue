@@ -142,7 +142,7 @@ export default {
               }
             } else if (changedFields.length > 1 && changedFields.includes('price')) this.priceProductList = formData.price
             else if (changedFields.length === 1 && changedFields.includes('productId')) {
-              if(!!formData.priceListId) {
+              if(!formData.priceListId) {
                 resolve(formData)
                 return
               }
