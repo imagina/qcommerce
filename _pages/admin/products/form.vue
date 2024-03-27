@@ -213,13 +213,12 @@
                         <!--Status-->
                         <div class="input-title">{{ $tr('isite.cms.form.stock') }}</div>
                         <tree-select
-                            data-testid="stockStatus"
-                            :clearable="false"
-                            :append-to-body="true"
-                            :options="options.stockStatus"
-                            value-consists-of="BRANCH_PRIORITY"
-                            v-model="locale.formTemplate.stockStatus"
-                            class="q-mb-md"
+                          v-model="locale.formTemplate.stockStatus"
+                          :options="options.stockStatus"
+                          data-testid="stockStatus"
+                          :clearable="false"
+                          value-consists-of="BRANCH_PRIORITY"
+                          class="q-mb-md"
                         />
                         <!--sortOrder-->
                         <q-input data-testid="sortOrder" :label="$tr('icommerce.cms.form.sortOrder')"
@@ -487,11 +486,13 @@
                             <crud
                                 :crud-data="import('modules/qcommerce/_crud/productWarehouse.vue')"
                                 :custom-data="customCrudData.productWarehouse"
+                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
                                 :crud-data="import('modules/qcommerce/_crud/productOptValueWarehouse.vue')"
                                 :custom-data="customCrudData.productOptValueWarehouse"
+                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -747,7 +748,6 @@ export default {
           lengthClassId: null,
           volumeClassId: null,
           quantityClassId: null,
-          tags: [],
           manufacturerId: null,
           metaTitle: '',
           metaDescription: '',
@@ -1401,7 +1401,30 @@ export default {
         this.locale = this.$clone(dataLocale)//Add fields
         return resolve(true)
       })
-    }
+    },
+    //Get productdata when update or create warerhouse
+    getDataProduct() {
+      this.loading = true
+      const productId = this.$clone(this.productId)
+      if (productId) {
+        let configName = 'apiRoutes.qcommerce.products'
+        //Params
+        let params = {
+          refresh: true,
+        }
+        //Request
+        this.$crud.show(configName, productId, params).then(response => {
+          this.locale.formTemplate.quantity = response.data.quantity
+          this.loading = false
+        }).catch(error => {
+          this.$apiResponse.handleError(error, () => {
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            console.error(error)
+            this.loading = false
+          })
+        })
+      } else this.loading = false
+    },
   }
 }
 </script>
