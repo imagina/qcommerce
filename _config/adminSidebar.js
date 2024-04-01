@@ -18,7 +18,14 @@ export default [
       pages.qcommerce.manufacturers,//Manufacturers
       pages.qcommerce.taxClasses,//Tax Classes
       //pages.qcommerce.taxRates,//Tax Rates
-      pages.qcommerce.priceLists,//Price Lists
+      {
+        title: 'icommerce.cms.sidebar.adminPriceLists',
+        icon: 'fa-light fa-file-invoice-dollar',
+        children: [
+          pages.qcommerce.priceLists,//Price Lists
+          pages.qcommerce.productLists,//Product Lists
+        ]
+      },
       //pages.qcommerce.itemTypes,//Item Types
       pages.qcommerce.currency,
       pages.qcommerce.quotes,
