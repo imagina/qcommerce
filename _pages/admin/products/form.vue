@@ -1072,7 +1072,7 @@ export default {
     //Return settings
     settings() {
       return {
-        isWarehouseEnable: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+        isWarehouseEnable: this.$getSetting('icommerce::warehouseFunctionality') == '1' ? true : false
       }
     }
   },

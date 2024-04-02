@@ -25,7 +25,7 @@ export default {
               field: 'warehouse',
               format: val => val ? val.title : '-',
               align: 'left',
-              vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+              vIf: this.$getSetting('icommerce::warehouseFunctionality') == '1' ? true : false
             },
             {
               name: 'total',
@@ -74,7 +74,7 @@ export default {
               props: {
                 label: `${this.$tr('icommerce.cms.label.warehouse')}:`,
                 clearable: true,
-                vIf: this.$store.getters['qsiteApp/getSettingValueByName']('icommerce::warehouseFunctionality') == '1' ? true : false
+                vIf: this.$getSetting('icommerce::warehouseFunctionality') == '1' ? true : false
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.warehouses'
