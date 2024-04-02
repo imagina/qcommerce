@@ -43,5 +43,6 @@ export default {
   stripe: {
     connect: `${urlStripe}/payout/connect`,
     accountUser: `${urlStripe}/payout/connect/account/user`
-  }
+  },
+  productLists: `${urlBase2}/product-lists`,
 }

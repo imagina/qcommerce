@@ -339,8 +339,8 @@ export default {
     crud: import('modules/qcommerce/_crud/priceLists'),
     page: () => import('modules/qcrud/_pages/admin/crudPage'),
     layout: () => import('layouts/master.vue'),
-    title: 'icommerce.cms.sidebar.adminPriceLists',
-    icon: 'fas fa-dollar-sign',
+    title: 'icommercepricelist.cms.sidebar.priceLists',
+    icon: 'fa-light fa-list',
     authenticated: true,
     subHeader: {refresh: true}
   },
@@ -470,5 +470,18 @@ export default {
     icon: 'fa-light fa-warehouse',
     authenticated: true,
     subHeader: {refresh: true}
+  },
+  productLists: {
+    permission: 'icommercepricelist.productlist.manage',
+    activated: true,
+    path: '/productLists',
+    name: 'qcommerce.admin.productLists.index',
+    crud: import('modules/qcommerce/_crud/productList'),
+    page: () => import('modules/qcrud/_pages/admin/crudPage'),
+    layout: () => import('layouts/master.vue'),
+    title: 'icommercepricelist.cms.sidebar.productList',
+    icon: 'fa-light fa-hand-holding-usd',
+    authenticated: true,
+    subHeader: { refresh: true }
   },
 }
