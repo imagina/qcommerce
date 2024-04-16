@@ -5,7 +5,6 @@ export default {
     return {
       crudId: this.$uid(),
       loadOptionsPriceList: [],
-      loadProducts: [],
       selectedProduct: null,
       priceProductList: 0
     };
@@ -65,16 +64,32 @@ export default {
         formLeft: {
           id: { value: '' },
           productId: {
-            type: 'select',
-            required: true,
+            value: null,
+            type: 'crud',
             props: {
-              label: `${this.$tr('isite.cms.form.product')}*`
+              crudType: 'select',
+              crudData: import('modules/qcommerce/_crud/products'),
+              customData: {
+                read: {
+                  requestParams: {refresh: true}
+                }
+              },
+              crudProps: {
+                label: `${this.$tr('isite.cms.form.product')}*`,
+                rules: [
+                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
+                ],
+
+              },
+              config: {
+                filterByQuery: true,
+                options:{
+                  label:"name", 
+                  value: "id"
+                },
+              },
+              
             },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qcommerce.products',
-              select: { label: 'name', id: 'id' },
-              loadedOptions: (data) => this.loadProducts = data
-            }
           },
           priceListId: {
             type: 'select',
@@ -119,16 +134,17 @@ export default {
             props: {
               label: `${this.$tr('icommerce.cms.form.value')}*`,
               type: 'number',
-              readonly: this.crudInfo.priceList?.criteria == 'percentage'
+              readonly: this.crudInfo.priceList?.criteria == 'percentage',
+              vIf: this.crudInfo.priceList?.criteria !== 'percentage',
             }
           }
         },
         handleFormUpdates: (formData, changedFields, formType) => {
           return new Promise(resolve => {
-
+            
             if (changedFields.length === 1 && changedFields.includes('priceListId')) {
               const priceListInfo = this.loadOptionsPriceList.find(priceList => priceList.id == formData.priceListId);
-
+              
               if (priceListInfo) {
                 formData = {
                   ...formData,
@@ -137,26 +153,10 @@ export default {
                     criteria: priceListInfo.criteria,
                     operationPrefix: priceListInfo.operationPrefix
                   },
-                  price: this.calculatePriceFromlist(formData.priceListId, formData.product?.productPrice)
+                  price: priceListInfo.criteria === 'percentage' ? 0 : this.priceProductList 
                 };
               }
-            } else if (changedFields.length > 1 && changedFields.includes('price')) this.priceProductList = formData.price;
-            else if (changedFields.length === 1 && changedFields.includes('productId')) {
-              if (!formData.priceListId) {
-                resolve(formData);
-                return;
-              }
-
-              const product = this.loadProducts.find(product => product.id == formData.productId);
-
-              if (product) {
-                this.selectedProduct = product;
-                formData = {
-                  ...formData,
-                  price: this.calculatePriceFromlist(formData.priceListId, product.price)
-                };
-              }
-            }
+            } else if (changedFields.length > 1 && changedFields.includes('price')) this.priceProductList = formData.price;  
 
             resolve(formData);
           });
@@ -167,22 +167,5 @@ export default {
       return this.$store.state.qcrudComponent.component[this.crudId] || {};
     }
   },
-  methods: {
-    calculatePriceFromlist(id = null, price = 0) {
-      if (id) {
-        let selectedPriceList = this.$array.findByTag(this.loadOptionsPriceList, 'id', id);
-
-        if (selectedPriceList.criteria == 'percentage') {
-          if (!price) price = this.selectedProduct?.price || 0;
-          const valuePriceList = (price * (selectedPriceList.value / 100));
-          if (selectedPriceList.operationPrefix == '-') return price - valuePriceList;
-          else return price + valuePriceList;
-        } else {
-          return this.priceProductList;
-        }
-      }
-      return 0;
-    }
-  }
 };
 </script>
