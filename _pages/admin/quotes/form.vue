@@ -101,7 +101,7 @@ import selectProductConfig from 'modules/qcommerce/_components/selectProductConf
 import { eventBus } from 'src/plugins/utils'
 
 export default {
-  beforeDestroy() {
+  beforeUnmount() {
     eventBus.off('qcommerce.quote.addProduct')
   },
   props: {},
