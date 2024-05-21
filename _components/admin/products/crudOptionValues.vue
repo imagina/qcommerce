@@ -62,7 +62,6 @@
                 <tree-select
                     :clearable="false"
                     :options="options.values"
-                    :append-to-body="true"
                     value-consists-of="BRANCH_PRIORITY"
                     v-model="form.optionValueId"
                     placeholder=""
@@ -103,7 +102,6 @@
               <q-field v-model="form.subtract" borderless>
                 <tree-select
                     :clearable="false"
-                    :append-to-body="true"
                     :options="options.subtract"
                     value-consists-of="BRANCH_PRIORITY"
                     v-model="form.subtract"

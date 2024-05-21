@@ -68,7 +68,6 @@
                   :clearable="false"
                   :options="template.parentValues"
                   placeholder="Select opion value..."
-                  :append-to-body="true"
                   @update:modelValue="updateProductOption()"
               />
             </div>
@@ -108,7 +107,6 @@
             {{ modal.parentOption.description }}
           </div>
           <!--Options-->
-          <div class="input-title">Option *</div>
           <crud :crud-data="import('modules/qcommerce/_crud/productOptions')" v-model="modal.optionSelected"
                 type="select" @created="getOptions" :crud-props="{label : `${$tr('isite.cms.form.option')} *`}"
                 :config="{options : {label : 'description', value : 'id'}}"/>
