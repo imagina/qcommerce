@@ -163,7 +163,7 @@
                                  :label="$tr('isite.cms.form.sku')" />
                         <!--Price-->
                         <q-input data-testid="price" outlined dense type="number" v-model="locale.formTemplate.price"
-                                 :label="$tr('isite.cms.form.price')" @update:modelValue="calculateAllPriceLists" />
+                                 :label="$tr('isite.cms.form.price')" />
                         <!--Quantity-->
                         <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity" />
                         <!--Quantity Class-->
@@ -1123,7 +1123,7 @@ export default {
           resolve(true);
         }).catch(error => {
           this.$apiResponse.handleError(error, () => {
-            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest')});
+            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest') });
             this.loadingCategory = false;
             reject(true);
           });
@@ -1226,13 +1226,14 @@ export default {
     },
     //Get just values not null from form
     getDataForm() {
-      let response = this.locale.form;
+      let response = this.$clone(this.locale.form);
       for (var item in response) {
         let valueItem = response[item];
         if (valueItem == null || valueItem == undefined) {
           delete response[item];
         }
       }
+      delete response.productOptions; //To prevent put as update relation
       return { ...response, manufacturerId: this.locale.form.manufacturerId || null };
     },
     //Action after created
