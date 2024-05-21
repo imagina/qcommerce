@@ -111,7 +111,7 @@ export default {
             resolve(true)//Resolve
           }).catch(error => {
             this.$apiResponse.handleError(error, () => {
-              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest')})
               this.loading = false
               reject(false)//Resolve
             })
@@ -135,7 +135,7 @@ export default {
           this.loading = false
         }).catch(error => {
           this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated')})
         })
       }
     },

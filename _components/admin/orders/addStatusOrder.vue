@@ -73,7 +73,7 @@ export default {
       this.$v.form.$touch()
       this.loading = true
       if (this.$v.form.$error) {
-        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid'), pos: 'bottom'})
+        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
         this.loading = false
         return
       }

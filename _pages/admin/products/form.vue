@@ -1123,7 +1123,7 @@ export default {
           resolve(true);
         }).catch(error => {
           this.$apiResponse.handleError(error, () => {
-            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' });
+            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest')});
             this.loadingCategory = false;
             reject(true);
           });

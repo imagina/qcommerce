@@ -21,7 +21,7 @@
                              @delete="deleteOption(template.currentOption)"/>
           <!--Add new option-->
           <div class="text-right q-mt-md">
-            <q-btn :label="$tr('isite.cms.label.add')" rounded unelevated color="green" @click="modal.show = true"/>
+            <q-btn :label="$tr('isite.cms.label.add')" rounded outline color="green" @click="modal.show = true"/>
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default {
         }).catch(error => {
           this.$apiResponse.handleError(error, () => {
             this.loading = false
-            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest')})
             reject(false)
           })
         })
@@ -222,7 +222,7 @@ export default {
         this.loading = false
       }).catch(error => {
         this.$apiResponse.handleError(error, () => {
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest')})
           this.loading = false
         })
       })
@@ -247,7 +247,7 @@ export default {
 
         //Request
         this.$crud.create(configName, dataOption).then(async response => {
-          this.$alert.success({message: this.$tr('isite.cms.message.recordCreated'), pos: 'bottom'})
+          this.$alert.success({message: this.$tr('isite.cms.message.recordCreated')})
           await this.getData()//Get data again
           this.modal.optionSelected = null//Reset option of select options
           //Get last option create
@@ -260,7 +260,7 @@ export default {
           this.modal.loading = false
           this.modal.show = false
         }).catch(error => {
-          this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated')})
           this.modal.show = false
           this.modal.loading = false
           this.modal.optionSelected = null//Reset option of select options
@@ -285,11 +285,11 @@ export default {
       })
       //Request
       this.$crud.update(configName, form.id, form).then(response => {
-        this.$alert.success({message: this.$tr('isite.cms.message.recordUpdated'), pos: 'bottom'})
+        this.$alert.success({message: this.$tr('isite.cms.message.recordUpdated')})
         this.setDataOption()
         this.loading = false
       }).catch(error => {
-        this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
+        this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated')})
         this.loading = false
       })
     },
@@ -311,12 +311,12 @@ export default {
           //Request
           this.$crud.delete(configName, optionId, {params: {}}).then(async response => {
             this.template.currentOption = null//Set null current option
-            this.$alert.success({message: this.$tr('isite.cms.message.recordDeleted'), pos: 'bottom'})
+            this.$alert.success({message: this.$tr('isite.cms.message.recordDeleted')})
             await this.getData()//Get data
             this.$refs.optionList.vRefresh()//Refresh List options
             this.loading = false
           }).catch((error) => {
-            this.$alert.error({message: this.$tr('isite.cms.message.recordNoDeleted'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoDeleted')})
             this.loading = false
           })
         }).onCancel(response => {
@@ -402,7 +402,7 @@ export default {
         this.loadingOptions = false
       }).catch(error => {
         this.$apiResponse.handleError(error, () => {
-          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest')})
           this.loading = false
         })
       })
