@@ -204,7 +204,7 @@ export default {
       //instance response
       let response = {
         props: {
-          data: this.order.items,
+          rows: this.order.items,
           pagination: {rowsPerPage: 0},
           class: 'no-shadow',
           hideBottom: true,

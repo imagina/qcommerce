@@ -1,7 +1,7 @@
 <template>
   <div id="orderItemsComponent">
     <q-table
-      :data="items"
+      :rows="items"
       :columns="columns"
       :pagination="{
         rowsPerPage: 0

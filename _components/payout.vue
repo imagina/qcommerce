@@ -63,7 +63,7 @@ export default {
           {name: 'account', label: this.$tr('isite.cms.label.account'), field: 'account', align: 'left'},
           {name: 'actions', label: this.$trp('isite.cms.label.action'), field: 'actions'},
         ],
-        data: [
+        rows: [
           {
             title: 'Stripe',
             account: !this.account ? this.$tr('isite.cms.message.noRegistered') :

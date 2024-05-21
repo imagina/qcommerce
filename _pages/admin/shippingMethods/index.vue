@@ -5,7 +5,7 @@
     <div class="col-12 relative-position backend-page">
       <!--Table-->
       <q-table
-          :data="table.data"
+          :rows="table.data"
           :columns="table.columns"
           :pagination.sync="table.pagination"
           @request="getData"

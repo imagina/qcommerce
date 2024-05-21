@@ -2,7 +2,7 @@
   <div id="orderStatusHistoryComponent">
 
     <q-table
-      :data="items"
+      :rows="items"
       :columns="columns"
       :pagination="{
         rowsPerPage: 0
