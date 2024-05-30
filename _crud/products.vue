@@ -221,7 +221,12 @@ export default {
                 ],
               },
               config: {
-                filterByQuery: true
+                filterByQuery: true,
+                options: {
+                  id: 'id',
+                  label: 'title',
+                  sublabel: item => item.parent?.title || null
+                }
               }
             },
           },

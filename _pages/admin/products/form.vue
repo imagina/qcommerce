@@ -821,7 +821,38 @@ export default {
               ]
             },
             config: {
-              filterByQuery: true
+              filterByQuery: true,
+              options: {
+                id: 'id',
+                label: 'title',
+                sublabel: item => item.parent?.title || null
+              }
+            }
+          }
+        },
+        categories: {
+          value: [],
+          type: 'crud',
+          props: {
+            crudType: 'select',
+            crudData: import('modules/qcommerce/_crud/productCategories'),
+            customData: {
+              read: {
+                requestParams: { include: 'parent', refresh: true }
+              }
+            },
+            crudProps: {
+              label: this.$trp('isite.cms.form.category'),
+              multiple: true,
+              useChips: true
+            },
+            config: {
+              filterByQuery: true,
+              options: {
+                id: 'id',
+                label: 'title',
+                sublabel: item => item.parent?.title || null
+              }
             }
           }
         },
@@ -870,27 +901,6 @@ export default {
 
             crudProps: {
               label: `${this.$tr('icommerce.cms.sidebar.volumeClasses')}`
-            }
-          }
-        },
-        categories: {
-          value: [],
-          type: 'crud',
-          props: {
-            crudType: 'select',
-            crudData: import('modules/qcommerce/_crud/productCategories'),
-            customData: {
-              read: {
-                requestParams: { include: 'parent', refresh: true }
-              }
-            },
-            crudProps: {
-              label: this.$trp('isite.cms.form.category'),
-              multiple: true,
-              useChips: true
-            },
-            config: {
-              filterByQuery: true
             }
           }
         },
