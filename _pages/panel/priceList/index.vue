@@ -36,7 +36,7 @@
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-item-label class="text-blue-grey text-weight-bold" caption>${{ $trn(product.price) }}</q-item-label>
+                    <q-item-label class="text-blue-grey text-weight-bold" caption>${{ $trn(product.userPrice || product.price) }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
