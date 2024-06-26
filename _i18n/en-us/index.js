@@ -284,5 +284,18 @@ export default {
         "dataSheet": "Data sheet"
       }
     }
+  },
+  "Icommercepricelist": {
+    "cms": {
+      "sidebar": {
+        "productList": "Prices",
+        "priceLists": "Lists"
+      },
+      "form": {
+        "newProductList": "New Product Price List",
+        "updateProductList": "Update Product Price List",
+        "productPriceListContent": "Choose from multiple price lists for your products."
+      }
+    }
   }
 }

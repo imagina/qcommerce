@@ -284,5 +284,18 @@ export default {
       "fieldEditableOnlyWarehouse": "Este campo se modifica por bodegas",
       "changeOnlyNestedOptionValue": "Esta opción tiene opciones hijas, solo puedes modificar este campo en ellas"
     }
+  },
+  "Icommercepricelist": {
+    "cms": {
+      "sidebar": {
+        "productList": "Precios",
+        "priceLists": "Listas"
+      },
+      "form": {
+        "newProductList": "Nueva Lista de Precios de Productos",
+        "updateProductList": "Actualizar Lista de Precios de Productos",
+        "productPriceListContent": "Elige entre varias listas de precios para tus productos."
+      }
+    }
   }
 }
