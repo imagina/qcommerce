@@ -1082,7 +1082,7 @@ export default {
       var response = true;
       //Validate empty strings
       ['name', 'slug', 'summary', 'description'].forEach(key => {
-        if (!formData[key] || !formData[key].trim().length) response = false
+        if (!formData[key] || !formData[key].length) response = false
       })
       //Validate Categories
       if (!formData.categoryId || !formData.categories.length) response = false;
