@@ -58,34 +58,6 @@
                         </div>
                       </template>
                     </div>
-                    <!-- Save Actions -->
-                    <div class="text-right">
-                      <!--Update button-->
-                      <q-btn
-                        v-if="productId" rounded unelevated outline
-                        color="green" :loading="loading"
-                        icon="fal fa-save" :label="$tr('isite.cms.label.update')" @click="updateItem()"
-                      />
-                      <!--Save button-->
-                      <q-btn-dropdown :label="buttonActions.label" split v-else :loading="loading"
-                                      content-style="min-width: 250px !important" unelevated outline
-                                      color="green" icon="fal fa-save" @click="createItem()" rounded align="right">
-                        <q-list link>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndReturn, value : 1}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndReturn }}
-                          </q-item>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndEdit, value : 2}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndEdit }}
-                          </q-item>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndCreate, value : 3}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndCreate }}
-                          </q-item>
-                        </q-list>
-                      </q-btn-dropdown>
-                    </div>
                   </q-tab-panel>
                   <q-tab-panel name="content">
                     <!--name-->
@@ -451,10 +423,37 @@
                     </q-card>
                   </q-tab-panel>
                 </q-tab-panels>
-                <!-- Back action -->
-                <div v-if="lastPanelOpen != 'home'" class="q-px-md text-right">
-                  <q-btn outline rounded color="green" :label="$tr('isite.cms.label.back')"
-                         icon="fal fa-arrow-left" @click="() => backHomePanel()" />
+                <!-- Actions -->
+                <div class="text-right">
+                  <!--Grid Action-->
+                  <q-btn v-if="lastPanelOpen != 'home'" outline rounded color="blue-grey"
+                         :label="$tr('isite.cms.label.back')" icon="fal fa-arrow-left"
+                         @click="() => backHomePanel()" class="q-mr-sm" no-caps />
+                  <!--Update button-->
+                  <q-btn
+                    v-if="productId" rounded unelevated outline
+                    color="green" :loading="loading" no-caps
+                    icon="fal fa-save" :label="$tr('isite.cms.label.update')" @click="updateItem()"
+                  />
+                  <!--Save button-->
+                  <q-btn-dropdown :label="buttonActions.label" split v-else :loading="loading"
+                                  content-style="min-width: 250px !important" unelevated outline no-caps
+                                  color="green" icon="fal fa-save" @click="createItem()" rounded align="right">
+                    <q-list link>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndReturn, value : 1}"
+                              v-close-popup>
+                        {{ options.btn.saveAndReturn }}
+                      </q-item>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndEdit, value : 2}"
+                              v-close-popup>
+                        {{ options.btn.saveAndEdit }}
+                      </q-item>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndCreate, value : 3}"
+                              v-close-popup>
+                        {{ options.btn.saveAndCreate }}
+                      </q-item>
+                    </q-list>
+                  </q-btn-dropdown>
                 </div>
               </div>
             </div>
@@ -842,9 +841,12 @@ export default {
               }
             },
             crudProps: {
-              label: this.$trp('isite.cms.form.category'),
+              label: this.$trp('isite.cms.form.category')+'*',
               multiple: true,
-              useChips: true
+              useChips: true,
+              rules: [
+                val => val.length || this.$tr('isite.cms.message.fieldRequired')
+              ],
             },
             config: {
               filterByQuery: true,
@@ -1079,15 +1081,25 @@ export default {
     //validate fields from home tab
     validateFieldsHomeTab() {
       const formData = this.locale.formTemplate;
-      var response = true;
+      let validateTabName = null;
+      let isValid = true;
       //Validate empty strings
       ['name', 'slug', 'summary', 'description'].forEach(key => {
-        if (!formData[key] || !formData[key].length) response = false;
+        if (!formData[key] || !formData[key].length) {
+          isValid = false;
+          validateTabName = 'content';
+        }
       });
       //Validate Categories
-      if (!formData.categoryId || !formData.categories.length) response = false;
-      //Default response
-      return response;
+      if (!formData.categoryId || !formData.categories.length) {
+        isValid = false;
+        validateTabName = 'categories';
+      }
+      if (isValid) return isValid;
+      else {
+        this.showNewForm(validateTabName);
+        setTimeout(() => this.$refs.localeComponent.validateForm(), 800);
+      }
     },
     //back to home panel
     async backHomePanel() {
@@ -1212,8 +1224,6 @@ export default {
           this.loading = false;
           this.$alert.error({ message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom' });
         });
-      } else {
-        this.$alert.error({ message: this.$tr('isite.cms.message.formInvalid') });
       }
     },
     //Update Product
@@ -1230,8 +1240,6 @@ export default {
           this.loading = false;
           this.$alert.error({ message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom' });
         });
-      } else {
-        this.$alert.error({ message: this.$tr('isite.cms.message.formInvalid') });
       }
     },
     //Get just values not null from form
