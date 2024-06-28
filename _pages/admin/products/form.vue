@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-10 offset-lg-1 relative-position">
         <!--Page Actions-->
         <div class="box box-auto-height q-mb-md">
-          <page-actions :title="pageTitle" :exclude-actions="['sync']" @refresh="initForm"/>
+          <page-actions :title="pageTitle" :exclude-actions="['sync']" @refresh="initForm" />
         </div>
         <!--Data-->
         <q-form autocorrect="off" autocomplete="off" ref="formContent"
@@ -14,22 +14,22 @@
           <div class="row justify-center q-col-gutter-x-md" v-if="success">
             <!--Language-->
             <div class="col-12 q-mb-md">
-              <locales v-model="locale" ref="localeComponent" :form="$refs.formContent"/>
+              <locales v-model="locale" ref="localeComponent" :form="$refs.formContent" />
             </div>
             <!--Form left-->
             <div class="col-12" v-if="locale.success">
               <div class="box">
                 <!-- Product Title-->
                 <div v-if="locale.formTemplate.name" class="box-title">
-                  <q-icon name="fa-light fa-tags"/>
+                  <q-icon name="fa-light fa-tags" />
                   {{ locale.formTemplate.name }}
-                  <q-separator class="q-my-md"/>
+                  <q-separator class="q-my-md" />
                 </div>
                 <!-- Tab information -->
                 <div v-if="lastPanelOpen != 'home'">
                   <div class="box-title text-primary q-mb-xs">{{ $tr(modalForms[lastPanelOpen].title) }}</div>
                   <p class="text-body2">{{ $tr(modalForms[lastPanelOpen].content) }}</p>
-                  <q-separator class="q-my-md" inset/>
+                  <q-separator class="q-my-md" inset />
                 </div>
                 <!-- form tabs-->
                 <q-tab-panels v-model="lastPanelOpen" keep-alive animated class="rounded-borders q-pa-none">
@@ -39,39 +39,11 @@
                            v-if="modalForm.type !== 'home' && (modalForm.vIf != undefined ? modalForm.vIf : true)"
                            @click="() => showNewForm(modalForm.type)">
                         <div class="relative-position card">
-                          <q-icon name="fal fa-edit" color="primary" class="absolute-right q-pr-md q-pt-md"/>
+                          <q-icon name="fal fa-edit" color="primary" class="absolute-right q-pr-md q-pt-md" />
                           <div class="box-title text-primary q-mb-sm ">{{ $tr(modalForm.title) }}</div>
                           <p class="text-body2">{{ $tr(modalForm.content) }}</p>
                         </div>
                       </div>
-                    </div>
-                    <!-- Save Actions -->
-                    <div class="text-right">
-                      <!--Update button-->
-                      <q-btn
-                          v-if="productId" rounded unelevated outline
-                          color="green" :loading="loading"
-                          icon="fal fa-save" :label="$tr('isite.cms.label.update')" @click="updateItem()"
-                      />
-                      <!--Save button-->
-                      <q-btn-dropdown :label="buttonActions.label" split v-else :loading="loading"
-                                      content-style="min-width: 250px !important" unelevated outline
-                                      color="green" icon="fal fa-save" @click="createItem()" rounded align="right">
-                        <q-list link>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndReturn, value : 1}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndReturn }}
-                          </q-item>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndEdit, value : 2}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndEdit }}
-                          </q-item>
-                          <q-item @click.native="buttonActions = {label : options.btn.saveAndCreate, value : 3}"
-                                  v-close-popup>
-                            {{ options.btn.saveAndCreate }}
-                          </q-item>
-                        </q-list>
-                      </q-btn-dropdown>
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="content">
@@ -79,63 +51,63 @@
                     <q-input v-model="locale.formTemplate.name" @input="setSlug()" outlined dense
                              data-testid="name"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.name')} (${locale.language})*`"/>
+                             :label="`${$tr('isite.cms.form.name')} (${locale.language})*`" />
                     <!--Slug-->
                     <q-input v-model="locale.formTemplate.slug" outlined dense
                              data-testid="slug"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.slug')} (${locale.language})*`"/>
+                             :label="`${$tr('isite.cms.form.slug')} (${locale.language})*`" />
                     <!--Sumario-->
                     <q-input v-model="locale.formTemplate.summary" type="textarea" outlined dense
                              data-testid="summary"
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3"/>
+                             :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3" />
                     <dynamic-field v-model="locale.formTemplate.advancedSummary" :field="dynamicFields.advancedSummary"
-                                   :item-id="productId" :language="locale.language"/>
+                                   :item-id="productId" :language="locale.language" />
                     <!--Description-->
                     <div class="input-title">{{ `${$tr('isite.cms.form.description')} (${locale.language})*` }}</div>
                     <q-field v-model="locale.formTemplate.description" borderless
                              :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]">
-                      <ck-editor v-model="locale.formTemplate.description" data-testid="description"/>
+                      <ck-editor v-model="locale.formTemplate.description" data-testid="description" />
                       <q-editor v-if="false" v-model="locale.formTemplate.description" class="full-width"
                                 :toolbar="editorText.toolbar" content-class="text-grey-9"
-                                toolbar-text-color="grey-9"/>
+                                toolbar-text-color="grey-9" />
                     </q-field>
                   </q-tab-panel>
                   <q-tab-panel name="status">
                     <q-select
-                        :clearable="false"
-                        emit-value map-options outlined dense
-                        :label="$tr('isite.cms.form.status')"
-                        :options="options.status"
-                        v-model="locale.formTemplate.status"
-                        data-testid="status"
+                      :clearable="false"
+                      emit-value map-options outlined dense
+                      :label="$tr('isite.cms.form.status')"
+                      :options="options.status"
+                      v-model="locale.formTemplate.status"
+                      data-testid="status"
                     />
                   </q-tab-panel>
                   <q-tab-panel name="categories">
                     <div class="relative-position text-right">
                       <!--Main category-->
-                      <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.categoryId"/>
+                      <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.categoryId" />
                       <!--Categories-->
                       <dynamic-field v-model="locale.formTemplate.categories"
-                                     :field="dynamicFields.categories"/>
+                                     :field="dynamicFields.categories" />
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="metaInfo">
                     <!--Meta Title-->
                     <q-input data-testid="metaTitle" v-model="locale.formTemplate.metaTitle" outlined dense
-                             :label="`${$tr('isite.cms.form.metaTitle')} (${locale.language})`" class="q-m-b-sm"/>
+                             :label="`${$tr('isite.cms.form.metaTitle')} (${locale.language})`" class="q-m-b-sm" />
                     <!--Meta Description-->
                     <q-input data-testid="metaDescription" v-model="locale.formTemplate.metaDescription"
                              type="textarea"
                              outlined dense
-                             :label="`${$tr('isite.cms.form.metaDescription')} (${locale.language})`" rows="3"/>
+                             :label="`${$tr('isite.cms.form.metaDescription')} (${locale.language})`" rows="3" />
                     <!--Custom url-->
                     <q-input data-testid="customUrl" v-model="locale.formTemplate.customUrl" outlined dense
                              :label="`${$tr('isite.cms.form.customUrl')}`">
                     </q-input>
                     <!--Quantity Class-->
-                    <dynamic-field v-model="locale.formTemplate.tags" :field="dynamicFields.tags"/>
+                    <dynamic-field v-model="locale.formTemplate.tags" :field="dynamicFields.tags" />
                   </q-tab-panel>
                   <q-tab-panel name="data">
                     <div class="row q-col-gutter-md q-pa-md">
@@ -143,163 +115,163 @@
                       <div class="col-12 col-md-6">
                         <!--reference-->
                         <q-input data-testid="reference" v-model="locale.formTemplate.reference" outlined dense
-                                 :label="$tr('isite.cms.form.reference')"/>
+                                 :label="$tr('isite.cms.form.reference')" />
                         <!--SKU-->
                         <q-input data-testid="sku" outlined dense v-model="locale.formTemplate.sku"
-                                 :label="$tr('isite.cms.form.sku')"/>
+                                 :label="$tr('isite.cms.form.sku')" />
                         <!--Price-->
                         <q-input data-testid="price" outlined dense type="number" v-model="locale.formTemplate.price"
-                                 :label="$tr('isite.cms.form.price')"/>
+                                 :label="$tr('isite.cms.form.price')" />
                         <!--Quantity-->
-                        <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity"/>
+                        <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity" />
                         <!--Quantity Class-->
                         <dynamic-field v-model="locale.formTemplate.quantityClassId"
-                                       :field="dynamicFields.quantityClassId"/>
+                                       :field="dynamicFields.quantityClassId" />
                         <!--minimum-->
                         <q-input data-testid="minimumOrder" :label="$tr('icommerce.cms.form.minimumOrder')"
                                  outlined dense
-                                 type="number" v-model="locale.formTemplate.minimum"/>
+                                 type="number" v-model="locale.formTemplate.minimum" />
                         <!--Status-->
                         <div class="input-title">{{ $tr('isite.cms.form.stock') }}</div>
                         <tree-select
-                            data-testid="stockStatus"
-                            :clearable="false"
-                            :append-to-body="true"
-                            :options="options.stockStatus"
-                            value-consists-of="BRANCH_PRIORITY"
-                            v-model="locale.formTemplate.stockStatus"
-                            class="q-mb-md"
+                          data-testid="stockStatus"
+                          :clearable="false"
+                          :append-to-body="true"
+                          :options="options.stockStatus"
+                          value-consists-of="BRANCH_PRIORITY"
+                          v-model="locale.formTemplate.stockStatus"
+                          class="q-mb-md"
                         />
                         <!--sortOrder-->
                         <q-input data-testid="sortOrder" :label="$tr('icommerce.cms.form.sortOrder')"
                                  outlined dense
-                                 type="number" v-model="locale.formTemplate.sortOrder"/>
+                                 type="number" v-model="locale.formTemplate.sortOrder" />
                       </div>
                       <!--Right-->
                       <div class="col-12 col-md-6">
                         <!--availability date-->
                         <dynamic-field v-model="locale.formTemplate.dateAvailable"
-                                       :field="dynamicFields.dateAvailable"/>
+                                       :field="dynamicFields.dateAvailable" />
                         <!--Points-->
                         <q-input data-testid="points" v-model="locale.formTemplate.points" outlined dense
-                                 :label="$trp('isite.cms.form.point')"/>
+                                 :label="$trp('isite.cms.form.point')" />
                         <!--Dimensions-->
                         <div class="row q-col-gutter-xs">
                           <!--length-->
                           <div class="col-xs-12 col-sm-4">
                             <q-input data-testid="length" v-model="locale.formTemplate.length"
                                      :label="$tr('isite.cms.form.length')"
-                                     outlined dense type="number"/>
+                                     outlined dense type="number" />
                           </div>
                           <!--width-->
                           <div class="col-xs-12 col-sm-4">
                             <q-input data-testid="width" v-model="locale.formTemplate.width"
                                      :label="$tr('isite.cms.form.width')"
-                                     outlined dense type="number"/>
+                                     outlined dense type="number" />
                           </div>
                           <!--height-->
                           <div class="col-xs-12 col-sm-4">
                             <q-input data-testid="height" v-model="locale.formTemplate.height"
                                      :label="$tr('isite.cms.form.height')"
-                                     outlined dense type="number"/>
+                                     outlined dense type="number" />
                           </div>
                         </div>
                         <!--Lenght Class-->
                         <dynamic-field v-model="locale.formTemplate.lengthClassId"
-                                       :field="dynamicFields.lengthClassId"/>
+                                       :field="dynamicFields.lengthClassId" />
                         <!--weight-->
                         <q-input data-testid="weight" v-model="locale.formTemplate.weight"
                                  :label="$tr('isite.cms.form.weight')"
-                                 outlined dense type="number"/>
+                                 outlined dense type="number" />
                         <!--Weight Class-->
                         <dynamic-field v-model="locale.formTemplate.weightClassId"
-                                       :field="dynamicFields.weightClassId"/>
+                                       :field="dynamicFields.weightClassId" />
 
                         <!--Order Weight-->
                         <q-input data-testid="orderWeight" :label="$tr('icommerce.cms.form.orderWeight')" outlined
                                  dense
-                                 v-model="locale.formTemplate.orderWeight"/>
+                                 v-model="locale.formTemplate.orderWeight" />
                         <!--volume-->
                         <q-input data-testid="weight" v-model="locale.formTemplate.volume"
                                  :label="$tr('icommerce.cms.form.volume')"
-                                 outlined dense type="number"/>
+                                 outlined dense type="number" />
                         <!--Volume Class-->
                         <dynamic-field v-model="locale.formTemplate.volumeClassId"
-                                       :field="dynamicFields.volumeClassId"/>
+                                       :field="dynamicFields.volumeClassId" />
                         <!--Requires shipping-->
                         <q-toggle
-                            data-testid="shipping"
-                            v-model="locale.formTemplate.shipping"
-                            :true-value="true"
-                            :false-value="false"
-                            :label="$tr('icommerce.cms.form.requriedShipping')"
-                            color="primary"
+                          data-testid="shipping"
+                          v-model="locale.formTemplate.shipping"
+                          :true-value="true"
+                          :false-value="false"
+                          :label="$tr('icommerce.cms.form.requriedShipping')"
+                          color="primary"
                         />
                         <br>
                         <!--Free shipping-->
                         <q-toggle
-                            data-testid="freeShipping"
-                            v-model="locale.formTemplate.freeshipping"
-                            :true-value="true"
-                            :false-value="false"
-                            :label="$tr('icommerce.cms.form.freeShipping')"
-                            color="primary"
+                          data-testid="freeShipping"
+                          v-model="locale.formTemplate.freeshipping"
+                          :true-value="true"
+                          :false-value="false"
+                          :label="$tr('icommerce.cms.form.freeShipping')"
+                          color="primary"
                         />
                         <br>
                         <!--Substrac from Stock-->
                         <q-toggle
-                            data-testid="subtract"
-                            v-model="locale.formTemplate.subtract"
-                            :true-value="true"
-                            :false-value="false"
-                            :label="$tr('icommerce.cms.form.subtractFromStock')"
-                            color="primary"
+                          data-testid="subtract"
+                          v-model="locale.formTemplate.subtract"
+                          :true-value="true"
+                          :false-value="false"
+                          :label="$tr('icommerce.cms.form.subtractFromStock')"
+                          color="primary"
                         />
                         <br>
                         <!--featured-->
                         <q-toggle
-                            data-testid="subtract"
-                            v-model="locale.formTemplate.featured"
-                            true-value="1"
-                            false-value="0"
-                            :label="$tr('icommerce.cms.form.featured')"
-                            color="primary"
+                          data-testid="subtract"
+                          v-model="locale.formTemplate.featured"
+                          true-value="1"
+                          false-value="0"
+                          :label="$tr('icommerce.cms.form.featured')"
+                          color="primary"
                         />
-                        <br/>
+                        <br />
                         <!--is call-->
                         <q-toggle
-                            data-testid="isCall"
-                            v-model="locale.formTemplate.isCall"
-                            true-value="1"
-                            false-value="0"
-                            :label="$tr('icommerce.cms.form.isCall')"
-                            color="primary"
+                          data-testid="isCall"
+                          v-model="locale.formTemplate.isCall"
+                          true-value="1"
+                          false-value="0"
+                          :label="$tr('icommerce.cms.form.isCall')"
+                          color="primary"
                         />
                         <br>
                         <!--Show price when is call-->
                         <q-toggle
-                            data-testid="showPriceIsCall"
-                            v-model="locale.formTemplate.showPriceIsCall"
-                            true-value="1"
-                            false-value="0"
-                            :label="$tr('icommerce.cms.form.showPriceIsCall')"
-                            color="primary"
+                          data-testid="showPriceIsCall"
+                          v-model="locale.formTemplate.showPriceIsCall"
+                          true-value="1"
+                          false-value="0"
+                          :label="$tr('icommerce.cms.form.showPriceIsCall')"
+                          color="primary"
                         />
                         <!--Extra fields-->
                         <div v-for="(field, key) in  extraFields" :key="key" :ref="key">
                           <!--Dynamic fake field-->
                           <dynamic-field
-                              v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
-                              :key="key" v-if="field.isFakeField || field.fakeFieldName"
-                              :field="{...field, testId : (field.testId || field.name || key)}"
-                              :language="locale.language" :item-id="productId"
-                              :ref="`field-${field.name || key}`"/>
+                            v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
+                            :key="key" v-if="field.isFakeField || field.fakeFieldName"
+                            :field="{...field, testId : (field.testId || field.name || key)}"
+                            :language="locale.language" :item-id="productId"
+                            :ref="`field-${field.name || key}`" />
                           <!--Dynamic field-->
                           <dynamic-field v-model="locale.formTemplate[field.name || key]" :key="key"
                                          :field="{...field, testId : (field.testId  || field.name || key)}"
                                          :language="locale.language" :item-id="productId"
                                          :ref="`field-${field.name || key}`"
-                                         v-if="!field.isFakeField && !field.fakeFieldName"/>
+                                         v-if="!field.isFakeField && !field.fakeFieldName" />
                         </div>
                       </div>
                     </div>
@@ -312,15 +284,15 @@
                           {{ `${$tr('isite.cms.form.masterRecord')}` }}
                         </div>
                         <tree-select
-                            data-testid="masterRecord"
-                            :clearable="false"
-                            :append-to-body="true"
-                            v-model="locale.formTemplate.options.masterRecord"
-                            :options="[
+                          data-testid="masterRecord"
+                          :clearable="false"
+                          :append-to-body="true"
+                          v-model="locale.formTemplate.options.masterRecord"
+                          :options="[
                                       {label: this.$tr('isite.cms.label.yes'), id: 1},
                                       {label: this.$tr('isite.cms.label.no'), id: 0},
                                     ]"
-                            placeholder=""
+                          placeholder=""
                         />
                       </div>
                       <!--Crud item types-->
@@ -349,29 +321,29 @@
                       <!--Parent-->
                       <div class="input-title" v-if="false">{{ `${$tr('isite.cms.form.parent')}` }}</div>
                       <tree-select
-                          data-testid="parentId"
-                          v-model="locale.formTemplate.parentId"
-                          :async="true"
-                          :append-to-body="true"
-                          class="q-mb-md"
-                          :load-options="searchProducts"
-                          :default-options="optionsTemplate.products"
-                          placeholder=""
-                          label="name"
-                          v-if="false"
+                        data-testid="parentId"
+                        v-model="locale.formTemplate.parentId"
+                        :async="true"
+                        :append-to-body="true"
+                        class="q-mb-md"
+                        :load-options="searchProducts"
+                        :default-options="optionsTemplate.products"
+                        placeholder=""
+                        label="name"
+                        v-if="false"
                       />
                       <!--Related Products-->
                       <div class="input-title">{{ $tr('icommerce.cms.form.relatedProducts') }}</div>
                       <tree-select
-                          data-testid="relatedProducts"
-                          v-model="locale.formTemplate.relatedProducts"
-                          :async="true"
-                          :multiple="true"
-                          :append-to-body="true"
-                          :load-options="searchProducts"
-                          :default-options="optionsTemplate.relatedProducts"
-                          placeholder=""
-                          label="name"
+                        data-testid="relatedProducts"
+                        v-model="locale.formTemplate.relatedProducts"
+                        :async="true"
+                        :multiple="true"
+                        :append-to-body="true"
+                        :load-options="searchProducts"
+                        :default-options="optionsTemplate.relatedProducts"
+                        placeholder=""
+                        label="name"
                       />
                     </div>
                   </q-tab-panel>
@@ -379,27 +351,27 @@
                     <div class="q-pa-md">
                       <!--Video-->
                       <q-input data-testid="optionsVideo" v-model="locale.formTemplate.options.video" outlined dense
-                               :label="$tr('isite.cms.form.video')"/>
+                               :label="$tr('isite.cms.form.video')" />
                       <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields.mainImage"
-                                     :item-id="productId"/>
+                                     :item-id="productId" />
                       <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields.sizereference"
-                                     :item-id="productId"/>
+                                     :item-id="productId" />
                       <dynamic-field v-model="locale.formTemplate.mediasMulti" :field="dynamicFields.gallery"
-                                     :item-id="productId"/>
+                                     :item-id="productId" />
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="options">
                     <q-card>
                       <q-card-section class="q-pa-sm">
                         <div class="q-pa-sm">
-                          <crud-options :productId="productId" v-if="productId"/>
+                          <crud-options :productId="productId" v-if="productId" />
                           <div v-else class="text-center">
                             <div class="q-my-md">
                               <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
                               {{ `${$tr('icommerce.cms.message.warnAddOpt')}...` }}
                             </div>
                             <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                                   @click="buttonActions.value = 4, createItem()" color="green" />
                           </div>
                         </div>
                       </q-card-section>
@@ -411,8 +383,8 @@
                         <div class="full-width">
                           <div class="q-pa-sm" v-if="productId">
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productDiscounts')"
-                                :custom-data="{read: {requestParams: {include: 'department', filter: {productId: productId} } }, formRight:{productId: {value: productId} } }"
+                              :crud-data="import('@imagina/qcommerce/_crud/productDiscounts')"
+                              :custom-data="{read: {requestParams: {include: 'department', filter: {productId: productId} } }, formRight:{productId: {value: productId} } }"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -421,7 +393,7 @@
                               {{ `${$tr('icommerce.cms.message.warnAddDiscount')}...` }}
                             </div>
                             <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                                   @click="buttonActions.value = 4, createItem()" color="green" />
                           </div>
                         </div>
                       </q-card-section>
@@ -434,15 +406,15 @@
                           <div class="q-pa-sm" v-if="productId">
                             <!--Product Warehouse-->
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
-                                :custom-data="customCrudData.productWarehouse"
-                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
+                              :crud-data="import('@imagina/qcommerce/_crud/productWarehouse.vue')"
+                              :custom-data="customCrudData.productWarehouse"
+                              @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
-                                :custom-data="customCrudData.productOptValueWarehouse"
-                                @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
+                              :crud-data="import('@imagina/qcommerce/_crud/productOptValueWarehouse.vue')"
+                              :custom-data="customCrudData.productOptValueWarehouse"
+                              @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -451,7 +423,7 @@
                               {{ `${$tr('icommerce.cms.message.warnWarehouse')}...` }}
                             </div>
                             <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                                   @click="buttonActions.value = 4, createItem()" color="green" />
                           </div>
                         </div>
                       </q-card-section>
@@ -464,8 +436,8 @@
                           <div class="q-pa-sm" v-if="productId">
                             <!--Product Price List-->
                             <crud
-                                :crud-data="import('@imagina/qcommerce/_crud/productList.vue')"
-                                :custom-data="customCrudData.productPriceList"
+                              :crud-data="import('@imagina/qcommerce/_crud/productList.vue')"
+                              :custom-data="customCrudData.productPriceList"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
@@ -474,24 +446,51 @@
                               {{ `${$tr('icommerce.cms.message.warnWarehouse')}...` }}
                             </div>
                             <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green"/>
+                                   @click="buttonActions.value = 4, createItem()" color="green" />
                           </div>
                         </div>
                       </q-card-section>
                     </q-card>
                   </q-tab-panel>
                 </q-tab-panels>
-                <!-- Back action -->
-                <div v-if="lastPanelOpen != 'home'" class="q-px-md text-right">
-                  <q-btn outline rounded color="green" :label="$tr('isite.cms.label.back')"
-                         icon="fal fa-arrow-left" @click="() => backHomePanel()"/>
+                <!-- Actions -->
+                <div class="text-right">
+                  <!--Grid Action-->
+                  <q-btn v-if="lastPanelOpen != 'home'" outline rounded color="blue-grey"
+                         :label="$tr('isite.cms.label.back')" icon="fal fa-arrow-left"
+                         @click="() => backHomePanel()" class="q-mr-sm" no-caps />
+                  <!--Update button-->
+                  <q-btn
+                    v-if="productId" rounded unelevated outline
+                    color="green" :loading="loading" no-caps
+                    icon="fal fa-save" :label="$tr('isite.cms.label.update')" @click="updateItem()"
+                  />
+                  <!--Save button-->
+                  <q-btn-dropdown :label="buttonActions.label" split v-else :loading="loading"
+                                  content-style="min-width: 250px !important" unelevated outline no-caps
+                                  color="green" icon="fal fa-save" @click="createItem()" rounded align="right">
+                    <q-list link>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndReturn, value : 1}"
+                              v-close-popup>
+                        {{ options.btn.saveAndReturn }}
+                      </q-item>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndEdit, value : 2}"
+                              v-close-popup>
+                        {{ options.btn.saveAndEdit }}
+                      </q-item>
+                      <q-item @click.native="buttonActions = {label : options.btn.saveAndCreate, value : 3}"
+                              v-close-popup>
+                        {{ options.btn.saveAndCreate }}
+                      </q-item>
+                    </q-list>
+                  </q-btn-dropdown>
                 </div>
               </div>
             </div>
           </div>
         </q-form>
         <!--Loading-->
-        <inner-loading :visible="loading"/>
+        <inner-loading :visible="loading" />
       </div>
     </div>
   </div>
@@ -535,7 +534,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       this.initForm()
       const path = this.$route.path.split("/");
       const lastChildPath = path[path.length - 2];
@@ -574,7 +573,7 @@ export default {
         products: [],
         relatedProducts: [],
       },
-      buttonActions: {label: '', value: 1},
+      buttonActions: { label: '', value: 1 },
       modalShow: {
         category: false
       },
@@ -743,7 +742,7 @@ export default {
           metaDescription: '',
           advancedSummary: ''
         },
-      }
+        }
     },
     //Check if update options
     updateOptions() {
@@ -760,12 +759,12 @@ export default {
     options() {
       return {
         status: [
-          {label: this.$tr('isite.cms.label.enabled'), value: 1},
-          {label: this.$tr('isite.cms.label.disabled'), value: 0}
+          { label: this.$tr('isite.cms.label.enabled'), value: 1 },
+          { label: this.$tr('isite.cms.label.disabled'), value: 0 }
         ],
         stockStatus: [
-          {label: this.$tr('isite.cms.label.available'), id: 1},
-          {label: this.$tr('isite.cms.label.soldOut'), id: 0}
+          { label: this.$tr('isite.cms.label.available'), id: 1 },
+          { label: this.$tr('isite.cms.label.soldOut'), id: 0 }
         ],
         btn: {
           saveAndReturn: this.$tr('isite.cms.message.saveAndReturn'),
@@ -821,7 +820,7 @@ export default {
           },
           loadOptions: {
             apiRoute: 'apiRoutes.qdiscountable.discounts',
-            select: {label: 'name', id: 'id'}
+            select: { label: 'name', id: 'id' }
           }
         },
         tags: {
@@ -846,7 +845,7 @@ export default {
             crudData: import('@imagina/qcommerce/_crud/productCategories'),
             customData: {
               read: {
-                requestParams: {include: 'parent', refresh: true}
+                requestParams: { include: 'parent', refresh: true }
               }
             },
             crudProps: {
@@ -873,13 +872,16 @@ export default {
             crudData: import('@imagina/qcommerce/_crud/productCategories'),
             customData: {
               read: {
-                requestParams: {include: 'parent', refresh: true}
+                requestParams: { include: 'parent', refresh: true }
               }
             },
             crudProps: {
-              label: this.$trp('isite.cms.form.category'),
+              label: this.$trp('isite.cms.form.category')+'*',
               multiple: true,
               useChips: true,
+              rules: [
+                val => val.length || this.$tr('isite.cms.message.fieldRequired')
+              ],
             },
             config: {
               filterByQuery: true,
@@ -977,13 +979,13 @@ export default {
           value: '',
           type: 'html',
           isTranslatable: true,
-          help: {description: this.$tr('icommerce.cms.form.advancedSummaryHelp')},
+          help: { description: this.$tr('icommerce.cms.form.advancedSummaryHelp') },
           props: {
             label: `${this.$tr('icommerce.cms.advancedSummary')}`,
 
           }
         },
-      }
+        }
     },
     //custom crudData for productWarehouse
     customCrudData() {
@@ -992,7 +994,7 @@ export default {
           read: {
             title: this.$tr('icommerce.cms.form.generalWarehouse'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: {include: 'product,warehouse', filter: {productId: this.productId}}
+            requestParams: { include: 'product,warehouse', filter: { productId: this.productId } }
           },
           formLeft: {
             productId: {
@@ -1005,7 +1007,7 @@ export default {
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: {label: 'name', id: 'id'}
+                select: { label: 'name', id: 'id' }
               }
             },
           },
@@ -1016,7 +1018,7 @@ export default {
             excludeActions: ['sync', 'recommendations'],
             requestParams: {
               include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',
-              filter: {include: 'product,warehouse', productId: this.productId}
+              filter: { include: 'product,warehouse', productId: this.productId }
             }
           },
           formLeft: {
@@ -1030,7 +1032,7 @@ export default {
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: {label: 'name', id: 'id'}
+                select: { label: 'name', id: 'id' }
               }
             },
           }
@@ -1039,7 +1041,7 @@ export default {
           read: {
             title: this.$tr('icommerce.cms.form.priceLists'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: {include: 'product,priceList', filter: {productId: this.productId}}
+            requestParams: { include: 'product,priceList', filter: { productId: this.productId } }
           },
           formLeft: {
             productId: {
@@ -1052,7 +1054,7 @@ export default {
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: {label: 'name', id: 'id'}
+                select: { label: 'name', id: 'id' }
               }
             },
             productPrice: {
@@ -1066,7 +1068,7 @@ export default {
             },
           },
         },
-      }
+            }
     },
     //Return settings
     settings() {
@@ -1079,15 +1081,26 @@ export default {
     //validate fields from home tab
     validateFieldsHomeTab() {
       const formData = this.locale.formTemplate;
-      var response = true;
+      let validateTabName = null;
+      let isValid = true;
       //Validate empty strings
       ['name', 'slug', 'summary', 'description'].forEach(key => {
-        if (!formData[key] || !formData[key].length) response = false
-      })
+        if (!formData[key] || !formData[key].length) {
+          isValid = false;
+          validateTabName = 'content';
+        }
+      });
       //Validate Categories
-      if (!formData.categoryId || !formData.categories.length) response = false;
-      //Default response
-      return response
+      if (!formData.categoryId || !formData.categories.length) {
+        isValid = false;
+        validateTabName = 'categories';
+      }
+
+      if (isValid) return isValid;
+      else {
+        this.showNewForm(validateTabName);
+        setTimeout(() => this.$refs.localeComponent.validateForm(), 800);
+      }
     },
     //back to home panel
     async backHomePanel() {
@@ -1151,7 +1164,7 @@ export default {
             refresh: true,
             params: {
               include: 'relatedProducts,categories,category,parent,discounts,manufacturer',
-              filter: {allTranslations: true}
+              filter: { allTranslations: true }
             }
           }
           //Request
@@ -1209,11 +1222,9 @@ export default {
           this.$alert.success({message: `${this.$tr('isite.cms.message.recordCreated')} ID: ${response.data.id}`})
           this.actionAfterCreated(response.data.id)
         }).catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
-        })
-      } else {
-        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
+          this.loading = false;
+          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom' });
+        });
       }
     },
     //Update Product
@@ -1227,11 +1238,9 @@ export default {
           this.$router.push({name: 'qcommerce.admin.products.index'})
           this.initForm()
         }).catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
-        })
-      } else {
-        this.$alert.error({message: this.$tr('isite.cms.message.formInvalid')})
+          this.loading = false;
+          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom' });
+        });
       }
     },
     //Get just values not null from form
@@ -1272,7 +1281,7 @@ export default {
       }, 2000)
     },
     //Search products
-    searchProducts({action, searchQuery, callback}) {
+    searchProducts({ action, searchQuery, callback }) {
       if (action === 'ASYNC_SEARCH') {
         let configName = 'apiRoutes.qcommerce.products'
         let params = {//Params to request
@@ -1301,7 +1310,7 @@ export default {
         //Request params
         let requestParams = {
           refresh: true,
-          params: {filter: {configName: 'icommerce.crud-fields.products'}}
+          params: { filter: { configName: 'icommerce.crud-fields.products' } }
         }
         //Request
         this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
@@ -1368,8 +1377,8 @@ export default {
         })
       } else this.loading = false
     },
+    }
   }
-}
 </script>
 
 <style lang="stylus">
