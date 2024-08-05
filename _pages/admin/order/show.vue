@@ -87,7 +87,7 @@
             {{ $tr('icommerce.cms.newStatus') }}
           </div>
           <q-separator class="q-mt-sm q-mb-md"/>
-          <dynamic-form v-bind="form.status" @sent="init()"/>
+º          <dynamic-form v-bind="form.status" @sent="init()" :key="statusFormKey"/>
         </div>
       </div>
       <!--Chat-->
@@ -136,7 +136,8 @@ export default {
         item: false,
         itemRating: false
       },
-      conversation: false
+      conversation: false,
+      statusFormKey: this.$uid()
     }
   },
   computed: {
@@ -220,7 +221,7 @@ export default {
             {name: 'sku', label: 'SKU', field: 'reference', align: 'left'},
             {name: 'quantity', label: this.$tr('isite.cms.label.quantity'), field: 'quantity', align: 'left'},
             {
-              name: 'price', label: this.$tr('isite.cms.label.price'), field: 'total', align: 'center',
+              name: 'price', label: this.$tr('isite.cms.label.price'), field: 'price', align: 'center',
               format: val => `$${this.$n(val || 0)}`
             },
             {
@@ -380,6 +381,7 @@ export default {
   methods: {
     init() {
       this.getData(true)
+      this.statusFormKey = this.$uid()
     },
     //get data
     getData(refresh) {
