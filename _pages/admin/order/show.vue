@@ -87,7 +87,7 @@
             {{ $tr('icommerce.cms.newStatus') }}
           </div>
           <q-separator class="q-mt-sm q-mb-md"/>
-º          <dynamic-form v-bind="form.status" @sent="init()" :key="statusFormKey"/>
+          <dynamic-form v-bind="form.status" @sent="init()" :key="statusFormKey"/>
         </div>
       </div>
       <!--Chat-->
