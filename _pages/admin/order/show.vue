@@ -7,7 +7,7 @@
     </div>
 
     <!--Dynamic blocks-->
-    <div id="dynamicBlocksContent" class="row q-col-gutter-md">
+    <div id="dynamicBlocksContent" class="row q-col-gutter-md" v-if="order.id">
       <div v-for="(col, keyCol) in informationBlocks" :key="keyCol" class="col-12 col-md-6">
         <div v-for="(block, keyBlock) in col" :key="keyBlock" class="box box-auto-height q-mb-md">
           <!--Title-->
@@ -181,7 +181,7 @@ export default {
           },
           {
             label: this.$tr('icommerce.cms.shipping'),
-            value: `$${this.$n(this.order.shippingAmount)}`
+            value: `$${this.$n(parseFloat(this.order.shippingAmount))}`
           },
           {
             label: this.$tr('icommerce.cms.form.total'),
