@@ -102,6 +102,32 @@ export default {
                 ],
               },
             },
+            featured: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.form.featured')}`,
+                clearable: true,
+                options: [
+                  { label: this.$tr('isite.cms.label.yes'), value: 1 },
+                  { label: this.$tr('isite.cms.label.no'), value: 0 }
+                ]
+              }
+            },
+            productWarehouses: {
+              value: [],
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.label.warehouse')}`,
+                clearable: true,
+                multiple: true,
+                useInputs: true,
+                useChips: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.warehouses'
+              }
+            },
             soonToSoldOut: {
               value: false,
               type: 'checkbox',
