@@ -55,15 +55,22 @@ export default {
           ],
           requestParams: {include: 'category,qrs', filter: {order: {field: 'id', way: 'desc'}}},
           filters: {
-            categories: {
+          categories: {
               value: null,
-              type: 'treeSelect',
+              type: 'select',
               props: {
                 label: `${this.$tr('isite.cms.form.category')}:`,
-                clearable: true,
+                clearable: true
               },
               loadOptions: {
-                apiRoute: 'apiRoutes.qcommerce.categories'
+                apiRoute: 'apiRoutes.qcommerce.categories',
+                requestParams: { include: 'parent' },
+                filterByQuery: true,
+                select: {
+                  id: 'id',
+                  label: 'title',
+                  sublabel: item => item.parent?.title || null
+                }
               }
             },
             manufacturers: {
