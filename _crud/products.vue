@@ -4,23 +4,23 @@ export default {
   data() {
     return {
       crudId: this.$uid()
-    }
+    };
   },
   computed: {
     crudData() {
       return {
         crudId: this.crudId,
-        entityName: config("main.qcommerce.entityNames.product"),
+        entityName: config('main.qcommerce.entityNames.product'),
         apiRoute: 'apiRoutes.qcommerce.products',
         permission: 'icommerce.products',
         extraFormFields: 'Icommerce.crud-fields.products',
         create: {
-          title: this.$tr('icommerce.cms.newProduct'),
+          title: this.$tr('icommerce.cms.newProduct')
           //to: {name: 'qcommerce.admin.products.create'}
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            { name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px' },
             {
               name: 'name',
               label: this.$tr('isite.cms.form.title'),
@@ -29,7 +29,7 @@ export default {
               align: 'rigth',
               sortable: true
             },
-            {name: 'sku', label: this.$tr('isite.cms.form.sku'), field: 'sku', align: 'left'},
+            { name: 'sku', label: this.$tr('isite.cms.form.sku'), field: 'sku', align: 'left' },
             {
               name: 'category', label: this.$tr('isite.cms.form.category'), field: 'category', align: 'left',
               format: val => (val && val.title) ? val.title : ''
@@ -40,30 +40,37 @@ export default {
             {
               name: 'quantity', label: this.$tr('isite.cms.form.stock'), field: 'quantity', align: 'left',
               format: val => !val ? this.$tr('isite.cms.label.soldOut') :
-                  `${this.$tr('isite.cms.label.available')} (${(val <= 100) ? val : '100+'})`
+                `${this.$tr('isite.cms.label.available')} (${(val <= 100) ? val : '100+'})`
             },
-            {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'slug', align: 'left'},
+            { name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'slug', align: 'left' },
             {
-              name: 'price', label: this.$tr('isite.cms.form.price'), field: 'formattedPrice', align: 'left',
+              name: 'price', label: this.$tr('isite.cms.form.price'), field: 'formattedPrice', align: 'left'
               //format: val => this.$trn(val || 0)
             },
             {
               name: 'createdAt', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
-              format: val => val ? this.$trd(val) : '-',
+              format: val => val ? this.$trd(val) : '-'
             },
-            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
+            { name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left' }
           ],
-          requestParams: {include: 'category,qrs', filter: {order: {field: 'id', way: 'desc'}}},
+          requestParams: { include: 'category,qrs', filter: { order: { field: 'id', way: 'desc' } } },
           filters: {
             categories: {
               value: null,
-              type: 'treeSelect',
+              type: 'select',
               props: {
                 label: `${this.$tr('isite.cms.form.category')}:`,
-                clearable: true,
+                clearable: true
               },
               loadOptions: {
-                apiRoute: 'apiRoutes.qcommerce.categories'
+                apiRoute: 'apiRoutes.qcommerce.categories',
+                requestParams: { include: 'parent' },
+                filterByQuery: true,
+                select: {
+                  id: 'id',
+                  label: 'title',
+                  sublabel: item => item.parent?.title || null
+                }
               }
             },
             manufacturers: {
@@ -71,11 +78,11 @@ export default {
               type: 'select',
               props: {
                 label: `${this.$tr('icommerce.cms.form.manufacturer')}:`,
-                clearable: true,
+                clearable: true
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.manufacturers',
-                select: {label: 'name', id: 'id'}
+                select: { label: 'name', id: 'id' }
               }
             },
             status: {
@@ -85,10 +92,10 @@ export default {
                 label: `${this.$tr('isite.cms.form.status')}:`,
                 clearable: true,
                 options: [
-                  {label: this.$tr('isite.cms.label.enabled'), value: 1},
-                  {label: this.$tr('isite.cms.label.disabled'), value: 0}
-                ],
-              },
+                  { label: this.$tr('isite.cms.label.enabled'), value: 1 },
+                  { label: this.$tr('isite.cms.label.disabled'), value: 0 }
+                ]
+              }
             },
             stockStatus: {
               value: null,
@@ -97,10 +104,10 @@ export default {
                 label: `${this.$tr('isite.cms.form.stock')}:`,
                 clearable: true,
                 options: [
-                  {label: this.$tr('isite.cms.label.available'), value: 1},
-                  {label: this.$tr('isite.cms.label.soldOut'), value: 0}
-                ],
-              },
+                  { label: this.$tr('isite.cms.label.available'), value: 1 },
+                  { label: this.$tr('isite.cms.label.soldOut'), value: 0 }
+                ]
+              }
             },
             featured: {
               value: null,
@@ -133,15 +140,15 @@ export default {
               type: 'checkbox',
               props: {
                 label: `${this.$tr('icommerce.cms.form.soonToSoldOut')}`
-              },
+              }
             },
             withDiscount: {
               value: false,
               type: 'checkbox',
               props: {
                 label: `${this.$tr('icommerce.cms.form.withDiscount')}`
-              },
-            },
+              }
+            }
           },
           actions: [
             {
@@ -149,7 +156,7 @@ export default {
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.viewProduct'),
               action: (row) => {
-                this.$helper.openExternalURL(row.url)
+                this.$helper.openExternalURL(row.url);
               }
             },
             {
@@ -157,18 +164,18 @@ export default {
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.advanceEdit'),
               action: (item) => {
-                this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: item.id}})
+                this.$router.push({ name: 'qcommerce.admin.products.edit', params: { id: item.id } });
               }
             }
           ]
         },
         update: {
-          title: this.$tr('icommerce.cms.updateProduct'),
+          title: this.$tr('icommerce.cms.updateProduct')
           //to: 'qcommerce.admin.products.edit'
         },
         delete: true,
         formLeft: {
-          id: {value: ''},
+          id: { value: '' },
           banner: {
             type: 'banner',
             props: {
@@ -182,9 +189,9 @@ export default {
                   },
                   action: () => {
                     if (this.crudInfo.typeForm === 'create') {
-                      this.$router.push({name: 'qcommerce.admin.products.create'})
+                      this.$router.push({ name: 'qcommerce.admin.products.create' });
                     } else {
-                      this.$router.push({name: 'qcommerce.admin.products.edit', params: {id: this.crudInfo.id}})
+                      this.$router.push({ name: 'qcommerce.admin.products.edit', params: { id: this.crudInfo.id } });
                     }
                   }
                 }
@@ -199,8 +206,8 @@ export default {
               label: `${this.$tr('isite.cms.form.name')}*`,
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            },
+              ]
+            }
           },
           summary: {
             value: '',
@@ -209,11 +216,11 @@ export default {
             props: {
               label: `${this.$tr('isite.cms.form.summary')}*`,
               type: 'textarea',
-              rows: "3",
+              rows: '3',
               rules: [
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
-            },
+              ]
+            }
           },
           status: {
             value: '1',
@@ -224,10 +231,10 @@ export default {
                 val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
               options: [
-                {label: this.$tr('isite.cms.label.enabled'), value: 1},
-                {label: this.$tr('isite.cms.label.disabled'), value: 0}
-              ],
-            },
+                { label: this.$tr('isite.cms.label.enabled'), value: 1 },
+                { label: this.$tr('isite.cms.label.disabled'), value: 0 }
+              ]
+            }
           },
           categoryId: {
             value: null,
@@ -237,14 +244,14 @@ export default {
               crudData: import('@imagina/qcommerce/_crud/productCategories'),
               customData: {
                 read: {
-                  requestParams: {include: 'parent', refresh: true}
+                  requestParams: { include: 'parent', refresh: true }
                 }
               },
               crudProps: {
                 label: `${this.$tr('isite.cms.form.category')}*`,
                 rules: [
                   val => !!val || this.$tr('isite.cms.message.fieldRequired')
-                ],
+                ]
               },
               config: {
                 filterByQuery: true,
@@ -254,7 +261,7 @@ export default {
                   sublabel: item => item.parent?.title || null
                 }
               }
-            },
+            }
           },
           price: {
             value: '0',
@@ -272,26 +279,26 @@ export default {
               entity: 'Modules\\Icommerce\\Entities\\Product',
               entityId: null
             }
-          },
+          }
         },
         getDataForm: (data, type) => {
           return new Promise(resolve => {
             if (type == 'create') {
-              const languages = this.$store.state?.qsiteApp?.selectedLocales
+              const languages = this.$store.state?.qsiteApp?.selectedLocales;
               //Set all languages with the same title
               for (const lang of languages) {
-                data[lang].slug = this.$helper.getSlug(data[lang].name)
+                data[lang].slug = this.$helper.getSlug(data[lang].name);
               }
             }
-            resolve(data)
-          })
+            resolve(data);
+          });
         }
-      }
+      };
     },
     //Crud info
     crudInfo() {
-      return this.$store.state.qcrudComponent.component[this.crudId] || {}
+      return this.$store.state.qcrudComponent.component[this.crudId] || {};
     }
   }
-}
+};
 </script>
