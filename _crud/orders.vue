@@ -37,6 +37,7 @@ export default {
             //{name: 'paymentCity', label: this.$tr('icommerce.cms.form.city'), field: 'paymentCity'},
             //{name: 'paymentCountry', label: this.$tr('icommerce.cms.form.country'), field: 'paymentCountry'},
             {name: 'shippingMethod', label: this.$tr('icommerce.cms.form.shippingMethod'), field: 'shippingMethod'},
+            { name: 'paymentMethod', label: this.$tr('icommerce.cms.paymentInformation'), field: 'paymentMethod' },
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'right',
               format: val => val ? this.$trd(val) : '-',
@@ -80,6 +81,28 @@ export default {
                 apiRoute: 'apiRoutes.qcommerce.warehouses'
               }
             },
+            paymentCode: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.paymentInformation')}:`,
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.paymentMethods'
+              }
+            },
+            shippingCode: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.form.shippingMethod')}:`,
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.shippingMethods'
+              }
+            }
           }
         },
         update: {
