@@ -4,14 +4,14 @@ export default {
   computed: {
     crudData() {
       return {
-        entityName: config("main.qcommerce.entityNames.order"),
+        entityName: config('main.qcommerce.entityNames.order'),
         apiRoute: 'apiRoutes.qcommerce.orders',
         permission: 'icommerce.orders',
         extraFormFields: 'Icommerce.crud-fields.orders',
         create: false,
         read: {
           columns: [
-            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id'},
+            { name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id' },
             {
               name: 'customer',
               label: this.$tr('isite.cms.form.name'),
@@ -33,28 +33,29 @@ export default {
               field: 'total',
               format: val => val ? `$${this.$trn(val)}` : ''
             },
-            {name: 'statusName', label: this.$tr('isite.cms.form.status'), field: 'statusName'},
+            { name: 'statusName', label: this.$tr('isite.cms.form.status'), field: 'statusName' },
             //{name: 'paymentCity', label: this.$tr('icommerce.cms.form.city'), field: 'paymentCity'},
             //{name: 'paymentCountry', label: this.$tr('icommerce.cms.form.country'), field: 'paymentCountry'},
-            {name: 'shippingMethod', label: this.$tr('icommerce.cms.form.shippingMethod'), field: 'shippingMethod'},
+            { name: 'shippingMethod', label: this.$tr('icommerce.cms.form.shippingMethod'), field: 'shippingMethod' },
+            { name: 'paymentMethod', label: this.$tr('icommerce.cms.paymentInformation'), field: 'paymentMethod' },
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'right',
-              format: val => val ? this.$trd(val) : '-',
+              format: val => val ? this.$trd(val) : '-'
             },
             {
               name: 'updated_at', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt', align: 'right',
-              format: val => val ? this.$trd(val) : '-',
+              format: val => val ? this.$trd(val) : '-'
             },
-            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
+            { name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right' }
           ].filter(item => item.vIf ?? true),
           requestParams: {
             include: 'warehouse',
             filter: {
               order: {
                 field: 'id',
-                way: 'desc',
-              },
-            },
+                way: 'desc'
+              }
+            }
           },
           filters: {
             status: {
@@ -80,15 +81,37 @@ export default {
                 apiRoute: 'apiRoutes.qcommerce.warehouses'
               }
             },
+            paymentCode: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.paymentInformation')}:`,
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.paymentMethods'
+              }
+            },
+            shippingCode: {
+              value: null,
+              type: 'select',
+              props: {
+                label: `${this.$tr('icommerce.cms.form.shippingMethod')}:`,
+                clearable: true
+              },
+              loadOptions: {
+                apiRoute: 'apiRoutes.qcommerce.shippingMethods'
+              }
+            }
           }
         },
         update: {
           to: 'qcommerce.shipping.orders.show'
         },
         delete: false,
-        formLeft: {},
-      }
+        formLeft: {}
+      };
     }
   }
-}
+};
 </script>
