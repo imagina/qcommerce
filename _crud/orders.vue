@@ -57,6 +57,16 @@ export default {
               },
             },
           },
+          actions: [
+            {
+              name: 'show',
+              icon: 'far fa-eye',
+              label: this.$tr('isite.cms.label.show'),
+              action: (item) => {
+                this.$router.push({name: 'qcommerce.shipping.orders.show', params: {id: item.id}})
+              }
+            }
+          ],
           filters: {
             status: {
               value: null,
