@@ -369,13 +369,13 @@ export default {
     },
     //Return order status history
     timeLine() {
-      return !this.order.histories ? [] : this.order.histories.reverse().map(item => {
+      return !this.order.histories ? [] : this.order.histories.map(item => {
         return {
           title: item.status.title,
           subtitle: this.$trd((item.created_at || item.createdAt), {type: 'long'}),
           body: item.comment || null
         }
-      })
+      }).reverse()
     }
   },
   methods: {
