@@ -510,6 +510,7 @@ export default {
   @media print {
     #masterPanelHeader,
     #masterDrawers,
+    #masterDrawers2,
     #masterFooter,
     #menuMaster,
     #pageActionscomponent .actions-content {
