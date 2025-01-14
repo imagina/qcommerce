@@ -57,6 +57,12 @@
             <div class="input-title capitalize">{{ $tr('isite.cms.form.required') }}</div>
             <q-toggle v-model="template.form.required" @update:modelValue="updateProductOption()"/>
           </div>
+
+          <!--replaceImages-->
+          <div class="inline-block q-ml-lg" v-if="replaceImages">
+            <div class="input-title capitalize"> replaceImages </div>
+            <q-toggle v-model="template.form.replaceImages" @update:modelValue="updateProductOption()"/>
+          </div>
           <!--Form-->
           <div class="row q-col-gutter-sm q-mt-sm">
             <!--Option value parent-->
@@ -78,7 +84,10 @@
             </div>
             <!--Option Values-->
             <div class="col-12 q-mt-md" v-if="!showFieldForm">
-              <crud-option-values :product-option="template.form"/>
+              <crud-option-values
+                :product-option="template.form"
+                @replace-images="(value) => this.replaceImages = value"
+              />
             </div>
           </div>
         </div>
@@ -162,7 +171,8 @@ export default {
         form: {},
         values: [],
         parentValues: []
-      }
+      },
+      replaceImages: false
     }
   },
   computed: {

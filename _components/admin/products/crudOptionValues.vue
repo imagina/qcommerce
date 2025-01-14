@@ -158,6 +158,26 @@
                            :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]" />
                 </div>
               </div>
+              <!-- images-->
+              <div class="content-prefix row" v-if="showMedia">
+                <div class="col-12">
+                  <dynamic-field
+                    :field="dataForm.mediasSingle"
+                    v-model="form.mediasSingle" 
+                    :item-id="this.modal.itemId"
+                  />
+                </div>
+              </div>
+              <div class="content-prefix row" v-if="showMedia">
+                <div class="col-12">
+                  <dynamic-field
+                    :field="dataForm.mediasMulti"
+                    v-model="form.mediasMulti" 
+                    :item-id="this.modal.itemId"
+                  />
+                </div>
+              </div>
+
             </div>
           </div>
           <!--Loading-->
@@ -187,6 +207,7 @@ export default {
   props: {
     productOption: { defalt: false }
   },
+  emits: ['replace-images'],
   watch: {
     productOption: {
       deep: true,
@@ -240,7 +261,28 @@ export default {
         points: null,
         pointsPrefix: '+',
         weight: null,
-        weightPrefix: '+'
+        weightPrefix: '+',
+        mediasSingle: {
+          value: {},
+          type: 'media',
+          props: {
+            label: this.$tr('isite.cms.label.mainImage'),
+            zone: 'mainimage',
+            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entityId: null,
+          }
+        },
+        mediasMulti: {
+          value: {},
+          type: 'media',
+          props: {
+            label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
+            zone: 'gallery',
+            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entityId: null,
+            multiple: true,
+          }
+        }
       };
     },
     //Data options
@@ -276,6 +318,12 @@ export default {
         { name: 'weight', label: this.$trp('isite.cms.form.weight'), field: 'weight' },
         { name: 'actions', label: this.$trp('isite.cms.form.actions') }
       ];
+    },
+    showMedia(){
+      return true
+      if(!this.form.optionValueId) return false
+      const {isColorOption} = this.options?.values?.find((item) => this.form.optionValueId == item.id  ) || {}      
+      return isColorOption || false
     }
   },
   methods: {
@@ -388,11 +436,15 @@ export default {
             refresh: true,
             params: { filter: { optionId: this.productOption.optionId } }
           };
+          //reset replaceImages toggle
+          this.$emit('replace-images', false)
           //Request
           this.$crud.index('apiRoutes.qcommerce.optionValues', requestParams).then(response => {
             //Set as options
             this.options.values = response.data.map(item => {
-              return { label: item.description, id: item.id };
+              const isColorOption = item.options.type == 3 || false
+              if(isColorOption) this.$emit('replace-images', true)
+              return { label: item.description, id: item.id, isColorOption };
             });
             resolve(true);
           }).catch(error => {
