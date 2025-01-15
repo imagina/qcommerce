@@ -161,23 +161,12 @@
               <!-- images-->
               <div class="content-prefix row" v-if="showMedia">
                 <div class="col-12">
-                  <dynamic-field
-                    :field="dataForm.mediasSingle"
-                    v-model="form.mediasSingle" 
-                    :item-id="this.modal.itemId"
+                  <dynamic-field v-for="(field, keyField) in mediaFields" :key="keyField" :field="field"                  
+                      v-model="form[field.name || keyField]"
+                      :item-id="this.modal.itemId"
                   />
                 </div>
               </div>
-              <div class="content-prefix row" v-if="showMedia">
-                <div class="col-12">
-                  <dynamic-field
-                    :field="dataForm.mediasMulti"
-                    v-model="form.mediasMulti" 
-                    :item-id="this.modal.itemId"
-                  />
-                </div>
-              </div>
-
             </div>
           </div>
           <!--Loading-->
@@ -262,8 +251,12 @@ export default {
         pointsPrefix: '+',
         weight: null,
         weightPrefix: '+',
+      }
+    },
+
+    mediaFields(){
+      return {
         mediasSingle: {
-          value: {},
           type: 'media',
           props: {
             label: this.$tr('isite.cms.label.mainImage'),
@@ -273,7 +266,6 @@ export default {
           }
         },
         mediasMulti: {
-          value: {},
           type: 'media',
           props: {
             label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
@@ -283,7 +275,7 @@ export default {
             multiple: true,
           }
         }
-      };
+      }
     },
     //Data options
     dataOptions() {
@@ -320,10 +312,7 @@ export default {
       ];
     },
     showMedia(){
-      return true
-      if(!this.form.optionValueId) return false
-      const {isColorOption} = this.options?.values?.find((item) => this.form.optionValueId == item.id  ) || {}      
-      return isColorOption || false
+      return (this.productOption.type == 'color_image') || false
     }
   },
   methods: {
