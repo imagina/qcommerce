@@ -59,8 +59,8 @@
           </div>
 
           <!--replaceImages-->
-          <div class="inline-block q-ml-lg" v-if="replaceImages">
-            <div class="input-title capitalize"> replaceImages </div>
+          <div class="inline-block q-ml-lg" v-if="showReplaceImages">
+            <div class="input-title capitalize">{{ $tr('icommerce.cms.form.replaceImages') }}</div>
             <q-toggle v-model="template.form.replaceImages" @update:modelValue="updateProductOption()"/>
           </div>
           <!--Form-->
@@ -86,7 +86,6 @@
             <div class="col-12 q-mt-md" v-if="!showFieldForm">
               <crud-option-values
                 :product-option="template.form"
-                @replace-images="(value) => this.replaceImages = value"
               />
             </div>
           </div>
@@ -171,8 +170,7 @@ export default {
         form: {},
         values: [],
         parentValues: []
-      },
-      replaceImages: false
+      }
     }
   },
   computed: {
@@ -180,6 +178,11 @@ export default {
       let types = ['text', 'textarea']
       let response = types.indexOf(this.template.form.type)
       return (response == -1) ? false : true
+    },
+    showReplaceImages() {
+      if (!this.template.currentOption) return false
+      const { type } = this.productOptionsRoot?.find((item) => this.template.currentOption == item.id) || {}
+      return this.isColorOption(type) || false
     }
   },
   methods: {
@@ -204,6 +207,11 @@ export default {
           this.productOptionsRoot.forEach(item => {
             if(!item.hasOwnProperty('required')){
               item.required = false
+            }
+
+            // fix: backend does not provide replaceImages
+            if(this.isColorOption(item.type)){
+              item.replaceImages = item?.options?.replaceImages || false
             }
           })
 
@@ -290,6 +298,15 @@ export default {
         if(element.id == this.template.currentOption){
           if(this.template.form?.required != undefined){
             element.required = this.template.form.required
+          }
+
+          // fix: showReplaceImages toggle
+          if(this.isColorOption(element.type) && this.template.form?.replaceImages != undefined){
+            element.replaceImages = this.template.form.replaceImages
+            //adds replaceImages to request
+            form.options = {
+              replaceImages: this.template.form.replaceImages
+            }
           }
         }
       })
@@ -460,6 +477,9 @@ export default {
         if (element.children.length) this.treeToArray(element.children, response, element.id)
       })
     },
+    isColorOption(type){
+      return (type == 'color_image')
+    }
   }
 }
 </script>
