@@ -196,7 +196,6 @@ export default {
   props: {
     productOption: { defalt: false }
   },
-  emits: ['replace-images'],
   watch: {
     productOption: {
       deep: true,
@@ -250,8 +249,8 @@ export default {
         points: null,
         pointsPrefix: '+',
         weight: null,
-        weightPrefix: '+',
-      }
+        weightPrefix: '+'
+      };
     },
 
     mediaFields(){
@@ -425,15 +424,11 @@ export default {
             refresh: true,
             params: { filter: { optionId: this.productOption.optionId } }
           };
-          //reset replaceImages toggle
-          this.$emit('replace-images', false)
           //Request
           this.$crud.index('apiRoutes.qcommerce.optionValues', requestParams).then(response => {
             //Set as options
             this.options.values = response.data.map(item => {
-              const isColorOption = item.options.type == 3 || false
-              if(isColorOption) this.$emit('replace-images', true)
-              return { label: item.description, id: item.id, isColorOption };
+              return { label: item.description, id: item.id };
             });
             resolve(true);
           }).catch(error => {

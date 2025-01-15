@@ -84,9 +84,7 @@
             </div>
             <!--Option Values-->
             <div class="col-12 q-mt-md" v-if="!showFieldForm">
-              <crud-option-values
-                :product-option="template.form"
-              />
+              <crud-option-values :product-option="template.form" />
             </div>
           </div>
         </div>
