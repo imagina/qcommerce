@@ -199,6 +199,22 @@ export default {
       breadcrumb: ['qcommerce.orders']
     }
   },
+  orderStatuses: {
+    permission: 'icommerce.orderstatuses.manage',
+    activated: true,
+    path: '/order-statuses/',
+    name: 'qcommerce.shipping.orderStatuses',
+    crud: import('modules/qcommerce/_crud/orderStatuses'),
+    page: () => import('modules/qcrud/_pages/admin/crudPage.vue'),
+    layout: () => import('layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.adminOrderStatuses',
+    icon: 'fa-light fa-receipt',
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb: ['qcommerce.orders']
+    }
+  },
   //Stores list
   stores: {
     permission: 'icommerce.stores.index',
