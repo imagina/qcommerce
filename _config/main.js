@@ -7,6 +7,7 @@ export default {
     itemType: 'itemType',
     manufacturer: 'manufacturer',
     order: 'order',
+    orderStatuses: 'orderStatuses',
     paymentMethod: 'paymentMethod',
     priceList: 'priceList',
     productCategory: 'productCategory',
