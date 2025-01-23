@@ -227,7 +227,8 @@ export default {
         "thousandsSeparator": "Thousands Separator",
         "volume": "Volume",
         "advancedSummaryHelp": "Adds detailed and complex content, appears at the top right of the product, offering tables, collapsible sections and more.",
-        "showPriceIsCall": "Show Price when is for Quote"
+        "showPriceIsCall": "Show Price when is for Quote",
+        "replaceImages": "Replace gallery/image."
       },
       "message": {
         "warnAddOpt": "To add options, you must first create the product",

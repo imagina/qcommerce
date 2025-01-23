@@ -158,6 +158,15 @@
                            :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]" />
                 </div>
               </div>
+              <!-- images-->
+              <div class="content-prefix row" v-if="showMedia">
+                <div class="col-12">
+                  <dynamic-field v-for="(field, keyField) in mediaFields" :key="keyField" :field="field"                  
+                      v-model="form[field.name || keyField]"
+                      :item-id="this.modal.itemId"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <!--Loading-->
@@ -243,6 +252,30 @@ export default {
         weightPrefix: '+'
       };
     },
+
+    mediaFields(){
+      return {
+        mediasSingle: {
+          type: 'media',
+          props: {
+            label: this.$tr('isite.cms.label.mainImage'),
+            zone: 'mainimage',
+            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entityId: null,
+          }
+        },
+        mediasMulti: {
+          type: 'media',
+          props: {
+            label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
+            zone: 'gallery',
+            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entityId: null,
+            multiple: true,
+          }
+        }
+      }
+    },
     //Data options
     dataOptions() {
       return {
@@ -276,6 +309,9 @@ export default {
         { name: 'weight', label: this.$trp('isite.cms.form.weight'), field: 'weight' },
         { name: 'actions', label: this.$trp('isite.cms.form.actions') }
       ];
+    },
+    showMedia(){
+      return (this.productOption.type == 'color_image') || false
     }
   },
   methods: {
