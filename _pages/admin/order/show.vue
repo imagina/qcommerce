@@ -506,10 +506,12 @@ export default {
       }
     }
   }
+}
 
   @media print {
     #masterPanelHeader,
     #masterDrawers,
+    #masterDrawers1,
     #masterDrawers2,
     #masterFooter,
     #menuMaster,
@@ -521,5 +523,5 @@ export default {
       padding: 0 !important;
     }
   }
-}
+
 </style>
