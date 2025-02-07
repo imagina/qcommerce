@@ -710,8 +710,6 @@ export default {
           rating: 3,
           points: 0,
           relatedProducts: [],
-          productOptions: [],
-          discounts: [],
           mediasSingle: {},
           mediasMulti: {},
           options: {
@@ -806,21 +804,6 @@ export default {
             label: this.$tr('isite.cms.form.quantity'),
             type: "number",
             readonly: this.settings.isWarehouseEnable
-          }
-        },
-        discounts: {
-          value: null,
-          type: 'select',
-          testId: 'discounts',
-          props: {
-            label: this.$tr('icommerce.cms.form.discount') + '*',
-            rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
-            clearable: true,
-            multiple: true,
-          },
-          loadOptions: {
-            apiRoute: 'apiRoutes.qdiscountable.discounts',
-            select: { label: 'name', id: 'id' }
           }
         },
         tags: {
@@ -1163,7 +1146,7 @@ export default {
           let params = {
             refresh: true,
             params: {
-              include: 'relatedProducts,categories,category,parent,discounts,manufacturer',
+              include: 'relatedProducts,categories,category,parent,manufacturer',
               filter: { allTranslations: true }
             }
           }
