@@ -680,7 +680,6 @@ export default {
           points: 0,
           relatedProducts: [],
           tags: [],
-          productOptions: [],
           mediasSingle: {},
           mediasMulti: {},
           options: {
@@ -1235,7 +1234,6 @@ export default {
           delete response[item];
         }
       }
-      delete response.productOptions; //To prevent put as update relation
       return { ...response, manufacturerId: this.locale.form.manufacturerId || null };
     },
     //Action after created
