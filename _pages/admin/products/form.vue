@@ -5,16 +5,28 @@
       <div class="col-12 col-lg-10 offset-lg-1 relative-position">
         <!--Page Actions-->
         <div class="box box-auto-height q-mb-md">
-          <page-actions :title="pageTitle" :exclude-actions="['sync']" @refresh="initForm" />
+          <page-actions
+            :title="pageTitle"
+            :exclude-actions="['sync']"
+            @refresh="initForm"
+          />
         </div>
         <!--Data-->
-        <q-form autocorrect="off" autocomplete="off" ref="formContent"
-                @submit="(!itemId && !field) ? createItem() : updateItem()"
-                @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))">
+        <q-form
+          autocorrect="off"
+          autocomplete="off"
+          ref="formContent"
+          @submit="!itemId && !field ? createItem() : updateItem()"
+          @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))"
+        >
           <div class="row justify-center q-col-gutter-x-md" v-if="success">
             <!--Language-->
             <div class="col-12 q-mb-md">
-              <locales v-model="locale" ref="localeComponent" :form="$refs.formContent" />
+              <locales
+                v-model="locale"
+                ref="localeComponent"
+                :form="$refs.formContent"
+              />
             </div>
             <!--Form left-->
             <div class="col-12" v-if="locale.success">
@@ -27,12 +39,21 @@
                 </div>
                 <!-- Tab information -->
                 <div v-if="lastPanelOpen != 'home'">
-                  <div class="box-title text-primary q-mb-xs">{{ $tr(modalForms[lastPanelOpen].title) }}</div>
-                  <p class="text-body2">{{ $tr(modalForms[lastPanelOpen].content) }}</p>
+                  <div class="box-title text-primary q-mb-xs">
+                    {{ $tr(modalForms[lastPanelOpen].title) }}
+                  </div>
+                  <p class="text-body2">
+                    {{ $tr(modalForms[lastPanelOpen].content) }}
+                  </p>
                   <q-separator class="q-my-md" inset />
                 </div>
                 <!-- form tabs-->
-                <q-tab-panels v-model="lastPanelOpen" keep-alive animated class="rounded-borders q-pa-none">
+                <q-tab-panels
+                  v-model="lastPanelOpen"
+                  keep-alive
+                  animated
+                  class="rounded-borders q-pa-none"
+                >
                   <q-tab-panel name="home">
                     <div class="row q-col-gutter-md q-mb-md">
                       <template
@@ -41,7 +62,10 @@
                       >
                         <div
                           class="col-12 col-md-6 col-xl-4"
-                          v-if="modalForm.type !== 'home' && (modalForm.vIf != undefined ? modalForm.vIf : true)"
+                          v-if="
+                            modalForm.type !== 'home' &&
+                            (modalForm.vIf != undefined ? modalForm.vIf : true)
+                          "
                           @click="() => showNewForm(modalForm.type)"
                         >
                           <div class="relative-position card">
@@ -50,10 +74,12 @@
                               color="primary"
                               class="absolute-right q-pr-md q-pt-md"
                             />
-                            <div class="box-title text-primary q-mb-sm ">
+                            <div class="box-title text-primary q-mb-sm">
                               {{ $tr(modalForm.title) }}
                             </div>
-                            <p class="text-body2">{{ $tr(modalForm.content) }}</p>
+                            <p class="text-body2">
+                              {{ $tr(modalForm.content) }}
+                            </p>
                           </div>
                         </div>
                       </template>
@@ -61,37 +87,94 @@
                   </q-tab-panel>
                   <q-tab-panel name="content">
                     <!--name-->
-                    <q-input v-model="locale.formTemplate.name" @update:modelValue="setSlug()" outlined dense
-                             data-testid="name"
-                             :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.name')} (${locale.language})*`" />
+                    <q-input
+                      v-model="locale.formTemplate.name"
+                      @update:modelValue="setSlug()"
+                      outlined
+                      dense
+                      data-testid="name"
+                      :rules="[
+                        (val) =>
+                          !!val || $tr('isite.cms.message.fieldRequired'),
+                      ]"
+                      :label="`${$tr('isite.cms.form.name')} (${
+                        locale.language
+                      })*`"
+                    />
                     <!--Slug-->
-                    <q-input v-model="locale.formTemplate.slug" outlined dense
-                             data-testid="slug"
-                             :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.slug')} (${locale.language})*`" />
+                    <q-input
+                      v-model="locale.formTemplate.slug"
+                      outlined
+                      dense
+                      data-testid="slug"
+                      :rules="[
+                        (val) =>
+                          !!val || $tr('isite.cms.message.fieldRequired'),
+                      ]"
+                      :label="`${$tr('isite.cms.form.slug')} (${
+                        locale.language
+                      })*`"
+                    />
                     <!--Sumario-->
-                    <q-input v-model="locale.formTemplate.summary" type="textarea" outlined dense
-                             data-testid="summary"
-                             :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-                             :label="`${$tr('isite.cms.form.summary')} (${locale.language})*`" rows="3" />
+                    <q-input
+                      v-model="locale.formTemplate.summary"
+                      type="textarea"
+                      outlined
+                      dense
+                      data-testid="summary"
+                      :rules="[
+                        (val) =>
+                          !!val || $tr('isite.cms.message.fieldRequired'),
+                      ]"
+                      :label="`${$tr('isite.cms.form.summary')} (${
+                        locale.language
+                      })*`"
+                      rows="3"
+                    />
                     <!--Advaced Summary-->
-                    <dynamic-field v-model="locale.formTemplate.advancedSummary" :field="dynamicFields.advancedSummary"
-                                   :item-id="productId" :language="locale.language" />
+                    <dynamic-field
+                      v-model="locale.formTemplate.advancedSummary"
+                      :field="dynamicFields.advancedSummary"
+                      :item-id="productId"
+                      :language="locale.language"
+                    />
                     <!--Description-->
-                    <div class="input-title">{{ `${$tr('isite.cms.form.description')} (${locale.language})*` }}</div>
-                    <q-field v-model="locale.formTemplate.description" borderless
-                             :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]">
-                      <ck-editor v-model="locale.formTemplate.description" data-testid="description" />
-                      <q-editor v-if="false" v-model="locale.formTemplate.description" class="full-width"
-                                :toolbar="editorText.toolbar" content-class="text-grey-9"
-                                toolbar-text-color="grey-9" />
+                    <div class="input-title">
+                      {{
+                        `${$tr('isite.cms.form.description')} (${
+                          locale.language
+                        })*`
+                      }}
+                    </div>
+                    <q-field
+                      v-model="locale.formTemplate.description"
+                      borderless
+                      :rules="[
+                        (val) =>
+                          !!val || $tr('isite.cms.message.fieldRequired'),
+                      ]"
+                    >
+                      <ck-editor
+                        v-model="locale.formTemplate.description"
+                        data-testid="description"
+                      />
+                      <q-editor
+                        v-if="false"
+                        v-model="locale.formTemplate.description"
+                        class="full-width"
+                        :toolbar="editorText.toolbar"
+                        content-class="text-grey-9"
+                        toolbar-text-color="grey-9"
+                      />
                     </q-field>
                   </q-tab-panel>
                   <q-tab-panel name="status">
                     <q-select
                       :clearable="false"
-                      emit-value map-options outlined dense
+                      emit-value
+                      map-options
+                      outlined
+                      dense
                       :label="$tr('isite.cms.form.status')"
                       :options="options.status"
                       v-model="locale.formTemplate.status"
@@ -101,109 +184,212 @@
                   <q-tab-panel name="categories">
                     <div class="relative-position text-right">
                       <!--Main category-->
-                      <dynamic-field v-model="locale.formTemplate.categoryId" :field="dynamicFields.categoryId" />
+                      <dynamic-field
+                        v-model="locale.formTemplate.categoryId"
+                        :field="dynamicFields.categoryId"
+                      />
                       <!--Categories-->
-                      <dynamic-field v-model="locale.formTemplate.categories"
-                                     :field="dynamicFields.categories" />
+                      <dynamic-field
+                        v-model="locale.formTemplate.categories"
+                        :field="dynamicFields.categories"
+                      />
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="metaInfo">
                     <!--Meta Title-->
-                    <q-input data-testid="metaTitle" v-model="locale.formTemplate.metaTitle" outlined dense
-                             :label="`${$tr('isite.cms.form.metaTitle')} (${locale.language})`" class="q-m-b-sm" />
+                    <q-input
+                      data-testid="metaTitle"
+                      v-model="locale.formTemplate.metaTitle"
+                      outlined
+                      dense
+                      :label="`${$tr('isite.cms.form.metaTitle')} (${
+                        locale.language
+                      })`"
+                      class="q-m-b-sm"
+                    />
                     <!--Meta Description-->
-                    <q-input data-testid="metaDescription" v-model="locale.formTemplate.metaDescription"
-                             type="textarea"
-                             outlined dense
-                             :label="`${$tr('isite.cms.form.metaDescription')} (${locale.language})`" rows="3" />
+                    <q-input
+                      data-testid="metaDescription"
+                      v-model="locale.formTemplate.metaDescription"
+                      type="textarea"
+                      outlined
+                      dense
+                      :label="`${$tr('isite.cms.form.metaDescription')} (${
+                        locale.language
+                      })`"
+                      rows="3"
+                    />
                     <!--Custom url-->
-                    <q-input data-testid="customUrl" v-model="locale.formTemplate.customUrl" outlined dense
-                             :label="`${$tr('isite.cms.form.customUrl')}`">
+                    <q-input
+                      data-testid="customUrl"
+                      v-model="locale.formTemplate.customUrl"
+                      outlined
+                      dense
+                      :label="`${$tr('isite.cms.form.customUrl')}`"
+                    >
                     </q-input>
                     <!--Quantity Class-->
-                    <dynamic-field v-model="locale.formTemplate.tags" :field="dynamicFields.tags" />
+                    <dynamic-field
+                      v-model="locale.formTemplate.tags"
+                      :field="dynamicFields.tags"
+                    />
                   </q-tab-panel>
                   <q-tab-panel name="data">
                     <div class="row q-col-gutter-md q-pa-md">
                       <!--Left-->
                       <div class="col-12 col-md-6">
                         <!--reference-->
-                        <q-input data-testid="reference" v-model="locale.formTemplate.reference" outlined dense
-                                 :label="$tr('isite.cms.form.reference')" />
+                        <q-input
+                          data-testid="reference"
+                          v-model="locale.formTemplate.reference"
+                          outlined
+                          dense
+                          :label="$tr('isite.cms.form.reference')"
+                        />
                         <!--SKU-->
-                        <q-input data-testid="sku" outlined dense v-model="locale.formTemplate.sku"
-                                 :label="$tr('isite.cms.form.sku')" />
+                        <q-input
+                          data-testid="sku"
+                          outlined
+                          dense
+                          v-model="locale.formTemplate.sku"
+                          :label="$tr('isite.cms.form.sku')"
+                        />
                         <!--Price-->
-                        <q-input data-testid="price" outlined dense type="number" v-model="locale.formTemplate.price"
-                                 :label="$tr('isite.cms.form.price')" />
+                        <q-input
+                          data-testid="price"
+                          outlined
+                          dense
+                          type="number"
+                          v-model="locale.formTemplate.price"
+                          :label="$tr('isite.cms.form.price')"
+                        />
                         <!--Quantity-->
-                        <dynamic-field v-model="locale.formTemplate.quantity" :field="dynamicFields.quantity" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.quantity"
+                          :field="dynamicFields.quantity"
+                        />
                         <!--Quantity Class-->
-                        <dynamic-field v-model="locale.formTemplate.quantityClassId"
-                                       :field="dynamicFields.quantityClassId" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.quantityClassId"
+                          :field="dynamicFields.quantityClassId"
+                        />
                         <!--minimum-->
-                        <q-input data-testid="minimumOrder" :label="$tr('icommerce.cms.form.minimumOrder')"
-                                 outlined dense
-                                 type="number" v-model="locale.formTemplate.minimum" />
+                        <q-input
+                          data-testid="minimumOrder"
+                          :label="$tr('icommerce.cms.form.minimumOrder')"
+                          outlined
+                          dense
+                          type="number"
+                          v-model="locale.formTemplate.minimum"
+                        />
                         <!--Stock status-->
-                        <dynamic-field v-model="locale.formTemplate.stockStatus"
-                                       :field="dynamicFields?.stockStatus" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.stockStatus"
+                          :field="dynamicFields?.stockStatus"
+                        />
                         <!--sortOrder-->
-                        <q-input data-testid="sortOrder" :label="$tr('icommerce.cms.form.sortOrder')"
-                                 outlined dense
-                                 type="number" v-model="locale.formTemplate.sortOrder" />
+                        <q-input
+                          data-testid="sortOrder"
+                          :label="$tr('icommerce.cms.form.sortOrder')"
+                          outlined
+                          dense
+                          type="number"
+                          v-model="locale.formTemplate.sortOrder"
+                        />
                       </div>
                       <!--Right-->
                       <div class="col-12 col-md-6">
                         <!--availability date-->
-                        <dynamic-field v-model="locale.formTemplate.dateAvailable"
-                                       :field="dynamicFields.dateAvailable" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.dateAvailable"
+                          :field="dynamicFields.dateAvailable"
+                        />
                         <!--Points-->
-                        <q-input data-testid="points" v-model="locale.formTemplate.points" outlined dense
-                                 :label="$trp('isite.cms.form.point')" />
+                        <q-input
+                          data-testid="points"
+                          v-model="locale.formTemplate.points"
+                          outlined
+                          dense
+                          :label="$trp('isite.cms.form.point')"
+                        />
                         <!--Dimensions-->
                         <div class="row q-col-gutter-xs">
                           <!--length-->
                           <div class="col-xs-12 col-sm-4">
-                            <q-input data-testid="length" v-model="locale.formTemplate.length"
-                                     :label="$tr('isite.cms.form.length')"
-                                     outlined dense type="number" />
+                            <q-input
+                              data-testid="length"
+                              v-model="locale.formTemplate.length"
+                              :label="$tr('isite.cms.form.length')"
+                              outlined
+                              dense
+                              type="number"
+                            />
                           </div>
                           <!--width-->
                           <div class="col-xs-12 col-sm-4">
-                            <q-input data-testid="width" v-model="locale.formTemplate.width"
-                                     :label="$tr('isite.cms.form.width')"
-                                     outlined dense type="number" />
+                            <q-input
+                              data-testid="width"
+                              v-model="locale.formTemplate.width"
+                              :label="$tr('isite.cms.form.width')"
+                              outlined
+                              dense
+                              type="number"
+                            />
                           </div>
                           <!--height-->
                           <div class="col-xs-12 col-sm-4">
-                            <q-input data-testid="height" v-model="locale.formTemplate.height"
-                                     :label="$tr('isite.cms.form.height')"
-                                     outlined dense type="number" />
+                            <q-input
+                              data-testid="height"
+                              v-model="locale.formTemplate.height"
+                              :label="$tr('isite.cms.form.height')"
+                              outlined
+                              dense
+                              type="number"
+                            />
                           </div>
                         </div>
                         <!--Lenght Class-->
-                        <dynamic-field v-model="locale.formTemplate.lengthClassId"
-                                       :field="dynamicFields.lengthClassId" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.lengthClassId"
+                          :field="dynamicFields.lengthClassId"
+                        />
                         <!--weight-->
-                        <q-input data-testid="weight" v-model="locale.formTemplate.weight"
-                                 :label="$tr('isite.cms.form.weight')"
-                                 outlined dense type="number" />
+                        <q-input
+                          data-testid="weight"
+                          v-model="locale.formTemplate.weight"
+                          :label="$tr('isite.cms.form.weight')"
+                          outlined
+                          dense
+                          type="number"
+                        />
                         <!--Weight Class-->
-                        <dynamic-field v-model="locale.formTemplate.weightClassId"
-                                       :field="dynamicFields.weightClassId" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.weightClassId"
+                          :field="dynamicFields.weightClassId"
+                        />
 
                         <!--Order Weight-->
-                        <q-input data-testid="orderWeight" :label="$tr('icommerce.cms.form.orderWeight')" outlined
-                                 dense
-                                 v-model="locale.formTemplate.orderWeight" />
+                        <q-input
+                          data-testid="orderWeight"
+                          :label="$tr('icommerce.cms.form.orderWeight')"
+                          outlined
+                          dense
+                          v-model="locale.formTemplate.orderWeight"
+                        />
                         <!--volume-->
-                        <q-input data-testid="weight" v-model="locale.formTemplate.volume"
-                                 :label="$tr('icommerce.cms.form.volume')"
-                                 outlined dense type="number" />
+                        <q-input
+                          data-testid="weight"
+                          v-model="locale.formTemplate.volume"
+                          :label="$tr('icommerce.cms.form.volume')"
+                          outlined
+                          dense
+                          type="number"
+                        />
                         <!--Volume Class-->
-                        <dynamic-field v-model="locale.formTemplate.volumeClassId"
-                                       :field="dynamicFields.volumeClassId" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.volumeClassId"
+                          :field="dynamicFields.volumeClassId"
+                        />
                         <!--Requires shipping-->
                         <q-toggle
                           data-testid="shipping"
@@ -213,7 +399,7 @@
                           :label="$tr('icommerce.cms.form.requriedShipping')"
                           color="primary"
                         />
-                        <br>
+                        <br />
                         <!--Free shipping-->
                         <q-toggle
                           data-testid="freeShipping"
@@ -223,7 +409,7 @@
                           :label="$tr('icommerce.cms.form.freeShipping')"
                           color="primary"
                         />
-                        <br>
+                        <br />
                         <!--Substrac from Stock-->
                         <q-toggle
                           data-testid="subtract"
@@ -233,7 +419,7 @@
                           :label="$tr('icommerce.cms.form.subtractFromStock')"
                           color="primary"
                         />
-                        <br>
+                        <br />
                         <!--featured-->
                         <q-toggle
                           data-testid="subtract"
@@ -253,7 +439,7 @@
                           :label="$tr('icommerce.cms.form.isCall')"
                           color="primary"
                         />
-                        <br>
+                        <br />
                         <!--Show price when is call-->
                         <q-toggle
                           data-testid="showPriceIsCall"
@@ -264,20 +450,48 @@
                           color="primary"
                         />
                         <!--Extra fields-->
-                        <div v-for="(field, key) in  extraFields" :key="key" :ref="key">
+                        <div
+                          v-for="(field, key) in extraFields"
+                          :key="key"
+                          :ref="key"
+                        >
                           <!--Dynamic fake field-->
                           <dynamic-field
-                            v-model="locale.formTemplate[field.fakeFieldName || 'options'][field.name || key]"
-                            :key="key" v-if="field.isFakeField || field.fakeFieldName"
-                            :field="{...field, testId : (field.testId || field.name || key)}"
-                            :language="locale.language" :item-id="productId"
-                            :ref="`field-${field.name || key}`" />
+                            v-model="
+                              locale.formTemplate[
+                                field.fakeFieldName || 'options'
+                              ][field.name || key]
+                            "
+                            :key="key"
+                            v-if="
+                              (field.isFakeField || field.fakeFieldName) &&
+                              !validateExtraFieldsTypeMedia(field)
+                            "
+                            :field="{
+                              ...field,
+                              testId: field.testId || field.name || key,
+                            }"
+                            :language="locale.language"
+                            :item-id="productId"
+                            :ref="`field-${field.name || key}`"
+                          />
                           <!--Dynamic field-->
-                          <dynamic-field v-model="locale.formTemplate[field.name || key]" :key="key"
-                                         :field="{...field, testId : (field.testId  || field.name || key)}"
-                                         :language="locale.language" :item-id="productId"
-                                         :ref="`field-${field.name || key}`"
-                                         v-if="!field.isFakeField && !field.fakeFieldName" />
+                          <dynamic-field
+                            v-model="locale.formTemplate[field.name || key]"
+                            :key="key"
+                            :field="{
+                              ...field,
+                              testId: field.testId || field.name || key,
+                            }"
+                            :language="locale.language"
+                            :item-id="productId"
+                            :ref="`field-${field.name || key}`"
+                            v-if="
+                              !field.isFakeField &&
+                              !field.fakeFieldName &&
+                              !validateExtraFieldsTypeMedia(field)
+                            "
+                          />
                         </div>
                       </div>
                     </div>
@@ -286,62 +500,156 @@
                     <div class="q-pa-md">
                       <!--Record Master-->
                       <div v-if="canManageRecordMaster" class="q-mb-md">
-                        <dynamic-field v-model="locale.formTemplate.options.masterRecord"
-                                       :field="dynamicFields?.masterRecord" />
+                        <dynamic-field
+                          v-model="locale.formTemplate.options.masterRecord"
+                          :field="dynamicFields?.masterRecord"
+                        />
                       </div>
                       <!--Crud item types-->
-                      <crud :crud-data="import('modules/qcommerce/_crud/itemTypes')"
-                            type="select"
-                            :crud-props="{label:`${$tr('icommerce.cms.form.itemType')}`, 'data-testid': 'itemTypeId'}"
-                            v-model="locale.formTemplate.itemTypeId"
-                            :config="{options: {label: 'title', value: 'id'}}"
-                            v-if="false"
+                      <crud
+                        :crud-data="import('modules/qcommerce/_crud/itemTypes')"
+                        type="select"
+                        :crud-props="{
+                          label: `${$tr('icommerce.cms.form.itemType')}`,
+                          'data-testid': 'itemTypeId',
+                        }"
+                        v-model="locale.formTemplate.itemTypeId"
+                        :config="{ options: { label: 'title', value: 'id' } }"
+                        v-if="false"
                       />
                       <!--Crud manufacturer-->
-                      <crud :crud-data="import('modules/qcommerce/_crud/taxClasses')"
-                            type="select"
-                            :crud-props="{label:`${$tr('icommerce.cms.form.taxClass')}`, 'data-testid': 'taxClassId'}"
-                            v-model="locale.formTemplate.taxClassId"
-                            :config="{options: {label: 'name', value: 'id'}}"
-                            v-if="$hasAccess('icommerce.taxclasses.manage')"
+                      <crud
+                        :crud-data="
+                          import('modules/qcommerce/_crud/taxClasses')
+                        "
+                        type="select"
+                        :crud-props="{
+                          label: `${$tr('icommerce.cms.form.taxClass')}`,
+                          'data-testid': 'taxClassId',
+                        }"
+                        v-model="locale.formTemplate.taxClassId"
+                        :config="{ options: { label: 'name', value: 'id' } }"
+                        v-if="$hasAccess('icommerce.taxclasses.manage')"
                       />
                       <!--Crud manufacturer-->
-                      <crud :crud-data="import('modules/qcommerce/_crud/manufacturers')"
-                            type="select"
-                            :crud-props="{label:`${$tr('icommerce.cms.form.manufacturer')}`,'data-testid': 'manufacturerId', clearable : true}"
-                            v-model="locale.formTemplate.manufacturerId"
-                            :config="{options: {label: 'name', value: 'id'}}"
+                      <crud
+                        :crud-data="
+                          import('modules/qcommerce/_crud/manufacturers')
+                        "
+                        type="select"
+                        :crud-props="{
+                          label: `${$tr('icommerce.cms.form.manufacturer')}`,
+                          'data-testid': 'manufacturerId',
+                          clearable: true,
+                        }"
+                        v-model="locale.formTemplate.manufacturerId"
+                        :config="{ options: { label: 'name', value: 'id' } }"
                       />
                       <!--Related Products-->
-                      <dynamic-field v-model="locale.formTemplate.relatedProducts"
-                                     :field="dynamicFields?.relatedProducts" />
+                      <dynamic-field
+                        v-model="locale.formTemplate.relatedProducts"
+                        :field="dynamicFields?.relatedProducts"
+                      />
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="images">
                     <div class="q-pa-md">
                       <!--Video-->
-                      <q-input data-testid="optionsVideo" v-model="locale.formTemplate.options.video" outlined dense
-                               :label="$tr('isite.cms.form.video')" />
-                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields?.mainImage"
-                                     :item-id="productId" />
-                      <dynamic-field v-model="locale.formTemplate.mediasSingle" :field="dynamicFields?.sizereference"
-                                     :item-id="productId" />
-                      <dynamic-field v-model="locale.formTemplate.mediasMulti" :field="dynamicFields.gallery"
-                                     :item-id="productId" />
+                      <q-input
+                        data-testid="optionsVideo"
+                        v-model="locale.formTemplate.options.video"
+                        outlined
+                        dense
+                        :label="$tr('isite.cms.form.video')"
+                      />
+                      <dynamic-field
+                        v-model="locale.formTemplate.mediasSingle"
+                        :field="dynamicFields?.mainImage"
+                        :item-id="productId"
+                      />
+                      <dynamic-field
+                        v-model="locale.formTemplate.mediasSingle"
+                        :field="dynamicFields?.sizereference"
+                        :item-id="productId"
+                      />
+                      <dynamic-field
+                        v-model="locale.formTemplate.mediasMulti"
+                        :field="dynamicFields.gallery"
+                        :item-id="productId"
+                      />
+
+                      <!--Extra fields-->
+                      <div
+                        v-for="(field, key) in extraFields"
+                        :key="key"
+                        :ref="key"
+                      >
+                        <!--Dynamic fake field-->
+                        <dynamic-field
+                          v-model="
+                            locale.formTemplate[
+                              field.fakeFieldName || 'options'
+                            ][field.name || key]
+                          "
+                          :key="key"
+                          v-if="
+                            (field.isFakeField || field.fakeFieldName) &&
+                            validateExtraFieldsTypeMedia(field)
+                          "
+                          :field="{
+                            ...field,
+                            testId: field.testId || field.name || key,
+                          }"
+                          :language="locale.language"
+                          :item-id="productId"
+                          :ref="`field-${field.name || key}`"
+                        />
+                        <!--Dynamic field-->
+                        <dynamic-field
+                          v-model="locale.formTemplate[field.name || key]"
+                          :key="key"
+                          :field="{
+                            ...field,
+                            testId: field.testId || field.name || key,
+                          }"
+                          :language="locale.language"
+                          :item-id="productId"
+                          :ref="`field-${field.name || key}`"
+                          v-if="
+                            !field.isFakeField &&
+                            !field.fakeFieldName &&
+                            validateExtraFieldsTypeMedia(field)
+                          "
+                        />
+                      </div>
                     </div>
                   </q-tab-panel>
                   <q-tab-panel name="options">
                     <q-card>
                       <q-card-section class="q-pa-sm">
                         <div class="q-pa-sm">
-                          <crud-options :productId="productId" v-if="productId" />
+                          <crud-options
+                            :productId="productId"
+                            v-if="productId"
+                          />
                           <div v-else class="text-center">
                             <div class="q-my-md">
-                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
-                              {{ `${$tr('icommerce.cms.message.warnAddOpt')}...` }}
+                              <q-icon
+                                name="fas fa-exclamation-triangle"
+                                color="warning"
+                              ></q-icon>
+                              {{
+                                `${$tr('icommerce.cms.message.warnAddOpt')}...`
+                              }}
                             </div>
-                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green" />
+                            <q-btn
+                              icon="fas fa-save"
+                              :label="options.btn.saveAndEdit"
+                              rounded
+                              unelevated
+                              @click="(buttonActions.value = 4), createItem()"
+                              color="green"
+                            />
                           </div>
                         </div>
                       </q-card-section>
@@ -353,17 +661,42 @@
                         <div class="full-width">
                           <div class="q-pa-sm" v-if="productId">
                             <crud
-                              :crud-data="import('modules/qcommerce/_crud/productDiscounts')"
-                              :custom-data="{read: {requestParams: {include: 'department', filter: {productId: productId} } }, formRight:{productId: {value: productId} } }"
+                              :crud-data="
+                                import(
+                                  'modules/qcommerce/_crud/productDiscounts'
+                                )
+                              "
+                              :custom-data="{
+                                read: {
+                                  requestParams: {
+                                    include: 'department',
+                                    filter: { productId: productId },
+                                  },
+                                },
+                                formRight: { productId: { value: productId } },
+                              }"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
                             <div class="q-my-md">
-                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
-                              {{ `${$tr('icommerce.cms.message.warnAddDiscount')}...` }}
+                              <q-icon
+                                name="fas fa-exclamation-triangle"
+                                color="warning"
+                              ></q-icon>
+                              {{
+                                `${$tr(
+                                  'icommerce.cms.message.warnAddDiscount'
+                                )}...`
+                              }}
                             </div>
-                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green" />
+                            <q-btn
+                              icon="fas fa-save"
+                              :label="options.btn.saveAndEdit"
+                              rounded
+                              unelevated
+                              @click="(buttonActions.value = 4), createItem()"
+                              color="green"
+                            />
                           </div>
                         </div>
                       </q-card-section>
@@ -376,24 +709,51 @@
                           <div class="q-pa-sm" v-if="productId">
                             <!--Product Warehouse-->
                             <crud
-                              :crud-data="import('modules/qcommerce/_crud/productWarehouse.vue')"
+                              :crud-data="
+                                import(
+                                  'modules/qcommerce/_crud/productWarehouse.vue'
+                                )
+                              "
                               :custom-data="customCrudData.productWarehouse"
-                              @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
+                              @created="getDataProduct"
+                              @updated="getDataProduct"
+                              @deleted="getDataProduct"
                             />
                             <!--Product Options ValueWarehouse-->
                             <crud
-                              :crud-data="import('modules/qcommerce/_crud/productOptValueWarehouse.vue')"
-                              :custom-data="customCrudData.productOptValueWarehouse"
-                              @created="getDataProduct" @updated="getDataProduct" @deleted="getDataProduct"
+                              :crud-data="
+                                import(
+                                  'modules/qcommerce/_crud/productOptValueWarehouse.vue'
+                                )
+                              "
+                              :custom-data="
+                                customCrudData.productOptValueWarehouse
+                              "
+                              @created="getDataProduct"
+                              @updated="getDataProduct"
+                              @deleted="getDataProduct"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
                             <div class="q-my-md">
-                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
-                              {{ `${$tr('icommerce.cms.message.warnWarehouse')}...` }}
+                              <q-icon
+                                name="fas fa-exclamation-triangle"
+                                color="warning"
+                              ></q-icon>
+                              {{
+                                `${$tr(
+                                  'icommerce.cms.message.warnWarehouse'
+                                )}...`
+                              }}
                             </div>
-                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green" />
+                            <q-btn
+                              icon="fas fa-save"
+                              :label="options.btn.saveAndEdit"
+                              rounded
+                              unelevated
+                              @click="(buttonActions.value = 4), createItem()"
+                              color="green"
+                            />
                           </div>
                         </div>
                       </q-card-section>
@@ -406,17 +766,34 @@
                           <div class="q-pa-sm" v-if="productId">
                             <!--Product Price List-->
                             <crud
-                              :crud-data="import('modules/qcommerce/_crud/productList.vue')"
+                              :crud-data="
+                                import(
+                                  'modules/qcommerce/_crud/productList.vue'
+                                )
+                              "
                               :custom-data="customCrudData.productPriceList"
                             />
                           </div>
                           <div v-else class="text-center q-pa-sm">
                             <div class="q-my-md">
-                              <q-icon name="fas fa-exclamation-triangle" color="warning"></q-icon>
-                              {{ `${$tr('icommerce.cms.message.warnPriceList')}...` }}
+                              <q-icon
+                                name="fas fa-exclamation-triangle"
+                                color="warning"
+                              ></q-icon>
+                              {{
+                                `${$tr(
+                                  'icommerce.cms.message.warnPriceList'
+                                )}...`
+                              }}
                             </div>
-                            <q-btn icon="fas fa-save" :label="options.btn.saveAndEdit" rounded unelevated
-                                   @click="buttonActions.value = 4, createItem()" color="green" />
+                            <q-btn
+                              icon="fas fa-save"
+                              :label="options.btn.saveAndEdit"
+                              rounded
+                              unelevated
+                              @click="(buttonActions.value = 4), createItem()"
+                              color="green"
+                            />
                           </div>
                         </div>
                       </q-card-section>
@@ -426,30 +803,78 @@
                 <!-- Actions -->
                 <div class="text-right">
                   <!--Grid Action-->
-                  <q-btn v-if="lastPanelOpen != 'home'" outline rounded color="blue-grey"
-                         :label="$tr('isite.cms.label.back')" icon="fal fa-arrow-left"
-                         @click="() => backHomePanel()" class="q-mr-sm" no-caps />
+                  <q-btn
+                    v-if="lastPanelOpen != 'home'"
+                    outline
+                    rounded
+                    color="blue-grey"
+                    :label="$tr('isite.cms.label.back')"
+                    icon="fal fa-arrow-left"
+                    @click="() => backHomePanel()"
+                    class="q-mr-sm"
+                    no-caps
+                  />
                   <!--Update button-->
                   <q-btn
-                    v-if="productId" rounded unelevated outline
-                    color="green" :loading="loading" no-caps
-                    icon="fal fa-save" :label="$tr('isite.cms.label.update')" @click="updateItem()"
+                    v-if="productId"
+                    rounded
+                    unelevated
+                    outline
+                    color="green"
+                    :loading="loading"
+                    no-caps
+                    icon="fal fa-save"
+                    :label="$tr('isite.cms.label.update')"
+                    @click="updateItem()"
                   />
                   <!--Save button-->
-                  <q-btn-dropdown :label="buttonActions.label" split v-else :loading="loading"
-                                  content-style="min-width: 250px !important" unelevated outline no-caps
-                                  color="green" icon="fal fa-save" @click="createItem()" rounded align="right">
+                  <q-btn-dropdown
+                    :label="buttonActions.label"
+                    split
+                    v-else
+                    :loading="loading"
+                    content-style="min-width: 250px !important"
+                    unelevated
+                    outline
+                    no-caps
+                    color="green"
+                    icon="fal fa-save"
+                    @click="createItem()"
+                    rounded
+                    align="right"
+                  >
                     <q-list link>
-                      <q-item @click.native="buttonActions = {label : options.btn.saveAndReturn, value : 1}"
-                              v-close-popup>
+                      <q-item
+                        @click.native="
+                          buttonActions = {
+                            label: options.btn.saveAndReturn,
+                            value: 1,
+                          }
+                        "
+                        v-close-popup
+                      >
                         {{ options.btn.saveAndReturn }}
                       </q-item>
-                      <q-item @click.native="buttonActions = {label : options.btn.saveAndEdit, value : 2}"
-                              v-close-popup>
+                      <q-item
+                        @click.native="
+                          buttonActions = {
+                            label: options.btn.saveAndEdit,
+                            value: 2,
+                          }
+                        "
+                        v-close-popup
+                      >
                         {{ options.btn.saveAndEdit }}
                       </q-item>
-                      <q-item @click.native="buttonActions = {label : options.btn.saveAndCreate, value : 3}"
-                              v-close-popup>
+                      <q-item
+                        @click.native="
+                          buttonActions = {
+                            label: options.btn.saveAndCreate,
+                            value: 3,
+                          }
+                        "
+                        v-close-popup
+                      >
                         {{ options.btn.saveAndCreate }}
                       </q-item>
                     </q-list>
@@ -479,7 +904,7 @@ export default {
   components: {
     crudOptions,
     recursiveList,
-    ckEditor
+    ckEditor,
   },
   watch: {
     $route(to, from) {
@@ -487,9 +912,16 @@ export default {
     },
     'locale.formTemplate.categoryId'(newValue) {
       setTimeout(() => {
-        if (this.locale.formTemplate && this.locale.formTemplate.categories && newValue) {
-          let categories = this.$clone(this.locale.formTemplate.categories);//Get catgeories
-          if ((categories.indexOf(newValue.toString()) == -1) && (categories.indexOf(newValue) == -1)) {
+        if (
+          this.locale.formTemplate &&
+          this.locale.formTemplate.categories &&
+          newValue
+        ) {
+          let categories = this.$clone(this.locale.formTemplate.categories); //Get catgeories
+          if (
+            categories.indexOf(newValue.toString()) == -1 &&
+            categories.indexOf(newValue) == -1
+          ) {
             categories.push(this.$clone(newValue));
           }
           this.locale.formTemplate.categories = this.$clone(categories);
@@ -499,12 +931,13 @@ export default {
     'locale.formTemplate.slug'(newValue) {
       if (newValue) {
         let replaced = this.$clone(this.$helper.getSlug(newValue));
-        if (newValue != replaced) this.locale.formTemplate.slug = this.$clone(replaced);
+        if (newValue != replaced)
+          this.locale.formTemplate.slug = this.$clone(replaced);
       }
-    }
+    },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       this.initForm();
       const path = this.$route.path.split('/');
       const lastChildPath = path[path.length - 2];
@@ -531,21 +964,29 @@ export default {
               fixedLabel: true,
               fixedIcon: true,
               list: 'no-icons',
-              options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5', 'size-6', 'size-7']
-            }
+              options: [
+                'size-1',
+                'size-2',
+                'size-3',
+                'size-4',
+                'size-5',
+                'size-6',
+                'size-7',
+              ],
+            },
           ],
           ['quote', 'unordered', 'ordered'],
-          ['fullscreen']
-        ]
+          ['fullscreen'],
+        ],
       },
       optionsTemplate: {
         categories: [],
         products: [],
-        relatedProducts: []
+        relatedProducts: [],
       },
       buttonActions: { label: '', value: 1 },
       modalShow: {
-        category: false
+        category: false,
       },
       extraFields: [],
       modalForms: {
@@ -553,78 +994,80 @@ export default {
           show: false,
           type: 'content',
           title: this.$tr('icommerce.cms.form.content'),
-          content: this.$tr('icommerce.cms.form.formContent')
+          content: this.$tr('icommerce.cms.form.formContent'),
         },
         status: {
           show: false,
           type: 'status',
           title: this.$tr('icommerce.cms.form.status'),
-          content: this.$tr('icommerce.cms.form.statusContent')
+          content: this.$tr('icommerce.cms.form.statusContent'),
         },
         categories: {
           show: false,
           type: 'categories',
           title: this.$tr('icommerce.cms.form.categories'),
-          content: this.$tr('icommerce.cms.form.categoriesContent')
+          content: this.$tr('icommerce.cms.form.categoriesContent'),
         },
         metaInfo: {
           show: false,
           type: 'metaInfo',
           title: this.$tr('icommerce.cms.form.metaInfo'),
-          content: this.$tr('icommerce.cms.form.metaInfoContent')
+          content: this.$tr('icommerce.cms.form.metaInfoContent'),
         },
         data: {
           show: false,
           type: 'data',
           title: this.$tr('icommerce.cms.form.data'),
-          content: this.$tr('icommerce.cms.form.dataContent')
+          content: this.$tr('icommerce.cms.form.dataContent'),
         },
         relations: {
           show: false,
           type: 'relations',
           title: this.$tr('icommerce.cms.form.link'),
-          content: this.$tr('icommerce.cms.form.relationsContent')
+          content: this.$tr('icommerce.cms.form.relationsContent'),
         },
         images: {
           show: false,
           type: 'images',
           title: this.$tr('icommerce.cms.form.images'),
-          content: this.$tr('icommerce.cms.form.imagesContent')
+          content: this.$tr('icommerce.cms.form.imagesContent'),
         },
         options: {
           show: false,
           type: 'options',
           title: this.$tr('icommerce.cms.form.options'),
-          content: this.$tr('icommerce.cms.form.optionsContent')
+          content: this.$tr('icommerce.cms.form.optionsContent'),
         },
         discount: {
           show: false,
           type: 'discount',
           title: this.$tr('icommerce.cms.form.discount'),
-          content: this.$tr('icommerce.cms.form.discountContent')
+          content: this.$tr('icommerce.cms.form.discountContent'),
         },
         productWarehouse: {
           show: false,
           type: 'productWarehouse',
           title: this.$tr('icommerce.cms.form.productWarehouse'),
           content: this.$tr('icommerce.cms.form.productWarehouseContent'),
-          vIf: this.$getSetting('icommerce::warehouseFunctionability')
+          vIf: this.$getSetting('icommerce::warehouseFunctionability'),
         },
         priceList: {
           show: false,
           type: 'priceList',
           title: this.$tr('icommerce.cms.form.priceLists'),
-          content: this.$tr('icommercepricelist.cms.form.productPriceListContent'),
-          vIf: !!this.$hasAccess('icommercepricelist.productlist.manage')
+          content: this.$tr(
+            'icommercepricelist.cms.form.productPriceListContent'
+          ),
+          vIf: !!this.$hasAccess('icommercepricelist.productlist.manage'),
         },
         home: {
           show: false,
           type: 'home',
           title: '',
-          content: ''
-        }
+          content: '',
+        },
       },
-      lastPanelOpen: 'home'
+      lastPanelOpen: 'home',
     };
   },
   computed: {
@@ -638,13 +1081,13 @@ export default {
               label: this.$tr('isite.cms.label.close'),
               color: 'green',
               rounded: true,
-              icon: 'fal fa-fill-drip'
+              icon: 'fal fa-fill-drip',
             },
             action: () => {
               this.modalForms[this.lastPanelOpen].show = false;
-            }
-          }
-        ]
+            },
+          },
+        ],
       };
     },
     //Page title
@@ -684,7 +1127,7 @@ export default {
           mediasMulti: {},
           options: {
             masterRecord: 0,
-            video: null
+            video: null,
           },
           taxClassId: null,
           weightClassId: null,
@@ -698,7 +1141,7 @@ export default {
           isCall: '0',
           sortOrder: '0',
           itemTypeId: 1,
-          customUrl: ''
+          customUrl: '',
         },
         fieldsTranslatable: {
           name: '',
@@ -707,8 +1150,8 @@ export default {
           description: '',
           metaTitle: '',
           metaDescription: '',
-          advancedSummary: ''
-        }
+          advancedSummary: '',
+        },
       };
     },
     //Check if update options
@@ -727,13 +1170,13 @@ export default {
       return {
         status: [
           { label: this.$tr('isite.cms.label.enabled'), value: 1 },
-          { label: this.$tr('isite.cms.label.disabled'), value: 0 }
+          { label: this.$tr('isite.cms.label.disabled'), value: 0 },
         ],
         btn: {
           saveAndReturn: this.$tr('isite.cms.message.saveAndReturn'),
           saveAndEdit: this.$tr('isite.cms.message.saveAndEdit'),
-          saveAndCreate: this.$tr('isite.cms.message.saveAndCreate')
-        }
+          saveAndCreate: this.$tr('isite.cms.message.saveAndCreate'),
+        },
       };
     },
     //Has manage master record
@@ -760,16 +1203,20 @@ export default {
         quantity: {
           value: 0,
           type: 'input',
-          help: this.settings.isWarehouseEnable ? {
-            description: this.$tr('icommerce.cms.fieldEditableOnlyWarehouse')
-          } : {},
+          help: this.settings.isWarehouseEnable
+            ? {
+                description: this.$tr(
+                  'icommerce.cms.fieldEditableOnlyWarehouse'
+                ),
+              }
+            : {},
           props: {
             outlined: true,
             dense: true,
             label: this.$tr('isite.cms.form.quantity'),
             type: 'number',
-            readonly: this.settings.isWarehouseEnable
-          }
+            readonly: this.settings.isWarehouseEnable,
+          },
         },
         tags: {
           value: [],
@@ -782,8 +1229,8 @@ export default {
             multiple: true,
             hideDropdownIcon: true,
             inputDebounce: '0',
-            newValueMode: 'add-unique'
-          }
+            newValueMode: 'add-unique',
+          },
         },
         categoryId: {
           value: null,
@@ -793,24 +1240,24 @@ export default {
             crudData: import('modules/qcommerce/_crud/productCategories'),
             customData: {
               read: {
-                requestParams: { include: 'parent', refresh: true }
-              }
+                requestParams: { include: 'parent', refresh: true },
+              },
             },
             crudProps: {
               label: `${this.$tr('isite.cms.form.category')}*`,
               rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ]
+                (val) => !!val || this.$tr('isite.cms.message.fieldRequired'),
+              ],
             },
             config: {
               filterByQuery: true,
               options: {
                 id: 'id',
                 label: 'title',
-                sublabel: item => item.parent?.title || null
-              }
-            }
-          }
+                sublabel: (item) => item.parent?.title || null,
+              },
+            },
+          },
         },
         categories: {
           value: [],
@@ -820,15 +1267,16 @@ export default {
             crudData: import('modules/qcommerce/_crud/productCategories'),
             customData: {
               read: {
-                requestParams: { include: 'parent', refresh: true }
-              }
+                requestParams: { include: 'parent', refresh: true },
+              },
             },
             crudProps: {
-              label: this.$trp('isite.cms.form.category')+'*',
+              label: this.$trp('isite.cms.form.category') + '*',
               multiple: true,
               useChips: true,
               rules: [
-                val => val.length || this.$tr('isite.cms.message.fieldRequired')
+                (val) =>
+                  val.length || this.$tr('isite.cms.message.fieldRequired'),
               ],
             },
             config: {
@@ -836,10 +1284,10 @@ export default {
               options: {
                 id: 'id',
                 label: 'title',
-                sublabel: item => item.parent?.title || null
-              }
-            }
-          }
+                sublabel: (item) => item.parent?.title || null,
+              },
+            },
+          },
         },
         quantityClassId: {
           value: null,
@@ -849,9 +1297,9 @@ export default {
             crudData: import('modules/qcommerce/_crud/quantityClasses'),
 
             crudProps: {
-              label: `${this.$tr('icommerce.cms.sidebar.quantityClasses')}`
-            }
-          }
+              label: `${this.$tr('icommerce.cms.sidebar.quantityClasses')}`,
+            },
+          },
         },
         weightClassId: {
           value: null,
@@ -861,9 +1309,9 @@ export default {
             crudData: import('modules/qcommerce/_crud/weightClasses'),
 
             crudProps: {
-              label: `${this.$tr('icommerce.cms.sidebar.weightClasses')}`
-            }
-          }
+              label: `${this.$tr('icommerce.cms.sidebar.weightClasses')}`,
+            },
+          },
         },
         lengthClassId: {
           value: null,
@@ -873,9 +1321,9 @@ export default {
             crudData: import('modules/qcommerce/_crud/lengthClasses'),
 
             crudProps: {
-              label: `${this.$tr('icommerce.cms.sidebar.lengthClasses')}`
-            }
-          }
+              label: `${this.$tr('icommerce.cms.sidebar.lengthClasses')}`,
+            },
+          },
         },
         volumeClassId: {
           value: null,
@@ -885,9 +1333,9 @@ export default {
             crudData: import('modules/qcommerce/_crud/volumeClasses'),
 
             crudProps: {
-              label: `${this.$tr('icommerce.cms.sidebar.volumeClasses')}`
-            }
-          }
+              label: `${this.$tr('icommerce.cms.sidebar.volumeClasses')}`,
+            },
+          },
         },
         mainImage: {
           type: 'media',
@@ -895,8 +1343,8 @@ export default {
             label: this.$tr('isite.cms.form.image'),
             zone: 'mainimage',
             entity: 'Modules\\Icommerce\\Entities\\Product',
-            entityId: this.productId ? this.productId : null
-          }
+            entityId: this.productId ? this.productId : null,
+          },
         },
         gallery: {
           type: 'media',
@@ -904,8 +1352,8 @@ export default {
             label: this.$tr('isite.cms.form.gallery'),
             zone: 'gallery',
             entity: 'Modules\\Icommerce\\Entities\\Product',
-            entityId: this.productId ? this.productId : null
-          }
+            entityId: this.productId ? this.productId : null,
+          },
         },
         sizereference: {
           type: 'media',
@@ -913,24 +1361,26 @@ export default {
             label: this.$tr('icommerce.cms.label.dataSheet'),
             zone: 'sizereference',
             entity: 'Modules\\Icommerce\\Entities\\Product',
-            entityId: this.productId ? this.productId : null
-          }
+            entityId: this.productId ? this.productId : null,
+          },
         },
         dateAvailable: {
           value: this.$moment().format('YYYY/MM/DD'),
           type: 'date',
           props: {
-            label: this.$tr('icommerce.cms.form.availableDate')
-          }
+            label: this.$tr('icommerce.cms.form.availableDate'),
+          },
         },
         advancedSummary: {
           value: '',
           type: 'html',
           isTranslatable: true,
-          help: { description: this.$tr('icommerce.cms.form.advancedSummaryHelp') },
+          help: {
+            description: this.$tr('icommerce.cms.form.advancedSummaryHelp'),
+          },
           props: {
-            label: `${this.$tr('icommerce.cms.advancedSummary')}`
-          }
+            label: `${this.$tr('icommerce.cms.advancedSummary')}`,
+          },
         },
         stockStatus: {
           type: 'select',
@@ -939,9 +1389,9 @@ export default {
             clearable: false,
             options: [
               { label: this.$tr('isite.cms.label.available'), value: 1 },
-              { label: this.$tr('isite.cms.label.soldOut'), value: 0 }
-            ]
-          }
+              { label: this.$tr('isite.cms.label.soldOut'), value: 0 },
+            ],
+          },
         },
         masterRecord: {
           type: 'select',
@@ -950,9 +1400,9 @@ export default {
             clearable: false,
             options: [
               { label: this.$tr('isite.cms.label.yes'), value: 1 },
-              { label: this.$tr('isite.cms.label.no'), value: 0 }
-            ]
-          }
+              { label: this.$tr('isite.cms.label.no'), value: 0 },
+            ],
+          },
         },
         relatedProducts: {
           type: 'select',
@@ -960,14 +1410,14 @@ export default {
             label: this.$tr('icommerce.cms.form.relatedProducts'),
             useInput: true,
             useChips: true,
-            multiple: true
+            multiple: true,
           },
           loadOptions: {
             apiRoute: 'apiRoutes.qcommerce.products',
             filterByQuery: true,
-            select: { label: 'name', id: 'id' }
-          }
-        }
+            select: { label: 'name', id: 'id' },
+          },
+        },
       };
     },
     //custom crudData for productWarehouse
@@ -977,7 +1427,10 @@ export default {
           read: {
             title: this.$tr('icommerce.cms.form.generalWarehouse'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: { include: 'product,warehouse', filter: { productId: this.productId } }
+            requestParams: {
+              include: 'product,warehouse',
+              filter: { productId: this.productId },
+            },
           },
           formLeft: {
             productId: {
@@ -986,23 +1439,27 @@ export default {
               required: true,
               props: {
                 label: `${this.$tr('isite.cms.form.product')}*`,
-                readonly: true
+                readonly: true,
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: { label: 'name', id: 'id' }
-              }
-            }
-          }
+                select: { label: 'name', id: 'id' },
+              },
+            },
+          },
         },
         productOptValueWarehouse: {
           read: {
             title: this.$tr('icommerce.cms.form.warehouseByOptions'),
             excludeActions: ['sync', 'recommendations'],
             requestParams: {
-              include: 'warehouse,productOptionValue.option,productOptionValue.optionValue',
-              filter: { include: 'product,warehouse', productId: this.productId }
-            }
+              include:
+                'warehouse,productOptionValue.option,productOptionValue.optionValue',
+              filter: {
+                include: 'product,warehouse',
+                productId: this.productId,
+              },
+            },
           },
           formLeft: {
             productId: {
@@ -1011,20 +1468,23 @@ export default {
               required: true,
               props: {
                 label: `${this.$tr('isite.cms.form.product')}*`,
-                readonly: true
+                readonly: true,
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: { label: 'name', id: 'id' }
-              }
-            }
-          }
+                select: { label: 'name', id: 'id' },
+              },
+            },
+          },
         },
         productPriceList: {
           read: {
             title: this.$tr('icommerce.cms.form.priceLists'),
             excludeActions: ['sync', 'recommendations'],
-            requestParams: { include: 'product,priceList', filter: { productId: this.productId } }
+            requestParams: {
+              include: 'product,priceList',
+              filter: { productId: this.productId },
+            },
           },
           formLeft: {
             productId: {
@@ -1033,12 +1493,12 @@ export default {
               required: true,
               props: {
                 label: `${this.$tr('isite.cms.form.product')}*`,
-                readonly: true
+                readonly: true,
               },
               loadOptions: {
                 apiRoute: 'apiRoutes.qcommerce.products',
-                select: { label: 'name', id: 'id' }
-              }
+                select: { label: 'name', id: 'id' },
+              },
             },
             productPrice: {
               value: this.locale.formTemplate.price,
@@ -1046,19 +1506,22 @@ export default {
               fakeFieldName: 'product',
               props: {
                 label: `${this.$tr('isite.cms.form.product')}*`,
-                vIf: false
-              }
-            }
-          }
-        }
+                vIf: false,
+              },
+            },
+          },
+        },
       };
     },
     //Return settings
     settings() {
       return {
-        isWarehouseEnable: this.$getSetting('icommerce::warehouseFunctionality') == '1' ? true : false
+        isWarehouseEnable:
+          this.$getSetting('icommerce::warehouseFunctionality') == '1'
+            ? true
+            : false,
       };
-    }
+    },
   },
   methods: {
     //validate fields from home tab
@@ -1067,7 +1530,7 @@ export default {
       let validateTabName = null;
       let isValid = true;
       //Validate empty strings
-      ['name', 'slug', 'summary', 'description'].forEach(key => {
+      ['name', 'slug', 'summary', 'description'].forEach((key) => {
         if (!formData[key] || !formData[key].length) {
           isValid = false;
           validateTabName = 'content';
@@ -1098,15 +1561,15 @@ export default {
     //Init Form
     async initForm() {
       this.loading = true;
-      this.success = false;//Disable status of page
+      this.success = false; //Disable status of page
       this.vTab = 'tab-data';
       this.buttonActions = { label: this.options.btn.saveAndReturn, value: 1 };
-      await this.orderFields();//Order field to locale
-      this.productId = this.$route.params.id;//Update param from route
-      if (this.locale.success) this.$refs.localeComponent.vReset();//Reset locale
-      await this.getData();//Get Data Item
+      await this.orderFields(); //Order field to locale
+      this.productId = this.$route.params.id; //Update param from route
+      if (this.locale.success) this.$refs.localeComponent.vReset(); //Reset locale
+      await this.getData(); //Get Data Item
       //await this.getCategories()//Get categories
-      this.success = true;//Activate status of page
+      this.success = true; //Activate status of page
       this.updateOptions;
       this.loading = false;
     },
@@ -1115,24 +1578,30 @@ export default {
       return new Promise((resolve, reject) => {
         this.loadingCategory = true;
         let configName = 'apiRoutes.qcommerce.categories';
-        let params = {//Params to request
+        let params = {
+          //Params to request
           refresh: true,
-          params: { include: 'parent' }
+          params: { include: 'parent' },
         };
 
         //Request
-        this.$crud.index(configName, params).then(response => {
-          this.optionsTemplate.categories = this.$array.tree(response.data);
-          //this.locale.fields.categoryId = response.data.length ? response.data[0].id : null
-          this.loadingCategory = false;
-          resolve(true);
-        }).catch(error => {
-          this.$apiResponse.handleError(error, () => {
-            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest') });
+        this.$crud
+          .index(configName, params)
+          .then((response) => {
+            this.optionsTemplate.categories = this.$array.tree(response.data);
+            //this.locale.fields.categoryId = response.data.length ? response.data[0].id : null
             this.loadingCategory = false;
-            reject(true);
+            resolve(true);
+          })
+          .catch((error) => {
+            this.$apiResponse.handleError(error, () => {
+              this.$alert.error({
+                message: this.$tr('isite.cms.message.errorRequest'),
+              });
+              this.loadingCategory = false;
+              reject(true);
+            });
           });
-        });
       });
     },
     //Get product if is edit
@@ -1145,24 +1614,31 @@ export default {
           let params = {
             refresh: true,
             params: {
-              include: 'relatedProducts,categories,category,parent,manufacturer',
-              filter: { allTranslations: true }
-            }
+              include:
+                'relatedProducts,categories,category,parent,manufacturer',
+              filter: { allTranslations: true },
+            },
           };
           //Request
-          this.$crud.show(configName, productId, params).then(response => {
-            this.orderDataItemToLocale(response.data);
-            resolve(true);//Resolve
-          }).catch(error => {
-            this.$apiResponse.handleError(error, () => {
-              this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' });
-              console.error(error);
-              this.loading = false;
-              reject(false);//Resolve
+          this.$crud
+            .show(configName, productId, params)
+            .then((response) => {
+              this.orderDataItemToLocale(response.data);
+              resolve(true); //Resolve
+            })
+            .catch((error) => {
+              this.$apiResponse.handleError(error, () => {
+                this.$alert.error({
+                  message: this.$tr('isite.cms.message.errorRequest'),
+                  pos: 'bottom',
+                });
+                console.error(error);
+                this.loading = false;
+                reject(false); //Resolve
+              });
             });
-          });
         } else {
-          resolve(true);//Resolve
+          resolve(true); //Resolve
         }
       });
     },
@@ -1170,7 +1646,11 @@ export default {
     orderDataItemToLocale(data) {
       let orderData = this.$clone(data);
       //Set default Parent options
-      if (data.parent) this.optionsTemplate.products = this.$array.tree([data.parent], { label: 'name', id: 'id' });
+      if (data.parent)
+        this.optionsTemplate.products = this.$array.tree([data.parent], {
+          label: 'name',
+          id: 'id',
+        });
       //Order categories
       orderData.categories.forEach((item, key) => {
         orderData.categories[key] = item.id;
@@ -1182,11 +1662,16 @@ export default {
 
       //Set default related products options
       if (data.relatedProducts && data.relatedProducts.length) {
-        this.optionsTemplate.relatedProducts = this.$array.tree(data.relatedProducts, { label: 'name', id: 'id' });
+        this.optionsTemplate.relatedProducts = this.$array.tree(
+          data.relatedProducts,
+          { label: 'name', id: 'id' }
+        );
       }
       this.locale.form = this.$clone({
         ...orderData,
-        dateAvailable: orderData.dateAvailable ? orderData.dateAvailable.replaceAll('-', '/') : this.$moment().format('YYYY/MM/DD')
+        dateAvailable: orderData.dateAvailable
+          ? orderData.dateAvailable.replaceAll('-', '/')
+          : this.$moment().format('YYYY/MM/DD'),
       });
       setTimeout(() => {
         /*this.locale.formTemplate.categoryId = orderData.categoryId
@@ -1200,13 +1685,23 @@ export default {
       if (this.validateFieldsHomeTab()) {
         this.loading = true;
         let configName = 'apiRoutes.qcommerce.products';
-        this.$crud.create(configName, this.getDataForm()).then(response => {
-          this.$alert.success({ message: `${this.$tr('isite.cms.message.recordCreated')} ID: ${response.data.id}` });
-          this.actionAfterCreated(response.data.id);
-        }).catch(error => {
-          this.loading = false;
-          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom' });
-        });
+        this.$crud
+          .create(configName, this.getDataForm())
+          .then((response) => {
+            this.$alert.success({
+              message: `${this.$tr('isite.cms.message.recordCreated')} ID: ${
+                response.data.id
+              }`,
+            });
+            this.actionAfterCreated(response.data.id);
+          })
+          .catch((error) => {
+            this.loading = false;
+            this.$alert.error({
+              message: this.$tr('isite.cms.message.recordNoCreated'),
+              pos: 'bottom',
+            });
+          });
       }
     },
     //Update Product
@@ -1215,14 +1710,22 @@ export default {
         this.loading = true;
         let configName = 'apiRoutes.qcommerce.products';
         let requestData = { ...this.getDataForm(), id: this.productId };
-        this.$crud.update(configName, this.productId, requestData).then(response => {
-          this.$alert.success({ message: `${this.$tr('isite.cms.message.recordUpdated')}` });
-          this.$router.push({ name: 'qcommerce.admin.products.index' });
-          this.initForm();
-        }).catch(error => {
-          this.loading = false;
-          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom' });
-        });
+        this.$crud
+          .update(configName, this.productId, requestData)
+          .then((response) => {
+            this.$alert.success({
+              message: `${this.$tr('isite.cms.message.recordUpdated')}`,
+            });
+            this.$router.push({ name: 'qcommerce.admin.products.index' });
+            this.initForm();
+          })
+          .catch((error) => {
+            this.loading = false;
+            this.$alert.error({
+              message: this.$tr('isite.cms.message.recordNoUpdated'),
+              pos: 'bottom',
+            });
+          });
       }
     },
     //Get just values not null from form
@@ -1234,28 +1737,34 @@ export default {
           delete response[item];
         }
       }
-      return { ...response, manufacturerId: this.locale.form.manufacturerId || null };
+      return {
+        ...response,
+        manufacturerId: this.locale.form.manufacturerId || null,
+      };
     },
     //Action after created
     actionAfterCreated(id) {
       setTimeout(() => {
         let action = this.buttonActions.value;
         switch (action) {
-          case 1://redirect to index products
+          case 1: //redirect to index products
             this.$router.push({ name: 'qcommerce.admin.products.index' });
             break;
-          case 2://Redirect to update this product
-            this.$router.push({ name: 'qcommerce.admin.products.edit', params: { id: id } });
+          case 2: //Redirect to update this product
+            this.$router.push({
+              name: 'qcommerce.admin.products.edit',
+              params: { id: id },
+            });
             this.loading = false;
             break;
-          case 3://Reset and init form
+          case 3: //Reset and init form
             this.$refs.localeComponent.vReset();
             this.loading = false;
             break;
-          case 4://Redirect to update this product and options
+          case 4: //Redirect to update this product and options
             this.$router.push({
               name: 'qcommerce.admin.products.edit',
-              params: { id: id, editOptions: 1 }
+              params: { id: id, editOptions: 1 },
             });
             this.loading = false;
             break;
@@ -1266,7 +1775,9 @@ export default {
     setSlug() {
       if (!this.productId) {
         let title = this.$clone(this.locale.formTemplate.name);
-        this.locale.formTemplate.slug = this.$clone(this.$helper.getSlug(title));
+        this.locale.formTemplate.slug = this.$clone(
+          this.$helper.getSlug(title)
+        );
       }
     },
     //Get extra fields
@@ -1275,24 +1786,34 @@ export default {
         //Request params
         let requestParams = {
           refresh: true,
-          params: { filter: { configName: 'icommerce.crud-fields.products' } }
+          params: { filter: { configName: 'icommerce.crud-fields.products' } },
         };
         //Request
-        this.$crud.index('apiRoutes.qsite.configs', requestParams).then(response => {
-          //Add response to form
-          if (response.data && Object.keys(response.data).length) this.extraFields = this.$clone(response.data);
-          //Response
-          resolve(response.data);
-        }).catch(error => {
-          this.$apiResponse.handleError(error, () => {
-            reject(error);
+        this.$crud
+          .index('apiRoutes.qsite.configs', requestParams)
+          .then((response) => {
+            //Add response to form
+            if (response.data && Object.keys(response.data).length)
+              this.extraFields = this.$clone(response.data);
+            //Response
+            console.log(response.data);
+
+            resolve(response.data);
+          })
+          .catch((error) => {
+            this.$apiResponse.handleError(error, () => {
+              reject(error);
+            });
           });
-        });
       });
+    },
+    // Validate ExtraFields Type Media
+    validateExtraFieldsTypeMedia(field) {
+      return field.type === 'media' || field.type === 'gallery';
     },
     //Order fields
     orderFields() {
-      return new Promise(async resolve => {
+      return new Promise(async (resolve) => {
         let dataLocale = this.$clone(this.dataLocale);
         //Get extra fields
         await this.getExtraFields();
@@ -1308,14 +1829,16 @@ export default {
           } else if (field.isFakeField) {
             dataLocale.fields.options[field.name || key] = field.value;
           } else if (field.fakeFieldName) {
-            if (!dataLocale.fields[field.fakeFieldName]) dataLocale.fields[field.fakeFieldName] = {};
-            dataLocale.fields[field.fakeFieldName][field.name || key] = field.value;
+            if (!dataLocale.fields[field.fakeFieldName])
+              dataLocale.fields[field.fakeFieldName] = {};
+            dataLocale.fields[field.fakeFieldName][field.name || key] =
+              field.value;
           } else {
             dataLocale.fields[field.name || key] = field.value;
           }
         });
 
-        this.locale = this.$clone(dataLocale);//Add fields
+        this.locale = this.$clone(dataLocale); //Add fields
         return resolve(true);
       });
     },
@@ -1327,22 +1850,28 @@ export default {
         let configName = 'apiRoutes.qcommerce.products';
         //Params
         let params = {
-          refresh: true
+          refresh: true,
         };
         //Request
-        this.$crud.show(configName, productId, params).then(response => {
-          this.locale.formTemplate.quantity = response.data.quantity;
-          this.loading = false;
-        }).catch(error => {
-          this.$apiResponse.handleError(error, () => {
-            this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' });
-            console.error(error);
+        this.$crud
+          .show(configName, productId, params)
+          .then((response) => {
+            this.locale.formTemplate.quantity = response.data.quantity;
             this.loading = false;
+          })
+          .catch((error) => {
+            this.$apiResponse.handleError(error, () => {
+              this.$alert.error({
+                message: this.$tr('isite.cms.message.errorRequest'),
+                pos: 'bottom',
+              });
+              console.error(error);
+              this.loading = false;
+            });
           });
-        });
       } else this.loading = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
