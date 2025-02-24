@@ -11,7 +11,15 @@ export default {
         create: false,
         read: {
           columns: [
-            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id'},
+            {
+              name: 'id',
+              label: this.$tr('isite.cms.form.id'),
+              field: 'id',
+              to: (item) => ({
+                name: 'qcommerce.shipping.orders.show',
+                params: { id: item.id },
+              }),
+            },
             {
               name: 'customer',
               label: this.$tr('isite.cms.form.name'),
@@ -39,11 +47,17 @@ export default {
             {name: 'shippingMethod', label: this.$tr('icommerce.cms.form.shippingMethod'), field: 'shippingMethod'},
             { name: 'paymentMethod', label: this.$tr('icommerce.cms.paymentInformation'), field: 'paymentMethod' },
             {
-              name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'right',
+              name: 'created_at',
+              label: this.$tr('isite.cms.form.createdAt'),
+              field: 'createdAt',
+              align: 'right',
               format: val => val ? this.$trd(val) : '-',
             },
             {
-              name: 'updated_at', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt', align: 'right',
+              name: 'updated_at',
+              label: this.$tr('isite.cms.form.updatedAt'),
+              field: 'updatedAt',
+              align: 'right',
               format: val => val ? this.$trd(val) : '-',
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
@@ -62,10 +76,8 @@ export default {
               name: 'show',
               icon: 'far fa-eye',
               label: this.$tr('isite.cms.label.show'),
-              action: (item) => {
-                this.$router.push({name: 'qcommerce.shipping.orders.show', params: {id: item.id}})
-              }
-            }
+              route: 'qcommerce.shipping.orders.show'
+            },
           ],
           filters: {
             status: {
