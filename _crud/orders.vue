@@ -78,6 +78,21 @@ export default {
               label: this.$tr('isite.cms.label.show'),
               route: 'qcommerce.shipping.orders.show'
             },
+            {
+              name: 'buyAgain',
+              icon: 'fal fa-box-dollar',
+              label: this.$tr('icommerce.cms.label.buyAgain'),
+              format: (row, act) => {
+                if(!row.buyAgainUrl) return {vIf: false}
+                return {
+                  props: {
+                    ...act.props,
+                    href: row.buyAgainUrl,
+                    target: '_blank'
+                  }
+                }
+              },
+            }
           ],
           filters: {
             status: {
