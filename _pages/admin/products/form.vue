@@ -499,7 +499,6 @@
                   <q-tab-panel name="relations">
                     <div class="q-pa-md">
                       <!--Record Master-->
-                      {{ locale.formTemplate.options.masterRecord}}
                       <div v-if="canManageRecordMaster" class="q-mb-md">
                         <dynamic-field
                           v-model="locale.formTemplate.options.masterRecord"
@@ -507,9 +506,6 @@
                         />
                       </div>
                       <!--Crud item types-->
-
-
-                      {{ locale.formTemplate.itemTypeId}}
                       <crud
                         :crud-data="import('modules/qcommerce/_crud/itemTypes')"
                         type="select"
@@ -521,10 +517,6 @@
                         :config="{ options: { label: 'title', value: 'id' } }"
                         v-if="false"
                       />
-
-
-
-                      {{ locale.formTemplate.taxClassId}}
                       <!--Crud manufacturer-->
                       <crud
                         :crud-data="
@@ -540,10 +532,6 @@
                         v-if="$hasAccess('icommerce.taxclasses.manage')"
                       />
                       <!--Crud manufacturer-->
-
-                      {{ locale.formTemplate.manufacturerId}}
-
-
                       <crud
                         :crud-data="
                           import('modules/qcommerce/_crud/manufacturers')
@@ -558,9 +546,6 @@
                         :config="{ options: { label: 'name', value: 'id' } }"
                       />
                       <!--Related Products-->
-
-
-                      {{ locale.formTemplate.relatedProducts}}
                       <dynamic-field
                         v-model="locale.formTemplate.relatedProducts"
                         :field="dynamicFields?.relatedProducts"
@@ -592,7 +577,6 @@
                         :field="dynamicFields.gallery"
                         :item-id="productId"
                       />
-
                       <!--Extra fields-->
                       <div
                         v-for="(field, key) in extraFields"
@@ -1743,10 +1727,10 @@ export default {
       for (var item in response) {
         let valueItem = response[item];
         if (valueItem == null || valueItem == undefined) {
+          //ignore these fields due backend needs them
           if(!this.isNulleableField(item)){
-            console.warn('delete =>', item)
             delete response[item];
-          } else { console.wanr('not delete',  item)}          
+          }
         }
       }
       return {
