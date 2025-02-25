@@ -11,7 +11,15 @@ export default {
         create: false,
         read: {
           columns: [
-            { name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id' },
+            {
+              name: 'id',
+              label: this.$tr('isite.cms.form.id'),
+              field: 'id',
+              to: (item) => ({
+                name: 'qcommerce.shipping.orders.show',
+                params: { id: item.id },
+              }),
+            },
             {
               name: 'customer',
               label: this.$tr('isite.cms.form.name'),
@@ -103,7 +111,30 @@ export default {
                 apiRoute: 'apiRoutes.qcommerce.shippingMethods'
               }
             }
-          }
+          },
+          actions: [
+            {
+              name: 'show',
+              icon: 'far fa-eye',
+              label: this.$tr('isite.cms.label.show'),
+              route: 'qcommerce.shipping.orders.show'
+            },
+            {
+              name: 'buyAgain',
+              icon: 'fal fa-box-dollar',
+              label: this.$tr('icommerce.cms.label.buyAgain'),
+              format: (row, act) => {
+                if(!row.buyAgainUrl) return {vIf: false}
+                return {
+                  props: {
+                    ...act.props,
+                    href: row.buyAgainUrl,
+                    target: '_blank'
+                  }
+                }
+              },
+            }
+          ],
         },
         update: {
           to: 'qcommerce.shipping.orders.show'

@@ -1189,12 +1189,6 @@ export default {
         ...orderData,
         dateAvailable: orderData.dateAvailable ? orderData.dateAvailable.replaceAll("-", "/") : this.$moment().format('YYYY/MM/DD')
       })
-      setTimeout(() => {
-        /*this.locale.formTemplate.categoryId = orderData.categoryId
-        this.locale.formTemplate.taxClassId = orderData.taxClassId
-        this.locale.formTemplate.parentId = orderData.parentId
-        this.locale.formTemplate.manufacturerId = orderData.manufacturerId*/
-      }, 3000)
     },
     //Create Product
     async createItem() {

@@ -155,17 +155,13 @@ export default {
               icon: 'fa-light fa-arrow-right-to-arc',
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.viewProduct'),
-              action: (row) => {
-                this.$helper.openExternalURL(row.url);
-              }
+              format: (row, action) => ({props: {...action.props, href: row.url}})
             },
             {
               icon: 'fa-light fa-pen-to-square',
               color: 'info',
               tooltip: this.$tr('icommerce.cms.message.advanceEdit'),
-              action: (item) => {
-                this.$router.push({ name: 'qcommerce.admin.products.edit', params: { id: item.id } });
-              }
+              route: 'qcommerce.admin.products.edit'
             }
           ]
         },
