@@ -577,7 +577,6 @@
                         :field="dynamicFields.gallery"
                         :item-id="productId"
                       />
-
                       <!--Extra fields-->
                       <div
                         v-for="(field, key) in extraFields"
@@ -1728,13 +1727,20 @@ export default {
       for (var item in response) {
         let valueItem = response[item];
         if (valueItem == null || valueItem == undefined) {
-          delete response[item];
+          //ignore these fields due backend needs them
+          if(!this.isNulleableField(item)){
+            delete response[item];
+          }
         }
       }
       return {
         ...response,
         manufacturerId: this.locale.form.manufacturerId || null,
       };
+    },
+    isNulleableField(name){
+      const nulleables = ['masterRecord', 'itemTypeId', 'taxClassId', 'manufacturerId', 'relatedProducts']
+      return nulleables.includes(name)
     },
     //Action after created
     actionAfterCreated(id) {
@@ -1790,8 +1796,6 @@ export default {
             if (response.data && Object.keys(response.data).length)
               this.extraFields = this.$clone(response.data);
             //Response
-            console.log(response.data);
-
             resolve(response.data);
           })
           .catch((error) => {
