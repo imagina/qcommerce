@@ -1226,10 +1226,17 @@ export default {
       for (var item in response) {
         let valueItem = response[item]
         if (valueItem == null || valueItem == undefined) {
-          delete response[item]
+          //ignore these fields due backend needs them
+          if(!this.isNulleableField(item)){
+            delete response[item];
+          }
         }
       }
       return {...response, manufacturerId: this.locale.form.manufacturerId || null}
+    },
+    isNulleableField(name){
+      const nulleables = ['masterRecord', 'itemTypeId', 'taxClassId', 'manufacturerId', 'relatedProducts']
+      return nulleables.includes(name)
     },
     //Action after created
     actionAfterCreated(id) {
