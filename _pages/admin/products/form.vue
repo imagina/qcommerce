@@ -499,6 +499,7 @@
                   <q-tab-panel name="relations">
                     <div class="q-pa-md">
                       <!--Record Master-->
+                      {{ locale.formTemplate.options.masterRecord}}
                       <div v-if="canManageRecordMaster" class="q-mb-md">
                         <dynamic-field
                           v-model="locale.formTemplate.options.masterRecord"
@@ -506,6 +507,9 @@
                         />
                       </div>
                       <!--Crud item types-->
+
+
+                      {{ locale.formTemplate.itemTypeId}}
                       <crud
                         :crud-data="import('modules/qcommerce/_crud/itemTypes')"
                         type="select"
@@ -517,6 +521,10 @@
                         :config="{ options: { label: 'title', value: 'id' } }"
                         v-if="false"
                       />
+
+
+
+                      {{ locale.formTemplate.taxClassId}}
                       <!--Crud manufacturer-->
                       <crud
                         :crud-data="
@@ -532,6 +540,10 @@
                         v-if="$hasAccess('icommerce.taxclasses.manage')"
                       />
                       <!--Crud manufacturer-->
+
+                      {{ locale.formTemplate.manufacturerId}}
+
+
                       <crud
                         :crud-data="
                           import('modules/qcommerce/_crud/manufacturers')
@@ -546,6 +558,9 @@
                         :config="{ options: { label: 'name', value: 'id' } }"
                       />
                       <!--Related Products-->
+
+
+                      {{ locale.formTemplate.relatedProducts}}
                       <dynamic-field
                         v-model="locale.formTemplate.relatedProducts"
                         :field="dynamicFields?.relatedProducts"
@@ -1728,13 +1743,20 @@ export default {
       for (var item in response) {
         let valueItem = response[item];
         if (valueItem == null || valueItem == undefined) {
-          delete response[item];
+          if(!this.isNulleableField(item)){
+            console.warn('delete =>', item)
+            delete response[item];
+          } else { console.wanr('not delete',  item)}          
         }
       }
       return {
         ...response,
         manufacturerId: this.locale.form.manufacturerId || null,
       };
+    },
+    isNulleableField(name){
+      const nulleables = ['masterRecord', 'itemTypeId', 'taxClassId', 'manufacturerId', 'relatedProducts']
+      return nulleables.includes(name)
     },
     //Action after created
     actionAfterCreated(id) {
@@ -1790,8 +1812,6 @@ export default {
             if (response.data && Object.keys(response.data).length)
               this.extraFields = this.$clone(response.data);
             //Response
-            console.log(response.data);
-
             resolve(response.data);
           })
           .catch((error) => {
