@@ -67,6 +67,12 @@
 
     <!--Actions-->
     <div class="row q-col-gutter-md q-mb-md">
+      <!-- Buy Again -->
+      <div class="col-12" v-if="order.buyAgainUrl">
+        <q-btn class="full-width" :label="$tr('icommerce.cms.label.buyAgain')"
+          :href="order.buyAgainUrl" target="_blank" outline color="primary"
+          icon="fal fa-box-dollar" no-caps/>
+      </div>
       <!--Status info-->
       <div class="col-12 col-md-6">
         <!--Tracking info-->
@@ -144,6 +150,16 @@ export default {
     //Return extra actions
     extraPageActions() {
       return [
+        {
+          label: this.$tr('icommerce.cms.label.buyAgain'),
+          props: {
+            icon: 'fal fa-box-dollar',
+            label: this.$tr('icommerce.cms.label.buyAgain'),
+            href: this.order.buyAgainUrl,
+            target: '_blank'
+          },
+          vIf: this.order.buyAgainUrl ? true : false
+        },
         {
           label: this.$tr('isite.cms.label.print'),
           props: {
