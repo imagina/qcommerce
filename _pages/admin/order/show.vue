@@ -38,6 +38,8 @@
           <q-td :props="props">
             <div style="max-width: 250px; white-space: normal">
               {{ props.value }}
+                <br />
+              <b class="text-grey">{{ props.row.details }}</b>
             </div>
           </q-td>
         </template>
