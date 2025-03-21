@@ -38,6 +38,9 @@
           <q-td :props="props">
             <div style="max-width: 250px; white-space: normal">
               {{ props.value }}
+              <div v-if="props.row.details" class"cart-product-details">
+                  <b class="text-grey">{{ props.row.details }}</b>
+              </div>
             </div>
           </q-td>
         </template>
