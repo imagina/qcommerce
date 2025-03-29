@@ -198,7 +198,6 @@ export default function controller(props: any, emit: any) {
           state.data = [...state.data, ...filterPriceList];
         });
 
-
         if (metaData.currentPage < metaData.lastPage) {
           const diffPages = metaData.lastPage - metaData.currentPage;
           const batch = diffPages > batchSize
@@ -209,7 +208,7 @@ export default function controller(props: any, emit: any) {
         }
 
         //Stop Loading
-        if (metaData.currentPage == metaData.lastPage) {
+        if (metaData.currentPage >= metaData.lastPage) {
           state.expiresIn = res[res.length - 1]?.expiresIn;
           state.loading = false;
         }
