@@ -34,6 +34,15 @@
       <!--Product list-->
       <q-table v-bind="tableConfig.props">
         <!-- Custom column -->
+        <!-- Custom column -->
+        <template v-slot:body-cell-title="props">
+          <q-td :props="props" :title="props.value">
+            {{ props.value }}
+            <div v-if="props.row.category" class="text-blue-grey">
+              {{props.row.category.title}}
+            </div>
+          </q-td>
+        </template>
         <template v-slot:body-cell-productOptionsLabel="props">
           <q-td :props="props">
             <div style="max-width: 250px; white-space: normal">
@@ -419,7 +428,7 @@ export default {
         //Request params
         let requestParams = {
           refresh: refresh,
-          params: {include: 'shippingDepartment,shippingCountry,customer.addresses,customer.fields'}
+          params: {include: 'shippingDepartment,shippingCountry,customer.addresses,customer.fields,orderItems.category'}
         }
         //Request
         this.$crud.show('apiRoutes.qcommerce.orders', this.orderId, requestParams).then(response => {
