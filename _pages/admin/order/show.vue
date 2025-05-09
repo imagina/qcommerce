@@ -34,12 +34,21 @@
       <!--Product list-->
       <q-table v-bind="tableConfig.props">
         <!-- Custom column -->
+        <!-- Custom column -->
+        <template v-slot:body-cell-title="props">
+          <q-td :props="props" :title="props.value">
+            {{ props.value }}
+            <div v-if="props.row.category" class="text-blue-grey">
+              {{props.row.category.title}}
+            </div>
+          </q-td>
+        </template>
         <template v-slot:body-cell-productOptionsLabel="props">
           <q-td :props="props">
             <div style="max-width: 250px; white-space: normal">
               {{ props.value }}
               <div v-if="props.row.details" class="cart-product-details">
-                  <b class="text-grey">{{ props.row.details }}</b>
+                <b class="text-grey">{{ props.row.details }}</b>
               </div>
             </div>
           </q-td>
@@ -73,8 +82,8 @@
       <!-- Buy Again -->
       <div class="col-12" v-if="order.buyAgainUrl">
         <q-btn class="full-width" :label="$tr('icommerce.cms.label.buyAgain')"
-          :href="order.buyAgainUrl" target="_blank" outline color="primary"
-          icon="fal fa-box-dollar" no-caps/>
+               :href="order.buyAgainUrl" target="_blank" outline color="primary"
+               icon="fal fa-box-dollar" no-caps/>
       </div>
       <!--Status info-->
       <div class="col-12 col-md-6">
@@ -419,7 +428,7 @@ export default {
         //Request params
         let requestParams = {
           refresh: refresh,
-          params: {include: 'shippingDepartment,shippingCountry,customer.addresses,customer.fields'}
+          params: {include: 'shippingDepartment,shippingCountry,customer.addresses,customer.fields,orderItems.category'}
         }
         //Request
         this.$crud.show('apiRoutes.qcommerce.orders', this.orderId, requestParams).then(response => {
@@ -528,12 +537,12 @@ export default {
 }
 
   @media print {
-    #masterPanelHeader,
-    #masterDrawers,
+#masterPanelHeader,
+#masterDrawers,
     #masterDrawers1,
-    #masterDrawers2,
-    #masterFooter,
-    #menuMaster,
+#masterDrawers2,
+#masterFooter,
+#menuMaster,
     #pageActionscomponent .actions-content {
       display: none;
     }
