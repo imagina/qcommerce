@@ -65,7 +65,8 @@ export default {
         "value": "valor",
         "status": "Estado",
         "default_currency": "Moneda predeterminada",
-        "warehouses": "Bodegas"
+        "warehouses": "Bodegas",
+        "adminProductWarehouse": "Productos por Bodega"
       },
       "newProduct": "Nuevo Producto",
       "updateProduct": "Actualizar Producto",
