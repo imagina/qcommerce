@@ -500,4 +500,17 @@ export default {
     authenticated: true,
     subHeader: { refresh: true }
   },
+  productWarehouse: {
+    permission: 'icommerce.productwarehouses.manage',
+    activated: true,
+    path: '/productWarehouse',
+    name: 'qcommerce.admin.productWarehouses.index',
+    crud: import('modules/qcommerce/_crud/productWarehouse'),
+    page: () => import('modules/qcrud/_pages/admin/crudPage'),
+    layout: () => import('layouts/master.vue'),
+    title: 'icommerce.cms.sidebar.adminProductWarehouse',
+    icon: 'fa-light fa-warehouse-full',
+    authenticated: true,
+    subHeader: { refresh: true }
+  },
 }

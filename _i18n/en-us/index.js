@@ -67,7 +67,8 @@ export default {
         "newQuantityClasses": "New Quantity Class",
         "updateQuantityClasses": "Update Quantity Class",
         "quantityClasses": "Quantity Classes",
-        "decimals": "Decimal"
+        "decimals": "Decimal",
+        "adminProductWarehouse": "Product Warehouse"
       },
       "newProduct": "New Product",
       "updateProduct": "Update Product",

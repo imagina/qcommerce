@@ -34,7 +34,8 @@ export default [
       pages.qcommerce.weightClasses,
       pages.qcommerce.lengthClasses,
       pages.qcommerce.volumeClasses,
-      pages.qcommerce.warehouses
+      pages.qcommerce.warehouses,
+      pages.qcommerce.productWarehouse
     ]
   },
 ]
