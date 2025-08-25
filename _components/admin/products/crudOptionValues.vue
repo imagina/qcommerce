@@ -161,7 +161,7 @@
               <!-- images-->
               <div class="content-prefix row" v-if="showMedia">
                 <div class="col-12">
-                  <dynamic-field v-for="(field, keyField) in mediaFields" :key="keyField" :field="field"                  
+                  <dynamic-field v-for="(field, keyField) in mediaFields" :key="keyField" :field="field"
                       v-model="form[field.name || keyField]"
                       :item-id="this.modal.itemId"
                   />
@@ -260,7 +260,7 @@ export default {
           props: {
             label: this.$tr('isite.cms.label.mainImage'),
             zone: 'mainimage',
-            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entity: 'Modules\\Icommerce\\Models\\ProductOptionValue',
             entityId: null,
           }
         },
@@ -269,7 +269,7 @@ export default {
           props: {
             label: `${this.$tr('isite.cms.form.gallery')} (${this.$trp('isite.cms.label.image')})`,
             zone: 'gallery',
-            entity: 'Modules\\Icommerce\\Entities\\ProductOptionValue',
+            entity: 'Modules\\Icommerce\\Models\\ProductOptionValue',
             entityId: null,
             multiple: true,
           }

@@ -88,7 +88,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.image'),
               zone: 'mainimage',
-              entity: "Modules\\Icommerce\\Entities\\PaymentMethod",
+              entity: "Modules\\Icommerce\\Models\\PaymentMethod",
               entityId: null
             }
           }

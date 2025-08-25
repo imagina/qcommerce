@@ -1341,7 +1341,7 @@ export default {
           props: {
             label: this.$tr('isite.cms.form.image'),
             zone: 'mainimage',
-            entity: 'Modules\\Icommerce\\Entities\\Product',
+            entity: 'Modules\\Icommerce\\Models\\Product',
             entityId: this.productId ? this.productId : null,
           },
         },
@@ -1350,7 +1350,7 @@ export default {
           props: {
             label: this.$tr('isite.cms.form.gallery'),
             zone: 'gallery',
-            entity: 'Modules\\Icommerce\\Entities\\Product',
+            entity: 'Modules\\Icommerce\\Models\\Product',
             entityId: this.productId ? this.productId : null,
           },
         },
@@ -1359,7 +1359,7 @@ export default {
           props: {
             label: this.$tr('icommerce.cms.label.dataSheet'),
             zone: 'sizereference',
-            entity: 'Modules\\Icommerce\\Entities\\Product',
+            entity: 'Modules\\Icommerce\\Models\\Product',
             entityId: this.productId ? this.productId : null,
           },
         },

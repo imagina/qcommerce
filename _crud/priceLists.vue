@@ -137,7 +137,7 @@
               }
             },
             relatedEntity:{
-              value: 'Modules\\Iprofile\\Entities\\Department'
+              value: 'Modules\\Iprofile\\Models\\Department'
             }
           },
           handleFormUpdates: (formData, changedFields, formType) => {

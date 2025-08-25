@@ -105,7 +105,7 @@
               props : {
                 label: this.$tr('isite.cms.form.firstImage'),
                 zone: 'mainimage',
-                entity: "Modules\\Icommerce\\Entities\\Store",
+                entity: "Modules\\Icommerce\\Models\\Store",
                 enitityId: null
               }
             },

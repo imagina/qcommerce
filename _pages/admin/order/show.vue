@@ -342,7 +342,7 @@ export default {
             extraData: {
               userId: this.$store.state.quserAuth.userId,
               rateableId: this.modalRating.item?.productId || null,
-              rateableType: 'Modules\\Icommerce\\Entities\\Product'
+              rateableType: 'Modules\\Icommerce\\Models\\Product'
             }
           },
           blocks: [{
@@ -381,7 +381,7 @@ export default {
                 props: {
                   label: this.$trp('isite.cms.form.image'),
                   zone: 'gallery',
-                  entity: "Modules\\Icomments\\Entities\\Comment",
+                  entity: "Modules\\Icomments\\Models\\Comment",
                   entityId: itemRatingComments[0]?.id || null,
                   accept: 'images',
                   directUpload: true,
@@ -451,7 +451,7 @@ export default {
         let requestParams = {
           refresh: refresh,
           params: {
-            filter: {field: 'entity_id', entity_type: 'Modules\\Icommerce\\Entities\\Order'}
+            filter: {field: 'entity_id', entity_type: 'Modules\\Icommerce\\Models\\Order'}
           }
         }
         //request
@@ -481,7 +481,7 @@ export default {
             filter: {
               field: 'rateable_id',
               userId: this.$store.state.quserAuth.userId,
-              rateableType: 'Modules\\Icommerce\\Entities\\Product'
+              rateableType: 'Modules\\Icommerce\\Models\\Product'
             }
           }
         }

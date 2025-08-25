@@ -120,7 +120,7 @@
               props: {
                 label: this.$tr('isite.cms.form.firstImage'),
                 zone: 'mainimage',
-                entity: "Modules\\Icommerce\\Entities\\Manufacturer",
+                entity: "Modules\\Icommerce\\Models\\Manufacturer",
                 enitityId: null
               }
             },
@@ -132,7 +132,7 @@
               props: {
                 label: this.$tr('isite.cms.form.secondaryImage'),
                 zone: 'secondaryimage',
-                entity: "Modules\\Icommerce\\Entities\\Manufacturer",
+                entity: "Modules\\Icommerce\\Models\\Manufacturer",
                 enitityId: null
               }
             },

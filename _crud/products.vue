@@ -272,7 +272,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.image'),
               zone: 'mainimage',
-              entity: 'Modules\\Icommerce\\Entities\\Product',
+              entity: 'Modules\\Icommerce\\Models\\Product',
               entityId: null
             }
           },
