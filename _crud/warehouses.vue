@@ -29,21 +29,21 @@ export default {
             },
             {
               name: 'country_id',
-              label: this.$tr('ilocations.cms.form.country'),
+              label: this.$tr('ilocation.cms.form.country'),
               field: 'country',
               align: 'left',
               format: val => val ? val.name : ''
             },
             {
               name: 'province_id',
-              label: this.$tr('ilocations.cms.form.province'),
+              label: this.$tr('ilocation.cms.form.province'),
               field: 'province',
               align: 'left',
               format: val => val ? val.name : ''
             },
             {
               name: 'city_id',
-              label: this.$tr('ilocations.cms.form.city'),
+              label: this.$tr('ilocation.cms.form.city'),
               field: 'city',
               align: 'left',
               format: val => val ? val.name : ''
@@ -71,7 +71,7 @@ export default {
               value: null,
               type: 'select',
               props: {
-                label: this.$tr('ilocations.cms.form.country'),
+                label: this.$tr('ilocation.cms.form.country'),
                 clearable: true
               },
               loadOptions: {
@@ -83,7 +83,7 @@ export default {
               value: null,
               type: 'select',
               props: {
-                label: this.$tr('ilocations.cms.form.province'),
+                label: this.$tr('ilocation.cms.form.province'),
                 clearable: true
               },
               loadOptions: {
@@ -232,7 +232,7 @@ export default {
             type: 'select',
             required: true,
             props: {
-              label: `${this.$tr('ilocations.cms.form.province')}*`,
+              label: `${this.$tr('ilocation.cms.form.province')}*`,
               readonly: (this.crudInfo.countryId ? false : true)
             },
             loadOptions: {
@@ -261,7 +261,7 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: this.$tr('ilocations.cms.form.polygon'),
+              label: this.$tr('ilocation.cms.form.polygon'),
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.polygons',
